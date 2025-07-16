@@ -47,8 +47,8 @@ public struct Part(string name, int index, int version, Type? serializable) : IE
         { "GAMEPLAY_DATA", new Part("GAMEPLAY_DATA", 0x1b, PartHistory.GAMEPLAY_DATA, typeof(PGameplayData)) },
         { "ENEMY", new Part("ENEMY", 0x1c, PartHistory.ENEMY, typeof(PEnemy)) },
         { "GROUP", new Part("GROUP", 0x1d, PartHistory.GROUP, typeof(PGroup)) },
-        { "PHYSICS_TWEAK", new Part("PHYSICS_TWEAK", 0x1e, PartHistory.PHYSICS_TWEAK, typeof(PPhysicsTweak)) }, /*
-        { "NPC", new Part("NPC", 0x1f, PartHistory.NPC, typeof(PNpc)) },
+        { "PHYSICS_TWEAK", new Part("PHYSICS_TWEAK", 0x1e, PartHistory.PHYSICS_TWEAK, typeof(PPhysicsTweak)) },
+        { "NPC", new Part("NPC", 0x1f, PartHistory.NPC, typeof(PNpc)) }, /*
         { "SWITCH_INPUT", new Part("SWITCH_INPUT", 0x20, PartHistory.SWITCH_INPUT, typeof(PSwitchInput)) },
         { "MICROCHIP", new Part("MICROCHIP", 0x21, PartHistory.MICROCHIP, typeof(PMicrochip)) },
         { "MATERIAL_TWEAK", new Part("MATERIAL_TWEAK", 0x22, PartHistory.MATERIAL_TWEAK, typeof(PMaterialTweak)) },
@@ -145,7 +145,7 @@ public struct Part(string name, int index, int version, Type? serializable) : IE
     }
 
     /**
-     * Checks whether or not a thing contains this part
+     * Checks whether a thing contains this part
      * based on version and part flags.
      *
      * @param head    Head revision of resource
