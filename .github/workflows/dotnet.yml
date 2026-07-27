@@ -28,7 +28,7 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Upload
-      uses: actions/upload-artifact@v7.0.
+      uses: actions/upload-artifact@v7.0.1
       with:
         name: CwLibNet
         path: bin\Debug\CwLibNet.dll
