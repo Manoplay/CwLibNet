@@ -34,4 +34,4 @@ jobs:
     - name: Pack
       run: dotnet pack --configuration Release
     - name: Deploy
-      run: dotnet nuget push "bin/Release/CwLibNet.1.0.0.nupkg" --api-key ${{secrets.GITHUB_TOKEN}} --source "github"
+      run: dotnet nuget push "CwLibNet/bin/Release/CwLibNet.1.0.0.nupkg" --api-key ${{secrets.GITHUB_TOKEN}} --source "github"
