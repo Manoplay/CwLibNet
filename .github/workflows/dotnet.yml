@@ -28,4 +28,4 @@ jobs:
       uses: actions/upload-artifact@v7.0.1
       with:
         name: CwLibNet
-        path: bin\Debug\CwLibNet.dll
+        path: /home/runner/work/CwLibNet/CwLibNet/CwLibNet/bin/Debug/net*/CwLibNet.dll
