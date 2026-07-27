@@ -29,3 +29,5 @@ jobs:
       with:
         name: CwLibNet
         path: /home/runner/work/CwLibNet/CwLibNet/CwLibNet/bin/Debug/net*/CwLibNet.dll
+    - name: Push
+      run: dotnet nuget add source --username Manoplay --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/Manoplay/index.json"
