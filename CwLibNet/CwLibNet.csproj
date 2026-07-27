@@ -7,11 +7,24 @@
         <LangVersion>latest</LangVersion>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+        <UserSecretsId>89498085-2b3f-4a16-a753-ca19210f14d1</UserSecretsId>
+        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+        <Title>CwLibNet</Title>
+        <Authors>ProjectCraftworld</Authors>
+        <PackageProjectUrl>https://github.com/ProjectCraftworld/CwLibNet</PackageProjectUrl>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="DotNetZip.Original" Version="2025.2.15" />
-      <PackageReference Include="SkiaSharp" Version="3.116.1" />
+      <PackageReference Include="SkiaSharp" Version="4.150.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="README.md">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
     </ItemGroup>
 
 </Project>
