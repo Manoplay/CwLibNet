@@ -45,7 +45,7 @@ public class MaterialParameterAnimation: ISerializable
         else
         {
             var stream = serializer.GetInput();
-            var components = stream.Floatarray();
+            var components = stream.FloatArray();
             name = stream.Str(stream.I32());
             ComponentsAnimated = stream.I8();
             if (components.Length == 0) return;

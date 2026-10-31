@@ -265,12 +265,11 @@ public class RGfxMaterial: Resource
         );
     }
 
-    /**
-     * Gets the number of shader blob offsets in this material.
-     *
-     * @param revision Revision of the resource
-     * @return Number of blob offsets
-     */
+    /// <summary>
+    /// Gets the number of shader blob offsets in this material.
+    /// </summary>
+    /// <param name="revision">Revision of the resource</param>
+    /// <returns>Number of blob offsets</returns>
     public int GetBlobOffsetCount(Revision revision)
     {
         var head = revision.GetVersion();
@@ -290,12 +289,11 @@ public class RGfxMaterial: Resource
         return sourceOffsets;
     }
 
-    /**
-     * Finds the output wire of a specified box
-     *
-     * @param box Index of box
-     * @return Output wire if it exists
-     */
+    /// <summary>
+    /// Finds the output wire of a specified box
+    /// </summary>
+    /// <param name="box">Index of box</param>
+    /// <returns>Output wire if it exists</returns>
     public MaterialWire FindWireFrom(int box)
     {
         foreach (var wire in Wires)
@@ -304,11 +302,10 @@ public class RGfxMaterial: Resource
         return null;
     }
 
-    /**
-     * Gets the index of the shader output box
-     *
-     * @return Index of output box
-     */
+    /// <summary>
+    /// Gets the index of the shader output box
+    /// </summary>
+    /// <returns>Index of output box</returns>
     public int GetOutputBox()
     {
         for (var i = 0; i < Boxes.Count; ++i)

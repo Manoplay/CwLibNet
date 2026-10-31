@@ -38,7 +38,7 @@ public class RFontFace
         if (Revision > 0x272)
             IsCompressed = stream.Boole();
 
-        Data = stream.Bytes(stream.GetLength() - stream.GetOffset());
+        Data = stream.Bytes(stream.Length - stream.Offset);
     }
 
     public GlyphInfo? GetGlyph(char c)

@@ -10,30 +10,30 @@ public class Decal: ISerializable
 {
     public const int BaseAllocationSize = 0x80;
 
-    /**
-     * The texture used for this decal.
-     */
+    /// <summary>
+    /// The texture used for this decal.
+    /// </summary>
     public ResourceDescriptor Texture;
 
-    /**
-     * Coordinates of decal on the UV map.
-     */
+    /// <summary>
+    /// Coordinates of decal on the UV map.
+    /// </summary>
     public float U, V;
 
-    /**
-     * Rect of decal on the UV map.
-     */
+    /// <summary>
+    /// Rect of decal on the UV map.
+    /// </summary>
     public float Xvecu, Xvecv, Yvecu, Yvecv;
 
-    /**
-     * Color tint of this decal (RGB565).
-     */
+    /// <summary>
+    /// Color tint of this decal (RGB565).
+    /// </summary>
     
     public ushort Color = 0xad55;
 
-    /**
-     * Type of decal
-     */
+    /// <summary>
+    /// Type of decal
+    /// </summary>
     
     public DecalType Type = DecalType.STICKER;
 
@@ -45,27 +45,27 @@ public class Decal: ISerializable
     
     public short NumMetadata;
 
-    /**
-     * Player that placed this decal.
-     */
+    /// <summary>
+    /// Player that placed this decal.
+    /// </summary>
     
     public short PlacedBy = -1;
 
-    /**
-     * Number of frames that have passed in play mode.
-     */
+    /// <summary>
+    /// Number of frames that have passed in play mode.
+    /// </summary>
     
     public int PlayModeFrame;
 
-    /**
-     * If this decal has a scorch mark on it.
-     */
+    /// <summary>
+    /// If this decal has a scorch mark on it.
+    /// </summary>
     
     public bool ScorchMark;
 
-    /**
-     * The plan that this decal came from.
-     */
+    /// <summary>
+    /// The plan that this decal came from.
+    /// </summary>
     
     public ResourceDescriptor? Plan;
 

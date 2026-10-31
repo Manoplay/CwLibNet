@@ -58,20 +58,20 @@ public readonly struct Part(string name, int index, int version, Type? serializa
         { "CONTROLINATOR", new Part("CONTROLINATOR", 0x26, PartHistory.CONTROLINATOR, typeof(PControlinator)) } */
     };
 
-    /**
-     * Minimum version required for this part
-     * to be serialized.
-     */
+    /// <summary>
+    /// Minimum version required for this part
+    /// to be serialized.
+    /// </summary>
     public readonly int Version = version;
 
-    /**
-     * Index of this part.
-     */
+    /// <summary>
+    /// Index of this part.
+    /// </summary>
     public readonly int Index = index;
 
-    /**
-     * Serializable class reference
-     */
+    /// <summary>
+    /// Serializable class reference
+    /// </summary>
     public readonly Type? Serializable = serializable;
     public readonly string Name = name;
 
@@ -90,12 +90,11 @@ public readonly struct Part(string name, int index, int version, Type? serializa
         return Serializable;
     }
 
-    /**
-     * Prepares a name used when serializating
-     * this part using reflection.
-     *
-     * @return Field name
-     */
+    /// <summary>
+    /// Prepares a name used when serializating
+    /// this part using reflection.
+    /// </summary>
+    /// <returns>Field name</returns>
     public string GetNameForReflection()
     {
         var name = Name.ToLower();
@@ -118,15 +117,14 @@ public readonly struct Part(string name, int index, int version, Type? serializa
         return name;
     }
 
-    /**
-     * Gets all the parts that can be serialized
-     * by a set of flags.
-     *
-     * @param head    Head revision of resource
-     * @param flags   Flags determing what parts can be serialized by a Thing
-     * @param version Parts revision
-     * @return Parts
-     */
+    /// <summary>
+    /// Gets all the parts that can be serialized
+    /// by a set of flags.
+    /// </summary>
+    /// <param name="head">Head revision of resource</param>
+    /// <param name="flags">Flags determing what parts can be serialized by a Thing</param>
+    /// <param name="version">Parts revision</param>
+    /// <returns>Parts</returns>
     public static Part[] FromFlags(int head, long flags, int version)
     {
         List<Part> parts = new(64);
@@ -144,15 +142,14 @@ public readonly struct Part(string name, int index, int version, Type? serializa
         return !(p1 == p2);
     }
 
-    /**
-     * Checks whether a thing contains this part
-     * based on version and part flags.
-     *
-     * @param head    Head revision of resource
-     * @param flags   Flags determing what parts can be serialized by a Thing
-     * @param version Version determing what parts existed at this point
-     * @return Whether a thing contains this part
-     */
+    /// <summary>
+    /// Checks whether a thing contains this part
+    /// based on version and part flags.
+    /// </summary>
+    /// <param name="head">Head revision of resource</param>
+    /// <param name="flags">Flags determing what parts can be serialized by a Thing</param>
+    /// <param name="version">Version determing what parts existed at this point</param>
+    /// <returns>Whether a thing contains this part</returns>
     public bool HasPart(int head, long flags, int version)
     {
         if ((head & 0xFFFF) >= 0x13c && Index is >= 0x36 and <= 0x3c)

@@ -4,18 +4,18 @@ namespace CwLibNet.Types.Data;
 
 public sealed class Sha1
 {
-    public static readonly Sha1 Empty = new();
+    public static readonly Sha1 EMPTY = new();
 
-    private readonly byte[]? _hashBytes;
-    private readonly string _hashString;
+    private readonly byte[]? hashBytes;
+    private readonly string hashString;
 
     /// <summary>
     /// Creates an empty SHA1 hash.
     /// </summary>
     public Sha1()
     {
-        _hashBytes = new byte[20];
-        _hashString = BitConverter.ToString(_hashBytes).Replace("-", "").ToLower();
+        hashBytes = new byte[20];
+        hashString = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
     }
 
     /// <summary>
@@ -29,8 +29,8 @@ public sealed class Sha1
         if (hash.Length != 40)
             throw new ArgumentException("SHA1 hash string must be 40 characters in length!");
 
-        _hashString = hash.ToLower();
-        _hashBytes = Enumerable.Range(0, hash.Length / 2)
+        hashString = hash.ToLower();
+        hashBytes = Enumerable.Range(0, hash.Length / 2)
             .Select(i => Convert.ToByte(hash.Substring(i * 2, 2), 16))
             .ToArray();
     }
@@ -46,8 +46,8 @@ public sealed class Sha1
         if (hash.Length != 20)
             throw new ArgumentException("SHA1 hash must be 20 bytes in length!");
 
-        _hashBytes = hash;
-        _hashString = BitConverter.ToString(_hashBytes).Replace("-", "").ToLower();
+        hashBytes = hash;
+        hashString = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
     }
 
     /// <summary>
@@ -67,7 +67,7 @@ public sealed class Sha1
 
     public byte[]? GetHash()
     {
-        return _hashBytes;
+        return hashBytes;
     }
 
     public override bool Equals(object? obj)
@@ -78,11 +78,11 @@ public sealed class Sha1
 
     public override int GetHashCode()
     {
-        return _hashString.GetHashCode();
+        return hashString.GetHashCode();
     }
 
     public override string ToString()
     {
-        return _hashString;
+        return hashString;
     }
 }

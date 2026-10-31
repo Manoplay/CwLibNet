@@ -10,25 +10,25 @@ public class PStickers: ISerializable
 {
     public static readonly int BASE_ALLOCATION_SIZE = 0x60;
 
-    /**
-     * Decals that are on the primary thing.
-     */
+    /// <summary>
+    /// Decals that are on the primary thing.
+    /// </summary>
     public Decal[]? decals;
 
-    /**
-     * Decals on specific costume pieces.
-     */
+    /// <summary>
+    /// Decals on specific costume pieces.
+    /// </summary>
     public Decal[]?[] costumeDecals = new Decal[14][];
 
-    /**
-     * Paint control data, depreciated.
-     */
+    /// <summary>
+    /// Paint control data, depreciated.
+    /// </summary>
     
     public PaintControlPoint[]? paintControl;
 
-    /**
-     * Eyetoy related information for decal placed.
-     */
+    /// <summary>
+    /// Eyetoy related information for decal placed.
+    /// </summary>
     
     public EyetoyData[]? eyetoyData;
 

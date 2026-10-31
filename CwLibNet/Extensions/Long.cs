@@ -4,11 +4,9 @@ public static class Longs
 {
     extension(long value)
     {
-        /**
-         * <summary>
-         * Counts the leading zeros in a number.
-         * </summary>
-         */
+        /// <summary>
+        /// Counts the leading zeros in a number.
+        /// </summary>
         public int NumberOfLeadingZeros()
         {
             if (value == 0)

@@ -12,14 +12,14 @@ public class MaterialWire: ISerializable
     public byte PortFrom, PortTo;
     public byte[] Swizzle = new byte[SwizzleElementCount];
 
-    /**
-     * Empty constructor for serialization.
-     */
+    /// <summary>
+    /// Empty constructor for serialization.
+    /// </summary>
     public MaterialWire() { }
 
-    /**
-     * Creates a connection between two boxes.
-     */
+    /// <summary>
+    /// Creates a connection between two boxes.
+    /// </summary>
     public MaterialWire(int boxFrom, int boxTo, int portFrom, int portTo)
     {
         BoxFrom = boxFrom;

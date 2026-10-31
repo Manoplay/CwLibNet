@@ -11,9 +11,9 @@ public class FileDb: IEnumerable<FileDbRow>
     private const int DefaultCapacity = 10;
     public bool HasChanges;
 
-    /**
-     * Minimum set of GUIDs not used by any of the LittleBigPlanet games.
-     */
+    /// <summary>
+    /// Minimum set of GUIDs not used by any of the LittleBigPlanet games.
+    /// </summary>
     private const long MinSafeGuid = 0x00180000;
 
     private int revision;
@@ -264,7 +264,7 @@ public class FileDb: IEnumerable<FileDbRow>
             stream.Sha1(entry.Sha1);
             stream.Guid(entry.GetGuid());
         }
-        return stream.GetBuffer();
+        return stream.Buffer;
     }
 
     public void Save(string? file = null)

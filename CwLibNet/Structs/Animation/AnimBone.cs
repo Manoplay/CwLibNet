@@ -7,24 +7,24 @@ public class AnimBone: ISerializable
 {
     public const int BaseAllocationSize = 0x20;
 
-    /**
-     * Unique identifier for the bone, generated from the name.
-     */
+    /// <summary>
+    /// Unique identifier for the bone, generated from the name.
+    /// </summary>
     public int AnimHash;
 
-    /**
-     * Index of the parent of this bone.
-     */
+    /// <summary>
+    /// Index of the parent of this bone.
+    /// </summary>
     public int Parent = -1;
 
-    /**
-     * Index of the first child of this bone.
-     */
+    /// <summary>
+    /// Index of the first child of this bone.
+    /// </summary>
     public int FirstChild = -1;
 
-    /**
-     * Index of the next sibling of this bone.
-     */
+    /// <summary>
+    /// Index of the next sibling of this bone.
+    /// </summary>
     public int NextSibling = -1;
 
     public AnimBone() { }

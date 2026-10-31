@@ -12,19 +12,19 @@ public class PShape: ISerializable
 {
     public const int BaseAllocationSize = 0x100;
 
-    /**
-     * Polygon defining the collision of this Thing.
-     */
+    /// <summary>
+    /// Polygon defining the collision of this Thing.
+    /// </summary>
     public Polygon Polygon = new();
 
-    /**
-     * Physical properties of this shape.
-     */
+    /// <summary>
+    /// Physical properties of this shape.
+    /// </summary>
     public ResourceDescriptor Material = new(10724, ResourceType.Material);
 
-    /**
-     * Old physical properties of this shape.
-     */
+    /// <summary>
+    /// Old physical properties of this shape.
+    /// </summary>
     
     public ResourceDescriptor OldMaterial;
 
@@ -33,14 +33,14 @@ public class PShape: ISerializable
     
     public float MassDepth = 1.0f;
 
-    /**
-     * RGBA color of the shape.
-     */
+    /// <summary>
+    /// RGBA color of the shape.
+    /// </summary>
     public uint Color = 0xFFFFFFFF;
 
-    /**
-     * Brightness of the color of the shape.
-     */
+    /// <summary>
+    /// Brightness of the color of the shape.
+    /// </summary>
     
     public float Brightness;
 

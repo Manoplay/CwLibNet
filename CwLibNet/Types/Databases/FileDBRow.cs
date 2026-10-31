@@ -29,7 +29,7 @@ public class FileDbRow: FileEntry
     
     public GUID GetGuid()
     {
-        return (GUID) Key;
+        return (GUID) (Key ?? new GUID(0));
     }
 
     

@@ -20,13 +20,13 @@ public class ResourceDescriptor
 
     public ResourceDescriptor(string? resource, ResourceType type)
     {
-        if (Strings.IsSHA1(resource))
+        if (Strings.IsSha1(resource))
         {
             var sha1 = Strings.GetSHA1(resource)!;
-            this.sha1 = sha1.Equals(Sha1.Empty) ? null : sha1;
+            this.sha1 = sha1.Equals(Sha1.EMPTY) ? null : sha1;
             guid = null;
         }
-        else if (Strings.IsGUID(resource))
+        else if (Strings.IsGuid(resource))
         {
             guid = new GUID(Strings.GetLong(resource));
             sha1 = null;
@@ -55,7 +55,7 @@ public class ResourceDescriptor
 
     public ResourceDescriptor(Sha1 sha1, ResourceType type)
     {
-        this.sha1 = sha1.Equals(Sha1.Empty) ? null : sha1;
+        this.sha1 = sha1.Equals(Sha1.EMPTY) ? null : sha1;
         this.type = type;
         guid = null;
         flags = ResourceFlags.NONE;
@@ -64,7 +64,7 @@ public class ResourceDescriptor
     public ResourceDescriptor(GUID? guid, Sha1? sha1, ResourceType type)
     {
         this.guid = guid;
-        this.sha1 = sha1 != null && sha1.Equals(Sha1.Empty) ? null : sha1;
+        this.sha1 = sha1 != null && sha1.Equals(Sha1.EMPTY) ? null : sha1;
         this.type = type;
         flags = ResourceFlags.NONE;
     }
@@ -81,7 +81,7 @@ public class ResourceDescriptor
 
     public bool IsValid()
     {
-        return guid != null || (sha1 != null && !sha1.Equals(Sha1.Empty));
+        return guid != null || (sha1 != null && !sha1.Equals(Sha1.EMPTY));
     }
 
     public GUID? GetGUID()

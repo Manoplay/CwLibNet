@@ -35,7 +35,7 @@ public sealed class Serializer
         input = stream;
         output = null;
         this.revision = revision;
-        compressionFlags = stream.GetCompressionFlags();
+        compressionFlags = stream.CompressionFlags;
         isWriting = false;
     }
 
@@ -49,7 +49,7 @@ public sealed class Serializer
         output = stream;
         input = null;
         this.revision = revision;
-        compressionFlags = stream.GetCompressionFlags();
+        compressionFlags = stream.CompressionFlags;
         isWriting = true;
     }
 
@@ -143,7 +143,7 @@ public sealed class Serializer
     public bool[] Boolarray(bool[] values)
     {
         if (!isWriting) return input.Boolarray();
-        output.Boolarray(values);
+        output.BoolArray(values);
         return values;
 
     }
@@ -346,7 +346,7 @@ public sealed class Serializer
     {
         if (isWriting)
         {
-            output.Shortarray(values);
+            output.ShortArray(values);
             return values;
         }
 
@@ -361,7 +361,7 @@ public sealed class Serializer
     public int[]? Intarray(int[]? values)
     {
         if (!isWriting) return input.Intarray();
-        output.Intarray(values);
+        output.IntArray(values);
         return values;
 
     }
@@ -375,7 +375,7 @@ public sealed class Serializer
     {
         if (isWriting)
         {
-            output.Longarray(values);
+            output.LongArray(values);
             return values;
         }
 
@@ -418,7 +418,7 @@ public sealed class Serializer
     /// <returns>Float array (de)serialized</returns>
     public float[] Floatarray(float[] values)
     {
-        if (!isWriting) return input.Floatarray();
+        if (!isWriting) return input.FloatArray();
         output.Floatarray(values);
         return values;
 
@@ -470,7 +470,7 @@ public sealed class Serializer
     /// <returns>Vector array (de)serialized</returns>
     public Vector4[]? Vectorarray(Vector4[]? values)
     {
-        if (!isWriting) return input.Vectorarray();
+        if (!isWriting) return input.VectorArray();
         output.Vectorarray(values);
         return values;
 
@@ -861,7 +861,7 @@ public sealed class Serializer
     /// <returns>(De)serialized enum value</returns>
     public T[] Enumarray<T>(T[] values) where T: Enum
     {
-        if (!isWriting) return input.Enumarray<T>();
+        if (!isWriting) return input.EnumArray<T>();
         output.Enumarray(values);
         return values;
 
@@ -1049,7 +1049,7 @@ public sealed class Serializer
     /// <returns>The shrinked buffer</returns>
     public byte[]? GetBuffer()
     {
-        return !isWriting ? null : output?.Shrink().GetBuffer();
+        return !isWriting ? null : output?.Shrink().Buffer;
     }
 
     public MemoryInputStream GetInput() => input;
@@ -1058,12 +1058,12 @@ public sealed class Serializer
 
     public int GetOffset()
     {
-        return isWriting ? output.GetOffset() : input.GetOffset();
+        return isWriting ? output.Offset : input.Offset;
     }
 
     public int GetLength()
     {
-        return isWriting ? output.GetLength() : input.GetLength();
+        return isWriting ? output.Length : input.Length;
     }
 
     public void Log(string message)

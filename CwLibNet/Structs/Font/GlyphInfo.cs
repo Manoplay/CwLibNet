@@ -5,7 +5,7 @@ namespace CwLibNet.Structs.Font;
 
 public class GlyphInfo: ISerializable
 {
-    public const int BaseAllocationSize = 0x10;
+    private const int BaseAllocationSize = 0x10;
     public short Character;
     public byte BoxLeft, BoxTop;
     public byte BoxW, BoxH;

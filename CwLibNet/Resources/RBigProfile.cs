@@ -166,7 +166,7 @@ namespace CwLibNet.Resources
             var serializer = new Serializer(GetAllocatedSize(), revision, compressionFlags);
             serializer.Struct(this);
             return new SerializationData(
-                serializer.GetOutput().GetBuffer(),
+                serializer.GetOutput().Buffer,
                 revision,
                 compressionFlags,
                 ResourceType.BigProfile,

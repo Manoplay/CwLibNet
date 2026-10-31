@@ -112,9 +112,9 @@ public class RTexture
         cached = GetImage();
     }
 
-    /**
-     * Assigns the properties of this class from the GTF resource header.
-     */
+    /// <summary>
+    /// Assigns the properties of this class from the GTF resource header.
+    /// </summary>
     public void ParseGtf()
     {
         var header = GetDdsHeader();
@@ -153,9 +153,9 @@ public class RTexture
         return m;
     }
 
-    /**
-     * Unswizzles each DXT1/5 compressed block in a Vita GXT texture.
-     */
+    /// <summary>
+    /// Unswizzles each DXT1/5 compressed block in a Vita GXT texture.
+    /// </summary>
     private void UnswizzleCompressed()
     {
         var pixels = new byte[Data.Length];
@@ -214,9 +214,9 @@ public class RTexture
         Data = pixels;
     }
 
-    /**
-     * Unswizzles the texture's pixel data
-     */
+    /// <summary>
+    /// Unswizzles the texture's pixel data
+    /// </summary>
     private void Unswizzle()
     {
         var pixels = DdsReader.Read(Data, DdsReader.ARGB, 0);
@@ -236,34 +236,31 @@ public class RTexture
                     cached.SetPixel(j, i, new SKColor((uint)pixels[j*i]));
     }
 
-    /**
-     * Convert texture to BufferedImage
-     *
-     * <returns> Converted texture </returns>
-     */
+    /// <summary>
+    /// Convert texture to BufferedImage
+    /// </summary>
+    /// <returns> Converted texture </returns>
     public SKBitmap? GetImage()
     {
         return cached ?? Images.FromDds(Data);
     }
 
-    /**
-     * Scales texture to specified W/H and creates an ImageIcon.
-     *
-     * <param name="width">  Desired width</param>
-     * <param name="height"> Desired height</param>
-     * <returns> Scaled ImageIcon of Texture </returns>
-     */
+    /// <summary>
+    /// Scales texture to specified W/H and creates an ImageIcon.
+    /// </summary>
+    /// <param name="width">  Desired width</param>
+    /// <param name="height"> Desired height</param>
+    /// <returns> Scaled ImageIcon of Texture </returns>
     public SKBitmap? GetImageIcon(int width = 320, int height = 320)
     {
         cached ??= GetImage();
         return cached?.Resize(new SKSizeI(width, height), SKSamplingOptions.Default);
     }
 
-    /**
-     * Generates a DDS header from attributes of Texture instance.
-     *
-     * @return Generated DDS header
-     */
+    /// <summary>
+    /// Generates a DDS header from attributes of Texture instance.
+    /// </summary>
+    /// <returns>Generated DDS header</returns>
     public byte[] GetDdsHeader()
     {
         return Dds.GetDdsHeader(Info);

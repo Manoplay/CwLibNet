@@ -34,11 +34,10 @@ public class SerializationData
         StaticMeshInfo = null;
     }
 
-    /**
-     * Creates a serialization data structure for texture data.
-     *
-     * <param name="buffer"> Decompressed texture data</param>
-     */
+    /// <summary>
+    /// Creates a serialization data structure for texture data.
+    /// </summary>
+    /// <param name="buffer"> Decompressed texture data</param>
     public SerializationData(byte[]? buffer)
     {
         Buffer = buffer;
@@ -51,12 +50,11 @@ public class SerializationData
         StaticMeshInfo = null;
     }
 
-    /**
-     * Creates a serialization data structure for GTF texture data.
-     *
-     * <param name="buffer"> Decompressed texture data</param>
-     * <param name="info">   Texture metadata</param>
-     */
+    /// <summary>
+    /// Creates a serialization data structure for GTF texture data.
+    /// </summary>
+    /// <param name="buffer"> Decompressed texture data</param>
+    /// <param name="info">   Texture metadata</param>
     public SerializationData(byte[] buffer, CellGcmTexture info)
     {
         Buffer = buffer;
@@ -69,13 +67,12 @@ public class SerializationData
         StaticMeshInfo = null;
     }
 
-    /**
-     * Creates a serialization data structure for static mesh data
-     *
-     * <param name="buffer">   Decompressed static mesh</param>
-     * <param name="revision"> Revision of the serialized resource</param>
-     * <param name="info">     Static mesh metadata</param>
-     */
+    /// <summary>
+    /// Creates a serialization data structure for static mesh data
+    /// </summary>
+    /// <param name="buffer">   Decompressed static mesh</param>
+    /// <param name="revision"> Revision of the serialized resource</param>
+    /// <param name="info">     Static mesh metadata</param>
     public SerializationData(byte[] buffer, Revision revision, StaticMeshInfo info)
     {
         Buffer = buffer;

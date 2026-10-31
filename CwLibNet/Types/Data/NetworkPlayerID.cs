@@ -7,7 +7,7 @@ public class NetworkPlayerID: ISerializable
 {
     public const int BaseAllocationSize = NetworkOnlineId.BaseAllocationSize + 0x10;
 
-    private NetworkOnlineId handle = new();
+    public NetworkOnlineId? Handle = new();
     private byte[]? opt = new byte[8];
     private byte[]? reserved = new byte[8];
 
@@ -15,13 +15,13 @@ public class NetworkPlayerID: ISerializable
 
     public NetworkPlayerID(string psid)
     {
-        handle = new NetworkOnlineId(psid);
+        Handle = new NetworkOnlineId(psid);
     }
 
     
     public void Serialize(Serializer serializer)
     {
-        handle = serializer.Struct(handle);
+        Handle = serializer.Struct(Handle);
 
         var lengthPrefixed = serializer.GetRevision().GetVersion() < 0x234;
 
@@ -32,13 +32,7 @@ public class NetworkPlayerID: ISerializable
         reserved = serializer.Bytes(reserved, 8);
     }
 
-    public NetworkOnlineId GetHandle()
-    {
-        return handle;
-    }
 
-
-    
     public int GetAllocatedSize()
     {
         return BaseAllocationSize;
@@ -48,7 +42,7 @@ public class NetworkPlayerID: ISerializable
     public NetworkPlayerID Clone()
     {
         var id = new NetworkPlayerID();
-        id.handle = new NetworkOnlineId(id.handle.ToString());
+        id.Handle = new NetworkOnlineId(id.Handle?.ToString());
         if (opt != null)
             id.opt = (byte[])opt.Clone();
         if (reserved != null)
@@ -59,18 +53,17 @@ public class NetworkPlayerID: ISerializable
     public override bool Equals(object? other)
     {
         if (other == this) return true;
-        if (!(other is NetworkPlayerID otherId)) return false;
-        return otherId.handle.Equals(handle);
+        return other is NetworkPlayerID { Handle: not null } otherId && otherId.Handle.Equals(Handle);
     }
 
     public override int GetHashCode()
     {
-        return handle != null ? handle.GetHashCode() : 0;
+        return Handle?.GetHashCode() ?? 0;
     }
 
     public override string ToString()
     {
-        return handle.ToString();
+        return Handle?.ToString() ?? "No handle";
     }
 
 

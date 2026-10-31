@@ -9,42 +9,42 @@ public class Primitive: ISerializable
 {
     public const int BaseAllocationSize = 0x60;
 
-    /**
-     * RGfxMaterial used to texture this primitive.
-     */
+    /// <summary>
+    /// RGfxMaterial used to texture this primitive.
+    /// </summary>
     public ResourceDescriptor? Material;
 
-    /**
-     * Presumably for mapping alternative textures to
-     * the material, however functionality appears to be scrapped.
-     */
+    /// <summary>
+    /// Presumably for mapping alternative textures to
+    /// the material, however functionality appears to be scrapped.
+    /// </summary>
     public ResourceDescriptor? TextureAlternatives;
 
-    /**
-     * Minimum vertex painted by this primitive.
-     */
+    /// <summary>
+    /// Minimum vertex painted by this primitive.
+    /// </summary>
     public int MinVert;
 
-    /**
-     * Maximum vertex painted by this primitive.
-     */
+    /// <summary>
+    /// Maximum vertex painted by this primitive.
+    /// </summary>
     public int MaxVert;
 
-    /**
-     * What index is first painted by this primitive.
-     */
+    /// <summary>
+    /// What index is first painted by this primitive.
+    /// </summary>
     public int FirstIndex;
 
-    /**
-     * Number of indices painted with this material
-     * after the first index.
-     */
+    /// <summary>
+    /// Number of indices painted with this material
+    /// after the first index.
+    /// </summary>
     public int NumIndices;
 
-    /**
-     * The region ID of this mesh, it essentially defines a "submesh",
-     * that can be hidden by costume pieces.
-     */
+    /// <summary>
+    /// The region ID of this mesh, it essentially defines a "submesh",
+    /// that can be hidden by costume pieces.
+    /// </summary>
     public int Region;
 
     public Primitive() { }
@@ -95,13 +95,12 @@ public class Primitive: ISerializable
         return BaseAllocationSize;
     }
 
-    /**
-     * In PS4 versions of models, the min/max vertices are all over the place,
-     * as I'm not sure what's the reason for it, the MeshExporter has to fix up primitives.
-     *
-     * @param minVert Fixed up minimum vertex in primitive
-     * @param maxVert Fixed up maximum vertex in primitive
-     */
+    /// <summary>
+    /// In PS4 versions of models, the min/max vertices are all over the place,
+    /// as I'm not sure what's the reason for it, the MeshExporter has to fix up primitives.
+    /// </summary>
+    /// <param name="minVert">Fixed up minimum vertex in primitive</param>
+    /// <param name="maxVert">Fixed up maximum vertex in primitive</param>
     public void SetMinMax(int minVert, int maxVert)
     {
         MinVert = minVert;

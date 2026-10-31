@@ -48,7 +48,7 @@ public class ChunkFile: ISerializable
                     if (descriptor != null && descriptor.IsHash())
                         ChunkHash = descriptor.GetSHA1();
                     else
-                        ChunkHash = Sha1.Empty;
+                        ChunkHash = Sha1.EMPTY;
                 }
 
                 break;

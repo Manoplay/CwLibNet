@@ -10,14 +10,14 @@ public class Bytes
 {
     private static readonly char[] HEX_ARRAY = "0123456789ABCDEF".ToCharArray();
 
-    /**
-     * Converts a byte array into a hex string.
-     * Implementation sourced from
-     * <a href="https://stackoverflow.com/questions/9655181/how-to-convert-a-byte-array-to-a-hex-string-in-java">here</a>.
-     *
-     * @param bytes Byte array to hexify
-     * @return Hex representation of byte array
-     */
+    /// <summary>
+    /// Converts a byte array into a hex string.
+    /// Implementation sourced from
+    /// </summary>
+    /// <a href="https://stackoverflow.com/questions/9655181/how-to-convert-a-byte-array-to-a-hex-string-in-java">here</a>.
+    ///
+    /// <param name="bytes">Byte array to hexify</param>
+    /// <returns>Hex representation of byte array</returns>
     public static string ToHex(byte[]? bytes)
     {
         if (bytes == null)
@@ -32,23 +32,21 @@ public class Bytes
         return string.Join("", hex);
     }
 
-    /**
-     * Converts an integer into a hex string.
-     *
-     * @param value Integer to hexify
-     * @return Hex representation of integer
-     */
+    /// <summary>
+    /// Converts an integer into a hex string.
+    /// </summary>
+    /// <param name="value">Integer to hexify</param>
+    /// <returns>Hex representation of integer</returns>
     public static string ToHex(int value)
     {
         return ToHex(ToBytesBE(value));
     }
 
-    /**
-     * Converts a hex string into a byte array.
-     *
-     * @param v Hex string
-     * @return Byte array from hex string
-     */
+    /// <summary>
+    /// Converts a hex string into a byte array.
+    /// </summary>
+    /// <param name="v">Hex string</param>
+    /// <returns>Byte array from hex string</returns>
     public static byte[] FromHex(string v)
     {
         var length = v.Length;
@@ -60,12 +58,11 @@ public class Bytes
         return b;
     }
 
-    /**
-     * Converts a big-order byte array to a short primitive.
-     *
-     * @param b 2-byte array containing big-order short
-     * @return the short from the byte array
-     */
+    /// <summary>
+    /// Converts a big-order byte array to a short primitive.
+    /// </summary>
+    /// <param name="b">2-byte array containing big-order short</param>
+    /// <returns>the short from the byte array</returns>
     public static short ToShortBE(byte[]? b)
     {
         if (b == null)
@@ -73,12 +70,11 @@ public class Bytes
         return (short)((b[0] & 0xFF) << 8 | (b[1] & 0xFF));
     }
 
-    /**
-     * Converts a little-order byte array to a short primitive.
-     *
-     * @param b 2-byte array containing litte-order short
-     * @return the short from the byte array
-     */
+    /// <summary>
+    /// Converts a little-order byte array to a short primitive.
+    /// </summary>
+    /// <param name="b">2-byte array containing litte-order short</param>
+    /// <returns>the short from the byte array</returns>
     public static short ToShortLE(byte[]? b)
     {
         if (b == null)
@@ -86,12 +82,11 @@ public class Bytes
         return (short)((b[0] & 0xFF) | (b[1] & 0xFF) << 8);
     }
 
-    /**
-     * Converts a big-order byte array to an integer primitive.
-     *
-     * @param b 4-byte array containing big-order integer
-     * @return the integer from the byte array
-     */
+    /// <summary>
+    /// Converts a big-order byte array to an integer primitive.
+    /// </summary>
+    /// <param name="b">4-byte array containing big-order integer</param>
+    /// <returns>the integer from the byte array</returns>
     public static int ToIntegerBE(byte[]? b)
     {
         if (b == null)
@@ -102,12 +97,11 @@ public class Bytes
                (b[3] & 0xFF);
     }
 
-    /**
-     * Converts a little-order byte array to an integer primitive.
-     *
-     * @param b 4-byte array containing little-order integer
-     * @return the integer from the byte array
-     */
+    /// <summary>
+    /// Converts a little-order byte array to an integer primitive.
+    /// </summary>
+    /// <param name="b">4-byte array containing little-order integer</param>
+    /// <returns>the integer from the byte array</returns>
     public static int ToIntegerLE(byte[]? b)
     {
         if (b == null)
@@ -118,12 +112,11 @@ public class Bytes
                (b[3] & 0xFF) << 24;
     }
 
-    /**
-     * Converts a short into a big-order byte array.
-     *
-     * @param v short primitive
-     * @return the big-order byte array containing the short
-     */
+    /// <summary>
+    /// Converts a short into a big-order byte array.
+    /// </summary>
+    /// <param name="v">short primitive</param>
+    /// <returns>the big-order byte array containing the short</returns>
     public static byte[] ToBytesBE(short v)
     {
         return [
@@ -132,12 +125,11 @@ public class Bytes
         ];
     }
 
-    /**
-     * Converts a short into a little-order byte array.
-     *
-     * @param v short primitive
-     * @return the little-order byte array containing the short
-     */
+    /// <summary>
+    /// Converts a short into a little-order byte array.
+    /// </summary>
+    /// <param name="v">short primitive</param>
+    /// <returns>the little-order byte array containing the short</returns>
     public static byte[] ToBytesLE(short v)
     {
         return [
@@ -146,12 +138,11 @@ public class Bytes
         ];
     }
 
-    /**
-     * Converts a integer into a big-order byte array.
-     *
-     * @param v integer primitive
-     * @return the big-order byte array containing the integer
-     */
+    /// <summary>
+    /// Converts a integer into a big-order byte array.
+    /// </summary>
+    /// <param name="v">integer primitive</param>
+    /// <returns>the big-order byte array containing the integer</returns>
     public static byte[] ToBytesBE(int v)
     {
         return [
@@ -162,12 +153,11 @@ public class Bytes
         ];
     }
 
-    /**
-     * Converts a integer into a little-order byte array.
-     *
-     * @param v integer primitive
-     * @return the little-order byte array containing the integer
-     */
+    /// <summary>
+    /// Converts a integer into a little-order byte array.
+    /// </summary>
+    /// <param name="v">integer primitive</param>
+    /// <returns>the little-order byte array containing the integer</returns>
     public static byte[] ToBytesLE(int v)
     {
         return [
@@ -183,7 +173,7 @@ public class Bytes
         var output = new MemoryOutputStream(0x8, compressionFlags);
         output.U32(value);
         output.Shrink();
-        return output.GetBuffer();
+        return output.Buffer;
     }
 
     public static byte[]? GetResourceReference(ResourceDescriptor? res, Revision revision,
@@ -194,12 +184,11 @@ public class Bytes
         return serializer.GetBuffer();
     }
 
-    /**
-     * Converts an array of 32 bit big endian integers to a byte array.
-     *
-     * @param data Integer array
-     * @return Converted byte array
-     */
+    /// <summary>
+    /// Converts an array of 32 bit big endian integers to a byte array.
+    /// </summary>
+    /// <param name="data">Integer array</param>
+    /// <returns>Converted byte array</returns>
     public static byte[] FromIntArrayBE(int[] data)
     {
         if (data == null)
@@ -217,12 +206,11 @@ public class Bytes
         return output;
     }
 
-    /**
-     * Converts a big endian byte array to an array of 32 bit integers.
-     *
-     * @param data Byte array
-     * @return Converted integer array
-     */
+    /// <summary>
+    /// Converts a big endian byte array to an array of 32 bit integers.
+    /// </summary>
+    /// <param name="data">Byte array</param>
+    /// <returns>Converted integer array</returns>
     public static int[] ToIntArrayBE(byte[] data)
     {
         if (data == null)
@@ -241,15 +229,15 @@ public class Bytes
         return output;
     }
 
-    /**
-     * Splits a byte array into a series of chunks.
-     * Implementation sourced from
-     * <a href="https://stackoverflow.com/questions/3405195/divide-array-into-smaller-parts/26695737">here</a>.
-     *
-     * @param data Byte array to split
-     * @param size Size of each byte chunk
-     * @return Chunked byte arrays
-     */
+    /// <summary>
+    /// Splits a byte array into a series of chunks.
+    /// Implementation sourced from
+    /// </summary>
+    /// <a href="https://stackoverflow.com/questions/3405195/divide-array-into-smaller-parts/26695737">here</a>.
+    ///
+    /// <param name="data">Byte array to split</param>
+    /// <param name="size">Size of each byte chunk</param>
+    /// <returns>Chunked byte arrays</returns>
     public static byte[][] Split(byte[]? data, int size)
     {
         var _out = new byte[(int)Math.Ceiling(data.Length / (double)size)][];
@@ -265,14 +253,14 @@ public class Bytes
         return _out;
     }
 
-    /**
-     * Combines a series of byte arrays into one.
-     * Implementation sourced from
-     * <a href="https://stackoverflow.com/questions/5513152/easy-way-to-concatenate-two-byte-arrays">here</a>.
-     *
-     * @param arrays Byte arrays to combine
-     * @return Combined byte arrays.
-     */
+    /// <summary>
+    /// Combines a series of byte arrays into one.
+    /// Implementation sourced from
+    /// </summary>
+    /// <a href="https://stackoverflow.com/questions/5513152/easy-way-to-concatenate-two-byte-arrays">here</a>.
+    ///
+    /// <param name="arrays">Byte arrays to combine</param>
+    /// <returns>Combined byte arrays.</returns>
     public static byte[] Combine(params byte[]?[] arrays)
     {
         var totalLength = 0;
@@ -287,16 +275,15 @@ public class Bytes
         return result;
     }
 
-    /**
-     * Replaces all instances of pattern inside bytearray with another.
-     * Does in-place modification if the lengths are the same, otherwise
-     * a new array is created.
-     *
-     * @param source      Buffer to replace patterns in
-     * @param original    Original pattern to replace
-     * @param replacement Data to replace original pattern with
-     * @return Bytearray with replaced patterns
-     */
+    /// <summary>
+    /// Replaces all instances of pattern inside bytearray with another.
+    /// Does in-place modification if the lengths are the same, otherwise
+    /// a new array is created.
+    /// </summary>
+    /// <param name="source">Buffer to replace patterns in</param>
+    /// <param name="original">Original pattern to replace</param>
+    /// <param name="replacement">Data to replace original pattern with</param>
+    /// <returns>Bytearray with replaced patterns</returns>
     public static byte[]? Replace(byte[]? source, byte[]? original, byte[]? replacement)
     {
         if (Equals(original, replacement)) return source;
@@ -339,25 +326,23 @@ public class Bytes
         return buffer;
     }
 
-    /**
-     * Gets a byte array containing a ULEB-128 encoded value.
-     *
-     * @param value Value to encode
-     * @return Encoded byte array
-     */
+    /// <summary>
+    /// Gets a byte array containing a ULEB-128 encoded value.
+    /// </summary>
+    /// <param name="value">Value to encode</param>
+    /// <returns>Encoded byte array</returns>
     public static byte[]? PackULEB128(long value)
     {
         var stream = new MemoryOutputStream(0x10,
             CompressionFlags.USE_ALL_COMPRESSION);
-        return stream.U32(value).Shrink().GetBuffer();
+        return stream.U32(value).Shrink().Buffer;
     }
 
-    /**
-     * Unpacks a 11/11/10 normal value.
-     *
-     * @param value Value to unpack
-     * @return Unpacked vector
-     */
+    /// <summary>
+    /// Unpacks a 11/11/10 normal value.
+    /// </summary>
+    /// <param name="value">Value to unpack</param>
+    /// <returns>Unpacked vector</returns>
     public static Vector3 UnpackNormal32(long value)
     {
         // There's probably a much better way to handle
@@ -388,12 +373,11 @@ public class Bytes
         return output;
     }
 
-    /**
-     * Unpacks a 12/11/1 normal value.
-     *
-     * @param normal Value to unpack
-     * @return Unpacked vector
-     */
+    /// <summary>
+    /// Unpacks a 12/11/1 normal value.
+    /// </summary>
+    /// <param name="normal">Value to unpack</param>
+    /// <returns>Unpacked vector</returns>
     public static Vector3 UnpackNormal24(int normal)
     {
         var x = (float)(normal & 0x7ff);
@@ -408,12 +392,11 @@ public class Bytes
         return new Vector3(x, y, z);
     }
 
-    /**
-     * Packs a 11/11/10 normal value.
-     *
-     * @param normal Vertex normal to pack
-     * @return Packed normal
-     */
+    /// <summary>
+    /// Packs a 11/11/10 normal value.
+    /// </summary>
+    /// <param name="normal">Vertex normal to pack</param>
+    /// <returns>Packed normal</returns>
     public static int PackNormal32(Vector3 normal)
     {
         if (normal == null)
@@ -426,12 +409,11 @@ public class Bytes
         return x | (y << 11) | (z << 22);
     }
 
-    /**
-     * Packs a 12/11/1 normal value.
-     *
-     * @param normal Vertex normal to pack
-     * @return Packed normal
-     */
+    /// <summary>
+    /// Packs a 12/11/1 normal value.
+    /// </summary>
+    /// <param name="normal">Vertex normal to pack</param>
+    /// <returns>Packed normal</returns>
     public static int PackNormal24(Vector3 normal)
     {
         if (normal == null)

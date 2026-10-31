@@ -84,12 +84,11 @@ public class CellGcmTexture
         stream.I32(offset, true);
     }
 
-    /**
-     * Deserializes TextureInfo from stream.
-     *
-     * @param stream to read texture info from
-     * @param method Texture type
-     */
+    /// <summary>
+    /// Deserializes TextureInfo from stream.
+    /// </summary>
+    /// <param name="stream">to read texture info from</param>
+    /// <param name="method">Texture type</param>
     public CellGcmTexture(MemoryInputStream stream, SerializationType method)
     {
         this.method = method;

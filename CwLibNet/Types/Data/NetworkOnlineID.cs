@@ -12,7 +12,7 @@ public class NetworkOnlineId : ISerializable
 
     public NetworkOnlineId() { }
 
-    public NetworkOnlineId (string psid)
+    public NetworkOnlineId (string? psid)
     {
         if (psid == null) return;
         if (psid.Length > 16) throw new ArgumentException("PSID cannot be longer than 16 characters.");

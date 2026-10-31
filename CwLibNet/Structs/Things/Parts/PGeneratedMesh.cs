@@ -10,42 +10,42 @@ public class PGeneratedMesh : ISerializable
 {
     public const int BaseAllocationSize = 0x80;
 
-    /**
-     * The material used to render this mesh.
-     */
+    /// <summary>
+    /// The material used to render this mesh.
+    /// </summary>
     public ResourceDescriptor? GfxMaterial = new(11166, ResourceType.GfxMaterial);
 
-    /**
-     * The bevel used with this mesh.
-     */
+    /// <summary>
+    /// The bevel used with this mesh.
+    /// </summary>
     public ResourceDescriptor? Bevel;
 
-    /**
-     * How much the UVs of the texture are offset.
-     * (UV tool in-game)
-     */
+    /// <summary>
+    /// How much the UVs of the texture are offset.
+    /// (UV tool in-game)
+    /// </summary>
     public Vector4? UvOffset;
 
-    /**
-     * The plan this generated mesh came from.
-     */
+    /// <summary>
+    /// The plan this generated mesh came from.
+    /// </summary>
     public GUID? PlanGuid;
 
-    /**
-     * Flags controlling the visibility of this mesh.
-     */
+    /// <summary>
+    /// Flags controlling the visibility of this mesh.
+    /// </summary>
     public byte VisibilityFlags = (byte)Enums.VisibilityFlags.PLAY_MODE | (byte)Enums.VisibilityFlags.EDIT_MODE;
 
-    /**
-     * Speed of this material's animation,
-     * animations are defined in the RGfxMaterial.
-     */
+    /// <summary>
+    /// Speed of this material's animation,
+    /// animations are defined in the RGfxMaterial.
+    /// </summary>
     public float TextureAnimationSpeed = 1.0f;
 
-    /**
-     * The speed of this material's animation when it's off,
-     * animations are defined in the RGfxMaterial.
-     */
+    /// <summary>
+    /// The speed of this material's animation when it's off,
+    /// animations are defined in the RGfxMaterial.
+    /// </summary>
     public float TextureAnimationSpeedOff = 1.0f;
 
 
@@ -55,32 +55,32 @@ public class PGeneratedMesh : ISerializable
 
     public float TextureScale;
 
-    /**
-     * Indicates that this material should have no bevel.
-     */
+    /// <summary>
+    /// Indicates that this material should have no bevel.
+    /// </summary>
     public bool NoBevel;
 
-    /**
-     * Whether this material has been sharded.
-     */
+    /// <summary>
+    /// Whether this material has been sharded.
+    /// </summary>
     public bool Sharded;
 
-    /**
-     * Whether the sides should be rendered(?)
-     */
+    /// <summary>
+    /// Whether the sides should be rendered(?)
+    /// </summary>
     public bool IncludeSides = true;
 
 
     public byte SlideImpactDamping = 50;
 
-    /**
-     * Speed the player moves when steering on a slide.
-     */
+    /// <summary>
+    /// Speed the player moves when steering on a slide.
+    /// </summary>
     public byte SlideSteer = 100;
 
-    /**
-     * Speed the player descends this slide.
-     */
+    /// <summary>
+    /// Speed the player descends this slide.
+    /// </summary>
     public byte SlideSpeed = 50;
 
     public PGeneratedMesh()

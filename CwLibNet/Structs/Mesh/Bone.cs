@@ -29,16 +29,15 @@ public class Bone: AnimBone
     public Vector4? BoundBoxMax;
     public Vector4? BoundSphere;
 
-    /**
-     * Creates an empty bone
-     */
+    /// <summary>
+    /// Creates an empty bone
+    /// </summary>
     public Bone() { }
 
-    /**
-     * Creates an empty named bone
-     *
-     * @param name Name of the bone
-     */
+    /// <summary>
+    /// Creates an empty named bone
+    /// </summary>
+    /// <param name="name">Name of the bone</param>
     public Bone(string name)
     {
         AnimHash = RAnimation.CalculateAnimationHash(name);
@@ -93,13 +92,12 @@ public class Bone: AnimBone
         return animHash == 0 ? skeleton[0] : skeleton.FirstOrDefault(bone => bone.AnimHash == animHash);
     }
 
-    /**
-     * Attempts to get a bone's name from an animation hash.
-     *
-     * @param skeleton Skeleton to search for animation hash
-     * @param animHash Hash to search for
-     * @return Bone's name
-     */
+    /// <summary>
+    /// Attempts to get a bone's name from an animation hash.
+    /// </summary>
+    /// <param name="skeleton">Skeleton to search for animation hash</param>
+    /// <param name="animHash">Hash to search for</param>
+    /// <returns>Bone's name</returns>
     public static string? GetNameFromHash(Bone[] skeleton, int animHash)
     {
         if (skeleton == null)
@@ -121,12 +119,11 @@ public class Bone: AnimBone
         return -1;
     }
 
-    /**
-     * Gets the index of this bone in a skeleton.
-     *
-     * @param skeleton The skeleton that this bone is from
-     * @return The index of this bone if it exists
-     */
+    /// <summary>
+    /// Gets the index of this bone in a skeleton.
+    /// </summary>
+    /// <param name="skeleton">The skeleton that this bone is from</param>
+    /// <returns>The index of this bone if it exists</returns>
     public int GetIndex(Bone[] skeleton)
     {
         if (skeleton == null)
@@ -137,12 +134,11 @@ public class Bone: AnimBone
         return -1;
     }
 
-    /**
-     * Gets the children of this bone.
-     *
-     * @param skeleton The skeleton that this bone is from
-     * @return The children of this bone
-     */
+    /// <summary>
+    /// Gets the children of this bone.
+    /// </summary>
+    /// <param name="skeleton">The skeleton that this bone is from</param>
+    /// <returns>The children of this bone</returns>
     public Bone[] GetChildren(Bone[] skeleton)
     {
         if (skeleton == null)

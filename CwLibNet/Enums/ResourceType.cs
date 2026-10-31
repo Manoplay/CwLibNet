@@ -106,12 +106,11 @@ public readonly struct ResourceType : IEquatable<ResourceType>
         Extension = extension;
     }
 
-    /**
-     * Attempts to get a valid ResourceType from a 3-byte magic header.
-     *
-     * @param value Magic header
-     * @return Resource type
-     */
+    /// <summary>
+    /// Attempts to get a valid ResourceType from a 3-byte magic header.
+    /// </summary>
+    /// <param name="value">Magic header</param>
+    /// <returns>Resource type</returns>
     public static ResourceType FromMagic(string? value)
     {
         if (value is { Length: > 3 })

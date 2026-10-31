@@ -6,19 +6,19 @@ public class Fat(Fart archive, Sha1 sha1, long offset, int size)
 {
     private readonly Fart archive = archive ?? throw new NullReferenceException("File archive provided to Fat cannot be null!");
 
-    /**
-     * SHA1 signature of data.
-     */
+    /// <summary>
+    /// SHA1 signature of data.
+    /// </summary>
     private readonly Sha1 sha1 = sha1 ?? throw new NullReferenceException("File SHA1 provided to Fat cannot be null!");
 
-    /**
-     * Offset of the data in the archive.
-     */
+    /// <summary>
+    /// Offset of the data in the archive.
+    /// </summary>
     private readonly long offset = offset;
 
-    /**
-     * Size of the associated data buffer.
-     */
+    /// <summary>
+    /// Size of the associated data buffer.
+    /// </summary>
     private readonly int size = size;
 
     public Sha1 GetSha1()
@@ -41,11 +41,10 @@ public class Fat(Fart archive, Sha1 sha1, long offset, int size)
         return archive;
     }
 
-    /**
-     * Extracts this entry from the associated archive.
-     *
-     * @return Extracted resource.
-     */
+    /// <summary>
+    /// Extracts this entry from the associated archive.
+    /// </summary>
+    /// <returns>Extracted resource.</returns>
     public byte[]? Extract()
     {
         return archive.Extract(this);

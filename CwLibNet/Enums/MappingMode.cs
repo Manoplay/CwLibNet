@@ -4,29 +4,29 @@ public enum MappingMode
 {
     // HIDDEN(0)
     HIDDEN,
-    // /**
-    //  * Standard XYZ UV Mapping.
-    //  */
+    // <summary>
+    // Standard XYZ UV Mapping.
+    // </summary>
     // DAVE(1)
     DAVE,
-    // /**
-    //  * Wraps vertically; separate faces.
-    //  */
+    // <summary>
+    // Wraps vertically; separate faces.
+    // </summary>
     // CYLINDER_01(2)
     CYLINDER_01,
-    // /**
-    //  * Wraps vertical; all one face.
-    //  */
+    // <summary>
+    // Wraps vertical; all one face.
+    // </summary>
     // CYLINDER(3)
     CYLINDER,
-    // /**
-    //  * Wraps vertically; seperate faces, stretches on Y axis.
-    //  */
+    // <summary>
+    // Wraps vertically; seperate faces, stretches on Y axis.
+    // </summary>
     // PLANARXZ_01(4)
     PLANARXZ_01,
-    // /**
-    //  * Wraps vertically; all one face, stretches on Y axis.
-    //  */
+    // <summary>
+    // Wraps vertically; all one face, stretches on Y axis.
+    // </summary>
     // PLANARXZ(5)
     PLANARXZ 
 }

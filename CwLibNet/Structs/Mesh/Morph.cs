@@ -4,22 +4,21 @@ namespace CwLibNet.Structs.Mesh;
 
 public class Morph
 {
-    /**
-     * Relative offset of each vertex.
-     */
+    /// <summary>
+    /// Relative offset of each vertex.
+    /// </summary>
     public readonly Vector3[] Offsets;
 
-    /**
-     * New normals for each vertex.
-     */
+    /// <summary>
+    /// New normals for each vertex.
+    /// </summary>
     public Vector3[] Normals;
 
-    /**
-     * Creates a morph from offset and normal data.
-     *
-     * @param offsets Relative offsets of each vertex
-     * @param normals New normals for each vertex
-     */
+    /// <summary>
+    /// Creates a morph from offset and normal data.
+    /// </summary>
+    /// <param name="offsets">Relative offsets of each vertex</param>
+    /// <param name="normals">New normals for each vertex</param>
     public Morph(Vector3[] offsets, Vector3[] normals)
     {
         Offsets = offsets;

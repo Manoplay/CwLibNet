@@ -7,7 +7,7 @@ namespace CwLibNet.Structs.DLC;
 
 public class DLCFile: ISerializable
 {
-    public const int BaseAllocationSize = 0x30; // Example size, adjust as needed
+    private const int BaseAllocationSize = 0x30; // Example size, adjust as needed
 
     public string? Directory;
     public string? File;

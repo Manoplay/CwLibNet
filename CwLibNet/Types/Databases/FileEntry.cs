@@ -6,29 +6,29 @@ public class FileEntry(string path, Sha1 sha1, long size)
 {
     public string Path = path;
 
-    /**
-     * Size of the associated data buffer.
-     */
+    /// <summary>
+    /// Size of the associated data buffer.
+    /// </summary>
     public long Size = size;
 
-    /**
-     * SHA1 signature of data.
-     */
+    /// <summary>
+    /// SHA1 signature of data.
+    /// </summary>
     public Sha1 Sha1 = sha1;
 
-    /**
-     * Unique key for data
-     */
+    /// <summary>
+    /// Unique key for data
+    /// </summary>
     public object? Key;
 
-    /**
-     * Resource metadata
-     */
+    /// <summary>
+    /// Resource metadata
+    /// </summary>
     public ResourceInfo? Info;
 
-    /**
-     * Map of resources assigned to this entry.
-     */
+    /// <summary>
+    /// Map of resources assigned to this entry.
+    /// </summary>
     private readonly object?[] resources = new object[10];
 
     public T? GetResource<T>(int key)

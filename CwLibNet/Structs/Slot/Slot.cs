@@ -92,7 +92,7 @@ public class Slot : ISerializable
         Name = descriptor.Name;
         Description = descriptor.Description;
 
-        if (Strings.IsSHA1(descriptor.Root) || Strings.IsGUID(descriptor.Root))
+        if (Strings.IsSha1(descriptor.Root) || Strings.IsGuid(descriptor.Root))
         {
             if (descriptor.IsAdventurePlanet)
             {
@@ -104,7 +104,7 @@ public class Slot : ISerializable
             }
         }
 
-        if (Strings.IsSHA1(descriptor.Icon) || Strings.IsGUID(descriptor.Icon))
+        if (Strings.IsSha1(descriptor.Icon) || Strings.IsGuid(descriptor.Icon))
         {
             Icon = new ResourceDescriptor(descriptor.Icon, ResourceType.Texture);
         }

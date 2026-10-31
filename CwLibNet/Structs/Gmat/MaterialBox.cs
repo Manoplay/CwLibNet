@@ -11,9 +11,9 @@ public class MaterialBox: ISerializable
 {
     public const int BaseAllocationSize = 0x80;
 
-    /**
-     * Number of parameters used before r0x2a4
-     */
+    /// <summary>
+    /// Number of parameters used before r0x2a4
+    /// </summary>
     public const int LegacyParameterCount = 0x6;
 
     public const int ParameterCount = 0x8;
@@ -25,14 +25,14 @@ public class MaterialBox: ISerializable
     public MaterialParameterAnimation Anim = new();
     public MaterialParameterAnimation Anim2 = new();
 
-    /**
-     * Creates an output node
-     */
+    /// <summary>
+    /// Creates an output node
+    /// </summary>
     public MaterialBox() { }
 
-    /**
-     * Creates a texture sample node
-     */
+    /// <summary>
+    /// Creates a texture sample node
+    /// </summary>
     public MaterialBox(Vector2 scale, Vector2 offset, int channel, int texture)
     {
         Type = BoxType.TEXTURE_SAMPLE;
@@ -44,9 +44,9 @@ public class MaterialBox: ISerializable
         @params[5] = texture;
     }
 
-    /**
-     * Creates a texture sample node
-     */
+    /// <summary>
+    /// Creates a texture sample node
+    /// </summary>
     public MaterialBox(Vector4 transform, int channel, int texture)
     {
         Type = BoxType.TEXTURE_SAMPLE;
@@ -58,9 +58,9 @@ public class MaterialBox: ISerializable
         @params[5] = texture;
     }
 
-    /***
-     * Creates a color node
-     */
+    /// <summary>
+    /// Creates a color node
+    /// </summary>
     public MaterialBox(Vector4 color)
     {
         Type = BoxType.COLOR;

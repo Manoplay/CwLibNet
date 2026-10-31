@@ -22,117 +22,117 @@ public class RMesh: Resource
     private static readonly int BaseAllocationSize =
         0x400 + SoftbodyClusterData.BASE_ALLOCATION_SIZE;
 
-    /**
-     * The number of vertices this mesh has.
-     */
+    /// <summary>
+    /// The number of vertices this mesh has.
+    /// </summary>
     public int NumVerts;
 
-    /**
-     * The number of face indices this mesh has.
-     */
+    /// <summary>
+    /// The number of face indices this mesh has.
+    /// </summary>
     public int NumIndices;
 
-    /**
-     * The number of edge indices his mesh has.
-     */
+    /// <summary>
+    /// The number of edge indices his mesh has.
+    /// </summary>
     public int NumEdgeIndices;
 
-    /**
-     * The number of triangles this mesh has.
-     */
+    /// <summary>
+    /// The number of triangles this mesh has.
+    /// </summary>
     public int NumTris;
 
-    /**
-     * The number of vertex streams this model has.
-     */
+    /// <summary>
+    /// The number of vertex streams this model has.
+    /// </summary>
     public int StreamCount;
 
-    /**
-     * How number of UVs this model has.
-     */
+    /// <summary>
+    /// How number of UVs this model has.
+    /// </summary>
     public int AttributeCount;
 
-    /**
-     * The number of morphs this model has.
-     */
+    /// <summary>
+    /// The number of morphs this model has.
+    /// </summary>
     public int MorphCount;
 
-    /**
-     * Names of the morphs in-use by this this.
-     */
+    /// <summary>
+    /// Names of the morphs in-use by this this.
+    /// </summary>
     public string[] MorphNames = new string[MaxMorphs];
 
     public float[] MinUv = [0.0f, 0.0f];
     public float[] MaxUv = [1.0f, 1.0f];
     public float AreaScaleFactor = 500;
 
-    /**
-     * STREAM[0] = v3 Pos, u32 Bone Indices
-     * STREAM[1] = u8 w2, u8 w1, u8 w0, u8 b1, u24 norm, u8 b2, u24 tangent, u8 b3, u24
-     * smoothnormal, b4
-     */
+    /// <summary>
+    /// STREAM[0] = v3 Pos, u32 Bone Indices
+    /// STREAM[1] = u8 w2, u8 w1, u8 w0, u8 b1, u24 norm, u8 b2, u24 tangent, u8 b3, u24
+    /// smoothnormal, b4
+    /// </summary>
     public byte[][] Streams;
 
-    /**
-     * Texture coordinate (UV) buffer.
-     */
+    /// <summary>
+    /// Texture coordinate (UV) buffer.
+    /// </summary>
     public byte[] Attributes;
 
-    /**
-     * Face indices buffer.
-     */
+    /// <summary>
+    /// Face indices buffer.
+    /// </summary>
     public byte[] Indices;
 
-    /**
-     * Triangle adjacency buffer used for
-     * geometry shaders in LittleBigPlanet 3.
-     */
+    /// <summary>
+    /// Triangle adjacency buffer used for
+    /// geometry shaders in LittleBigPlanet 3.
+    /// </summary>
     public byte[] TriangleAdjacencyInfos;
 
-    /**
-     * Primitive objects controlling how each part of this
-     * mesh gets rendered.
-     */
+    /// <summary>
+    /// Primitive objects controlling how each part of this
+    /// mesh gets rendered.
+    /// </summary>
     public List<Primitive> Primitives = [];
 
-    /**
-     * The skeleton of this this.
-     */
+    /// <summary>
+    /// The skeleton of this this.
+    /// </summary>
     public Bone[]? Bones;
 
-    /**
-     * Each index refers to a bone, the value at each index
-     * refers to the bone of which the first is a mirror.
-     */
+    /// <summary>
+    /// Each index refers to a bone, the value at each index
+    /// refers to the bone of which the first is a mirror.
+    /// </summary>
     public short[] MirrorBones;
 
-    /**
-     * The type of mirroring between the bones.
-     */
+    /// <summary>
+    /// The type of mirroring between the bones.
+    /// </summary>
     public FlipType[] MirrorBoneFlipTypes;
 
-    /**
-     * Each index refers to a morph, the value at each index
-     * refers to the morph of which the first is a mirror.
-     */
+    /// <summary>
+    /// Each index refers to a morph, the value at each index
+    /// refers to the morph of which the first is a mirror.
+    /// </summary>
     public short[] MirrorMorphs;
 
-    /**
-     * How this mesh will get rendered.
-     */
+    /// <summary>
+    /// How this mesh will get rendered.
+    /// </summary>
     public CellGcmPrimitive PrimitiveType = CellGcmPrimitive.TRIANGLE_STRIP;
 
     public SoftbodyClusterData SoftbodyCluster;
     public SoftbodySpring[]? SoftbodySprings;
 
-    /**
-     * Vertices that are equivalent, but only separate for texturing reasons.
-     */
+    /// <summary>
+    /// Vertices that are equivalent, but only separate for texturing reasons.
+    /// </summary>
     public SoftbodyVertEquivalence[]? SoftbodyEquivs;
 
-    /**
-     * Mass of each vertex, used for softbody physics.
-     */
+    /// <summary>
+    /// Mass of each vertex, used for softbody physics.
+    /// </summary>
     public float[] Mass;
 
     public ImplicitEllipsoid[]? ImplicitEllipsoids = [];
@@ -140,53 +140,53 @@ public class RMesh: Resource
     public ImplicitEllipsoid[]? InsideImplicitEllipsoids = [];
     public ImplicitPlane[]? ImplicitPlanes = [];
 
-    /**
-     * Settings for how this mesh's softbody physics behave.
-     */
+    /// <summary>
+    /// Settings for how this mesh's softbody physics behave.
+    /// </summary>
     public ResourceDescriptor SoftPhysSettings;
 
-    /**
-     * Min and max vertices where this mesh contains springs.
-     */
+    /// <summary>
+    /// Min and max vertices where this mesh contains springs.
+    /// </summary>
     public int MinSpringVert, MaxSpringVert;
 
     public int MinUnalignedSpringVert;
 
-    /**
-     * Indices of the mesh that are springy.
-     */
+    /// <summary>
+    /// Indices of the mesh that are springy.
+    /// </summary>
     public short[] SpringyTriIndices;
 
-    /**
-     * Whether the mesh's spring indices
-     * are tri-stripped or not.
-     * (Stored as an integer, but only used as a boolean)
-     */
+    /// <summary>
+    /// Whether the mesh's spring indices
+    /// are tri-stripped or not.
+    /// (Stored as an integer, but only used as a boolean)
+    /// </summary>
     public bool SpringTrisStripped;
 
     public Vector4? SoftbodyContainingBoundBoxMin;
     public Vector4? SoftbodyContainingBoundBoxMax;
 
-    /**
-     * Bones that control render culling behavior.
-     */
+    /// <summary>
+    /// Bones that control render culling behavior.
+    /// </summary>
     public CullBone[]? CullBones;
 
-    /**
-     * Parts of the player mesh that gets hidden
-     * when you wear this mesh as a costume piece.
-     */
+    /// <summary>
+    /// Parts of the player mesh that gets hidden
+    /// when you wear this mesh as a costume piece.
+    /// </summary>
     public int[] RegionIDsToHide;
 
-    /**
-     * Costume slots this mesh takes up.
-     */
+    /// <summary>
+    /// Costume slots this mesh takes up.
+    /// </summary>
     public int CostumeCategoriesUsed;
 
-    /**
-     * How this costume piece hides a player's
-     * hair when it's equipped.
-     */
+    /// <summary>
+    /// How this costume piece hides a player's
+    /// hair when it's equipped.
+    /// </summary>
     public HairMorph HairMorphs = HairMorph.HAT;
 
     public int BevelVertexCount;
@@ -194,9 +194,9 @@ public class RMesh: Resource
 
     public uint[] VertexColors;
 
-    /**
-     * Which character this mesh is for.
-     */
+    /// <summary>
+    /// Which character this mesh is for.
+    /// </summary>
     public SkeletonType SkeletonType = SkeletonType.SACKBOY;
 
     /* Creates an empty mesh, used for serialization. */
@@ -219,16 +219,15 @@ public class RMesh: Resource
         Init(streams, attributes, indices, bones);
     }
 
-    /**
-     * Creates a new mesh from raw streams.
-     * NOTE: Edge indices are not included.
-     * NOTE: Primitive type is assumed to be GL_TRIANGLES.
-     *
-     * @param streams    All vertex streams, including geometry, skinning/lighting, and morphs.
-     * @param attributes Texture coordinate (UV) data stream.
-     * @param indices    Face indices stream
-     * @param bones      Skeleton of this mesh
-     */
+    /// <summary>
+    /// Creates a new mesh from raw streams.
+    /// NOTE: Edge indices are not included.
+    /// NOTE: Primitive type is assumed to be GL_TRIANGLES.
+    /// </summary>
+    /// <param name="streams">All vertex streams, including geometry, skinning/lighting, and morphs.</param>
+    /// <param name="attributes">Texture coordinate (UV) data stream.</param>
+    /// <param name="indices">Face indices stream</param>
+    /// <param name="bones">Skeleton of this mesh</param>
     public RMesh(byte[][] streams, byte[] attributes, byte[] indices, Bone[] bones,
                  int numIndices, int numEdgeIndices, int numTris)
     {
@@ -504,21 +503,19 @@ public class RMesh: Resource
         );
     }
 
-    /**
-     * Checks if this mesh uses tri-strips.
-     *
-     * @return True if the mesh uses tri-strips, false otherwise.
-     */
+    /// <summary>
+    /// Checks if this mesh uses tri-strips.
+    /// </summary>
+    /// <returns>True if the mesh uses tri-strips, false otherwise.</returns>
     public bool IsStripped()
     {
         return PrimitiveType.Equals(CellGcmPrimitive.TRIANGLE_STRIP);
     }
 
-    /**
-     * Checks if this mesh uses softbody simulation.
-     *
-     * @return True if the mesh uses softbody simulation, false otherwise.
-     */
+    /// <summary>
+    /// Checks if this mesh uses softbody simulation.
+    /// </summary>
+    /// <returns>True if the mesh uses softbody simulation, false otherwise.</returns>
     public bool HasSoftbodyData()
     {
         if (SoftbodyCluster == null) return false;
@@ -539,12 +536,11 @@ public class RMesh: Resource
         return new Vector2(MaxUv[0], MaxUv[1]);
     }
 
-    /**
-     * Gets a stream at specified index.
-     *
-     * @param index Index of stream
-     * @return Stream at index
-     */
+    /// <summary>
+    /// Gets a stream at specified index.
+    /// </summary>
+    /// <param name="index">Index of stream</param>
+    /// <returns>Stream at index</returns>
     public byte[] GetVertexStream(int index)
     {
         if (Streams == null || index < 0 || index >= Streams.Length)
@@ -554,11 +550,10 @@ public class RMesh: Resource
         return Streams[index];
     }
 
-    /**
-     * Gets the main vertex stream.
-     *
-     * @return Main vertex stream.
-     */
+    /// <summary>
+    /// Gets the main vertex stream.
+    /// </summary>
+    /// <returns>Main vertex stream.</returns>
     public byte[] GetVertexStream()
     {
         if (Streams.Length <= StreamPosBoneindices)
@@ -566,12 +561,11 @@ public class RMesh: Resource
         return Streams[StreamPosBoneindices];
     }
 
-    /**
-     * Gets the stream that contains skinning data,
-     * as well as normals, tangents, and smooth normals.
-     *
-     * @return Skinning/Normal stream.
-     */
+    /// <summary>
+    /// Gets the stream that contains skinning data,
+    /// as well as normals, tangents, and smooth normals.
+    /// </summary>
+    /// <returns>Skinning/Normal stream.</returns>
     public byte[] GetSkinningStream()
     {
         if (Streams.Length <= StreamBoneweightsNormTangentSmoothNorm)
@@ -579,11 +573,10 @@ public class RMesh: Resource
         return Streams[StreamBoneweightsNormTangentSmoothNorm];
     }
 
-    /**
-     * Gets all streams containing morph data.
-     *
-     * @return Morph data streams
-     */
+    /// <summary>
+    /// Gets all streams containing morph data.
+    /// </summary>
+    /// <returns>Morph data streams</returns>
     public byte[][] GetMorphStreams()
     {
         var streams = new byte[MorphCount][];
@@ -601,12 +594,11 @@ public class RMesh: Resource
         MorphNames = names;
     }
 
-    /**
-     * Sets the morph name at index.
-     *
-     * @param name  Morph name
-     * @param index Index of morph
-     */
+    /// <summary>
+    /// Sets the morph name at index.
+    /// </summary>
+    /// <param name="name">Morph name</param>
+    /// <param name="index">Index of morph</param>
     public void SetMorphName(string name, int index)
     {
         MorphNames[index] = name;
@@ -642,12 +634,11 @@ public class RMesh: Resource
         Primitives = primitives;
     }
 
-    /**
-     * Sets a bone's mirror.
-     *
-     * @param index  Bone index
-     * @param mirror Bone mirror index
-     */
+    /// <summary>
+    /// Sets a bone's mirror.
+    /// </summary>
+    /// <param name="index">Bone index</param>
+    /// <param name="mirror">Bone mirror index</param>
     public void SetBoneMirror(int index, int mirror)
     {
         if (MirrorBones == null || index < 0 || index >= MirrorBones.Length)
@@ -657,12 +648,11 @@ public class RMesh: Resource
         MirrorBones[index] = (short) (mirror & 0xFFFF);
     }
 
-    /**
-     * Sets a bone's flip type.
-     *
-     * @param index Bone index
-     * @param type  Bone flip type
-     */
+    /// <summary>
+    /// Sets a bone's flip type.
+    /// </summary>
+    /// <param name="index">Bone index</param>
+    /// <param name="type">Bone flip type</param>
     public void SetBoneFlipType(int index, FlipType type)
     {
         if (MirrorBones == null || index < 0 || index >= MirrorBones.Length)
@@ -680,13 +670,12 @@ public class RMesh: Resource
         MirrorMorphs[index] = (short) (mirror & 0xFFFF);
     }
     
-    /**
-     * Sets the mass of a vertex at a given position,
-     * this is used for softbody simulations.
-     *
-     * @param index Index of the vertex
-     * @param mass  New mass of the vertex
-     */
+    /// <summary>
+    /// Sets the mass of a vertex at a given position,
+    /// this is used for softbody simulations.
+    /// </summary>
+    /// <param name="index">Index of the vertex</param>
+    /// <param name="mass">New mass of the vertex</param>
     public void SetVertexMass(int index, float mass)
     {
         if (Mass == null || Mass.Length != NumVerts)
@@ -702,11 +691,10 @@ public class RMesh: Resource
         Mass[index] = mass;
     }
 
-    /**
-     * Gets all sub-meshes contained in this this.
-     *
-     * @return Sub-meshes
-     */
+    /// <summary>
+    /// Gets all sub-meshes contained in this this.
+    /// </summary>
+    /// <returns>Sub-meshes</returns>
     public Primitive[][] GetSubmeshes()
     {
         Dictionary<int, List<Primitive>> meshes = new();
@@ -736,13 +724,12 @@ public class RMesh: Resource
         return submeshes;
     }
 
-    /**
-     * Gets all the vertices in a specified range
-     *
-     * @param start First vertex
-     * @param count Number of vertices
-     * @return Vertices of range
-     */
+    /// <summary>
+    /// Gets all the vertices in a specified range
+    /// </summary>
+    /// <param name="start">First vertex</param>
+    /// <param name="count">Number of vertices</param>
+    /// <returns>Vertices of range</returns>
     public Vector3[] GetVertices(int start, int count)
     {
         var stream = new MemoryInputStream(GetVertexStream());
@@ -762,13 +749,12 @@ public class RMesh: Resource
         return vertices;
     }
 
-    /**
-     * Gets all the softbody weights in a specified range
-     *
-     * @param start First vertex
-     * @param count Number of vertices
-     * @return Softbody weights of range
-     */
+    /// <summary>
+    /// Gets all the softbody weights in a specified range
+    /// </summary>
+    /// <param name="start">First vertex</param>
+    /// <param name="count">Number of vertices</param>
+    /// <returns>Softbody weights of range</returns>
     public float[] GetSoftbodyWeights(int start, int count)
     {
         var stream = new MemoryInputStream(GetVertexStream());
@@ -800,12 +786,11 @@ public class RMesh: Resource
         return vertices;
     }
 
-    /**
-     * Gets all the vertices from a mesh primitive.
-     *
-     * @param primitive Mesh primitive to get vertices from
-     * @return Vertices
-     */
+    /// <summary>
+    /// Gets all the vertices from a mesh primitive.
+    /// </summary>
+    /// <param name="primitive">Mesh primitive to get vertices from</param>
+    /// <returns>Vertices</returns>
     public Vector3[] GetVertices(Primitive primitive)
     {
         return GetVertices(
@@ -814,11 +799,10 @@ public class RMesh: Resource
         );
     }
 
-    /**
-     * Gets all the vertices from this this.
-     *
-     * @return Vertices
-     */
+    /// <summary>
+    /// Gets all the vertices from this this.
+    /// </summary>
+    /// <returns>Vertices</returns>
     public Vector3[] GetVertices()
     {
         return GetVertices(0, NumVerts);
@@ -837,14 +821,13 @@ public class RMesh: Resource
         }
     }
 
-    /**
-     * Gets the UVs in a specified range.
-     *
-     * @param start   First vertex to get UVs of
-     * @param count   Number of UVs
-     * @param channel UV channel
-     * @return UVs
-     */
+    /// <summary>
+    /// Gets the UVs in a specified range.
+    /// </summary>
+    /// <param name="start">First vertex to get UVs of</param>
+    /// <param name="count">Number of UVs</param>
+    /// <param name="channel">UV channel</param>
+    /// <returns>UVs</returns>
     public Vector2[] GetUVs(int start, int count, int channel)
     {
         if (Attributes == null)
@@ -863,13 +846,12 @@ public class RMesh: Resource
     }
 
 
-    /**
-     * Gets the UVs of a mesh primitive from a specified channel
-     *
-     * @param primitive Primitive to get UVs from
-     * @param channel   UV channel
-     * @return UVs
-     */
+    /// <summary>
+    /// Gets the UVs of a mesh primitive from a specified channel
+    /// </summary>
+    /// <param name="primitive">Primitive to get UVs from</param>
+    /// <param name="channel">UV channel</param>
+    /// <returns>UVs</returns>
     public Vector2[] GetUVs(Primitive primitive, int channel)
     {
         return GetUVs(
@@ -879,24 +861,22 @@ public class RMesh: Resource
         );
     }
 
-    /**
-     * Gets the UVs of this mesh from a specified channel.
-     *
-     * @param channel UV channel
-     * @return UVs
-     */
+    /// <summary>
+    /// Gets the UVs of this mesh from a specified channel.
+    /// </summary>
+    /// <param name="channel">UV channel</param>
+    /// <returns>UVs</returns>
     public Vector2[] GetUVs(int channel)
     {
         return GetUVs(0, NumVerts, channel);
     }
 
-    /**
-     * Gets the vertex normals in a specified range.
-     *
-     * @param start First vertex to get normals of
-     * @param count Number of vertices
-     * @return Vertex normals of range
-     */
+    /// <summary>
+    /// Gets the vertex normals in a specified range.
+    /// </summary>
+    /// <param name="start">First vertex to get normals of</param>
+    /// <param name="count">Number of vertices</param>
+    /// <returns>Vertex normals of range</returns>
     public Vector3[] GetNormals(int start, int count)
     {
         var stream = new MemoryInputStream(GetSkinningStream());
@@ -909,22 +889,20 @@ public class RMesh: Resource
         return normals;
     }
 
-    /**
-     * Gets all the vertex normals from this this.
-     *
-     * @return Vertex normals
-     */
+    /// <summary>
+    /// Gets all the vertex normals from this this.
+    /// </summary>
+    /// <returns>Vertex normals</returns>
     public Vector3[] GetNormals()
     {
         return GetNormals(0, NumVerts);
     }
 
-    /**
-     * Gets all the vertex normals from a mesh primitive.
-     *
-     * @param primitive Primitive to get vertex normals from
-     * @return Vertex normals
-     */
+    /// <summary>
+    /// Gets all the vertex normals from a mesh primitive.
+    /// </summary>
+    /// <param name="primitive">Primitive to get vertex normals from</param>
+    /// <returns>Vertex normals</returns>
     public Vector3[] GetNormals(Primitive primitive)
     {
         return GetNormals(
@@ -933,23 +911,21 @@ public class RMesh: Resource
         );
     }
 
-    /**
-     * Gets all the vertex tangents from this this.
-     *
-     * @return Vertex tangents
-     */
+    /// <summary>
+    /// Gets all the vertex tangents from this this.
+    /// </summary>
+    /// <returns>Vertex tangents</returns>
     public Vector4[] GetTangents()
     {
         return GetTangents(0, NumVerts);
     }
 
-    /**
-     * Gets the vertex tangents in a specified range.
-     *
-     * @param start First vertex to get tangents of
-     * @param count Number of vertices
-     * @return Vertex tangents of range
-     */
+    /// <summary>
+    /// Gets the vertex tangents in a specified range.
+    /// </summary>
+    /// <param name="start">First vertex to get tangents of</param>
+    /// <param name="count">Number of vertices</param>
+    /// <returns>Vertex tangents of range</returns>
     public Vector4[] GetTangents(int start, int count)
     {
         var stream = new MemoryInputStream(GetSkinningStream());
@@ -963,12 +939,11 @@ public class RMesh: Resource
         return tangents;
     }
 
-    /**
-     * Gets all the vertex tangents from a mesh primitive.
-     *
-     * @param primitive Primitive to get vertex tangents from
-     * @return Vertex tangents
-     */
+    /// <summary>
+    /// Gets all the vertex tangents from a mesh primitive.
+    /// </summary>
+    /// <param name="primitive">Primitive to get vertex tangents from</param>
+    /// <returns>Vertex tangents</returns>
     public Vector4[] GetTangents(Primitive primitive)
     {
         return GetTangents(
@@ -977,13 +952,12 @@ public class RMesh: Resource
         );
     }
 
-    /**
-     * Gets the smooth vertex normals in a specified range.
-     *
-     * @param start First vertex to get smooth normals of
-     * @param count Number of vertices
-     * @return Smooth vertex normals of range
-     */
+    /// <summary>
+    /// Gets the smooth vertex normals in a specified range.
+    /// </summary>
+    /// <param name="start">First vertex to get smooth normals of</param>
+    /// <param name="count">Number of vertices</param>
+    /// <returns>Smooth vertex normals of range</returns>
     public Vector3[] GetSmoothNormals(int start, int count)
     {
         var stream = new MemoryInputStream(GetSkinningStream());
@@ -996,22 +970,20 @@ public class RMesh: Resource
         return normals;
     }
 
-    /**
-     * Gets all the smooth vertex normals from this this.
-     *
-     * @return Smooth vertex normals
-     */
+    /// <summary>
+    /// Gets all the smooth vertex normals from this this.
+    /// </summary>
+    /// <returns>Smooth vertex normals</returns>
     public Vector3[] GetSmoothNormals()
     {
         return GetSmoothNormals(0, NumVerts);
     }
 
-    /**
-     * Gets all the smooth vertex normals from a mesh primitive.
-     *
-     * @param primitive Primitive to get smooth vertex normals from
-     * @return Smooth vertex normals
-     */
+    /// <summary>
+    /// Gets all the smooth vertex normals from a mesh primitive.
+    /// </summary>
+    /// <param name="primitive">Primitive to get smooth vertex normals from</param>
+    /// <returns>Smooth vertex normals</returns>
     public Vector3[] GetSmoothNormals(Primitive primitive)
     {
         return GetSmoothNormals(
@@ -1020,13 +992,12 @@ public class RMesh: Resource
         );
     }
 
-    /**
-     * Gets the joints that have an influence on each vertex in a range.
-     *
-     * @param start First vertex to get joints of
-     * @param count Number of vertices
-     * @return Joint indices per vertex in range
-     */
+    /// <summary>
+    /// Gets the joints that have an influence on each vertex in a range.
+    /// </summary>
+    /// <param name="start">First vertex to get joints of</param>
+    /// <param name="count">Number of vertices</param>
+    /// <returns>Joint indices per vertex in range</returns>
     public byte[][] GetJoints(int start, int count)
     {
         var stream = new MemoryInputStream(GetSkinningStream());
@@ -1043,12 +1014,11 @@ public class RMesh: Resource
         return joints;
     }
 
-    /**
-     * Gets the joints that have an influence on each vertex in a mesh primitive.
-     *
-     * @param primitive Primitive to get vertices from
-     * @return Joint indices per vertex
-     */
+    /// <summary>
+    /// Gets the joints that have an influence on each vertex in a mesh primitive.
+    /// </summary>
+    /// <param name="primitive">Primitive to get vertices from</param>
+    /// <returns>Joint indices per vertex</returns>
     public byte[][] GetJoints(Primitive primitive)
     {
         return GetJoints(
@@ -1057,24 +1027,22 @@ public class RMesh: Resource
         );
     }
 
-    /**
-     * Gets the joints that have an influence on each vertex.
-     *
-     * @return Joint indices per vertex
-     */
+    /// <summary>
+    /// Gets the joints that have an influence on each vertex.
+    /// </summary>
+    /// <returns>Joint indices per vertex</returns>
     public byte[][] GetJoints()
     {
         return GetJoints(0, NumVerts);
     }
 
-    /**
-     * Gets a number of weight influences from this skinned mesh,
-     * starting from a certain position
-     *
-     * @param start First vertex to get weights of
-     * @param count Number of vertices to get weights of
-     * @return Weight influences of vertex range
-     */
+    /// <summary>
+    /// Gets a number of weight influences from this skinned mesh,
+    /// starting from a certain position
+    /// </summary>
+    /// <param name="start">First vertex to get weights of</param>
+    /// <param name="count">Number of vertices to get weights of</param>
+    /// <returns>Weight influences of vertex range</returns>
     public Vector4[] GetWeights(int start, int count)
     {
         var stream =
@@ -1109,12 +1077,11 @@ public class RMesh: Resource
         return weights;
     }
 
-    /**
-     * Gets all weight influences from a mesh primitive.
-     *
-     * @param primitive Primitive to get weights of
-     * @return Weight influences of given primitive
-     */
+    /// <summary>
+    /// Gets all weight influences from a mesh primitive.
+    /// </summary>
+    /// <param name="primitive">Primitive to get weights of</param>
+    /// <returns>Weight influences of given primitive</returns>
     public Vector4[] GetWeights(Primitive primitive)
     {
         return GetWeights(
@@ -1123,21 +1090,19 @@ public class RMesh: Resource
         );
     }
 
-    /**
-     * Gets all weight influences from this skinned this.
-     *
-     * @return Weight influences
-     */
+    /// <summary>
+    /// Gets all weight influences from this skinned this.
+    /// </summary>
+    /// <returns>Weight influences</returns>
     public Vector4[] GetWeights()
     {
         return GetWeights(0, NumVerts);
     }
 
-    /**
-     * Parses all morphs from the morph streams.
-     *
-     * @return Parsed morphs
-     */
+    /// <summary>
+    /// Parses all morphs from the morph streams.
+    /// </summary>
+    /// <returns>Parsed morphs</returns>
     public Morph[] GetMorphs()
     {
         if (MorphCount == 0)
@@ -1159,13 +1124,12 @@ public class RMesh: Resource
         return morphs;
     }
 
-    /**
-     * Calculates a triangle list from a given range in the index buffer.
-     *
-     * @param start First face to include in list
-     * @param count Number of faces from start
-     * @return Mesh's triangle list
-     */
+    /// <summary>
+    /// Calculates a triangle list from a given range in the index buffer.
+    /// </summary>
+    /// <param name="start">First face to include in list</param>
+    /// <param name="count">Number of faces from start</param>
+    /// <returns>Mesh's triangle list</returns>
     public int[] GetSpringyTriangles(int start, int count)
     {
         if (Indices == null)
@@ -1198,13 +1162,12 @@ public class RMesh: Resource
         return triangles.ToArray();
     }
 
-    /**
-     * Calculates a triangle list from a given range in the index buffer.
-     *
-     * @param start First face to include in list
-     * @param count Number of faces from start
-     * @return Mesh's triangle list
-     */
+    /// <summary>
+    /// Calculates a triangle list from a given range in the index buffer.
+    /// </summary>
+    /// <param name="start">First face to include in list</param>
+    /// <param name="count">Number of faces from start</param>
+    /// <returns>Mesh's triangle list</returns>
     public int[] GetTriangles(int start, int count)
     {
         if (Indices == null)
@@ -1239,12 +1202,11 @@ public class RMesh: Resource
         return triangles.ToArray();
     }
 
-    /**
-     * Calcuates a triangle list from a given mesh primitive.
-     *
-     * @param primitive Primitive to get triangles from
-     * @return Mesh's triangle list
-     */
+    /// <summary>
+    /// Calcuates a triangle list from a given mesh primitive.
+    /// </summary>
+    /// <param name="primitive">Primitive to get triangles from</param>
+    /// <returns>Mesh's triangle list</returns>
     public int[] GetTriangles(Primitive primitive)
     {
         if (primitive == null)
@@ -1252,11 +1214,10 @@ public class RMesh: Resource
         return GetTriangles(primitive.FirstIndex, primitive.NumIndices);
     }
 
-    /**
-     * Gets this mesh's triangle list, triangulating if necessary.
-     *
-     * @return Mesh's triangle list
-     */
+    /// <summary>
+    /// Gets this mesh's triangle list, triangulating if necessary.
+    /// </summary>
+    /// <returns>Mesh's triangle list</returns>
     public int[] GetTriangles()
     {
         return GetTriangles(0, NumIndices);
@@ -1339,11 +1300,10 @@ public class RMesh: Resource
         return meshes.ToArray();
     }
 
-    /**
-     * Recalculates the bounding boxes for each bone in this model.
-     *
-     * @param setOBB Whether to set the OBB field from AABB bounding boxes.
-     */
+    /// <summary>
+    /// Recalculates the bounding boxes for each bone in this model.
+    /// </summary>
+    /// <param name="setOBB">Whether to set the OBB field from AABB bounding boxes.</param>
     public void CalculateBoundBoxes(bool setObb)
     {
         var vertices = GetVertices();

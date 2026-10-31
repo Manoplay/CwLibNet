@@ -16,33 +16,33 @@ public enum MachineType
     V4,
     // M44(0x6)
     M44,
-    // /**
-    //  * Strings used to be built-in types in the VM,
-    //  * but were later replaced with a native class.
-    //  * StringA/StringW
-    //  */
+    // <summary>
+    // Strings used to be built-in types in the VM,
+    // but were later replaced with a native class.
+    // StringA/StringW
+    // </summary>
     // @Deprecated
     // STRING(0x7)
     STRING,
-    // /**
-    //  * Raw pointers will generally be used
-    //  * when accessing native part data from
-    //  * scripts.
-    //  */
+    // <summary>
+    // Raw pointers will generally be used
+    // when accessing native part data from
+    // scripts.
+    // </summary>
     // RAW_PTR(0x8)
     RAW_PTR,
     // REF_PTR(0x9)
     REF_PTR,
-    // /**
-    //  * Often time, scripts that inherit from
-    //  * Thing's will be of type safeptr.
-    //  */
+    // <summary>
+    // Often time, scripts that inherit from
+    // Thing's will be of type safeptr.
+    // </summary>
     // SAFE_PTR(0xa)
     SAFE_PTR,
-    // /**
-    //  * Any reference to an object in the scripting engine
-    //  * that's not a safeptr, will generally be an object reference.
-    //  */
+    // <summary>
+    // Any reference to an object in the scripting engine
+    // that's not a safeptr, will generally be an object reference.
+    // </summary>
     // OBJECT_REF(0xb)
     OBJECT_REF,
     // S64(0xc)

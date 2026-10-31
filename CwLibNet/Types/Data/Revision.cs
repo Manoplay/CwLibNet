@@ -15,12 +15,11 @@ public readonly struct Revision
         return BranchRevision;
     }
 
-    /**
-     * Forms revision with branch data.
-     *
-     * @param revision          Head revision
-     * @param branchDescription Revision branch descriptor
-     */
+    /// <summary>
+    /// Forms revision with branch data.
+    /// </summary>
+    /// <param name="revision">Head revision</param>
+    /// <param name="branchDescription">Revision branch descriptor</param>
     public Revision(int revision, int branchDescription)
     {
         Head = revision;
@@ -28,11 +27,10 @@ public readonly struct Revision
         BranchRevision = (short) (branchDescription & 0xFFFF);
     }
 
-    /**
-     * Forms revision with no branch data.
-     *
-     * @param revision Head revision
-     */
+    /// <summary>
+    /// Forms revision with no branch data.
+    /// </summary>
+    /// <param name="revision">Head revision</param>
     public Revision(int revision)
     {
         Head = revision;
@@ -40,13 +38,12 @@ public readonly struct Revision
         BranchRevision = 0;
     }
 
-    /**
-     * Forms revision with branch ID and revision.
-     *
-     * @param revision       Head revision
-     * @param branchID       Branch ID of revision
-     * @param branchRevision Revision of branch
-     */
+    /// <summary>
+    /// Forms revision with branch ID and revision.
+    /// </summary>
+    /// <param name="revision">Head revision</param>
+    /// <param name="branchID">Branch ID of revision</param>
+    /// <param name="branchRevision">Revision of branch</param>
     public Revision(int revision, int branchId, int branchRevision)
     {
         Head = revision;
@@ -109,21 +106,19 @@ public readonly struct Revision
         return BranchRevision < revision;
     }
 
-    /**
-     * Gets the LBP3 specific revision of the head revision.
-     *
-     * @return LBP3 head revision
-     */
+    /// <summary>
+    /// Gets the LBP3 specific revision of the head revision.
+    /// </summary>
+    /// <returns>LBP3 head revision</returns>
     public int GetSubVersion()
     {
         return (Head >>> 16) & 0xFFFF;
     }
 
-    /**
-     * Gets the LBP1/LBP2/V revision of the head revision.
-     *
-     * @return LBP1/2/V head revision
-     */
+    /// <summary>
+    /// Gets the LBP1/LBP2/V revision of the head revision.
+    /// </summary>
+    /// <returns>LBP1/2/V head revision</returns>
     public int GetVersion()
     {
         return Head & 0xFFFF;

@@ -47,13 +47,13 @@ public static class Strings
         hash = hash.Replace(" ", "");
         if (hash.StartsWith("h"))
             hash = hash[1..];
-        return IsSHA1(hash) ? new Sha1(hash) : null;
+        return IsSha1(hash) ? new Sha1(hash) : null;
     }
 
     /// <summary>
     /// Gets a GUID from a string
     /// </summary>
-    public static GUID? GetGUID(string? number)
+    public static GUID? GetGuid(string? number)
     {
         var value = GetLong(number);
         return value > 0 ? new GUID(value) : null;
@@ -62,7 +62,7 @@ public static class Strings
     /// <summary>
     /// Tests if a given string is a SHA1 hash.
     /// </summary>
-    public static bool IsSHA1(string? hash)
+    public static bool IsSha1(string? hash)
     {
         return !string.IsNullOrEmpty(hash) && Sha1Regex.IsMatch(hash);
     }
@@ -70,7 +70,7 @@ public static class Strings
     /// <summary>
     /// Tests if a given string is a valid GUID.
     /// </summary>
-    public static bool IsGUID(string? guid)
+    public static bool IsGuid(string? guid)
     {
         return !string.IsNullOrEmpty(guid) && (GuidRegex.IsMatch(guid) || HexGuidRegex.IsMatch(guid));
     }
@@ -78,7 +78,7 @@ public static class Strings
     /// <summary>
     /// Cleans up a filepath string for consistency.
     /// </summary>
-    public static string CleanupPath(string path)
+    public static string? CleanupPath(string path)
     {
         if (string.IsNullOrEmpty(path)) return null;
         path = path.Trim().Replace("\\", "/");

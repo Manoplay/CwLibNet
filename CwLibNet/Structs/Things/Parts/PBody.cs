@@ -9,24 +9,24 @@ public class PBody: ISerializable
 {
     public const int BaseAllocationSize = 0x100;
 
-    /**
-     * Positional velocity
-     */
+    /// <summary>
+    /// Positional velocity
+    /// </summary>
     public Vector3? PosVel;
 
-    /**
-     * Angular velocity
-     */
+    /// <summary>
+    /// Angular velocity
+    /// </summary>
     public float AngVel;
 
-    /**
-     * The state of this object
-     */
+    /// <summary>
+    /// The state of this object
+    /// </summary>
     public int Frozen;
 
-    /**
-     * The player that's currently editing this thing(?)
-     */
+    /// <summary>
+    /// The player that's currently editing this thing(?)
+    /// </summary>
     public Thing? EditingPlayer;
 
     public void Serialize(Serializer serializer) {

@@ -16,40 +16,33 @@ public class MemoryInputStream
 {
     private readonly byte[]? buffer;
 
-    private int offset;
-    private readonly int length;
-    private readonly byte compressionFlags;
+    public bool IsLittleEndian;
 
-    private bool isLittleEndian;
-
-    /**
-     * Creates a memory input stream from a byte array.
-     *
-     * @param buffer Byte array to use as source
-     */
+    /// <summary>
+    /// Creates a memory input stream from a byte array.
+    /// </summary>
+    /// <param name="buffer">Byte array to use as source</param>
     public MemoryInputStream(byte[]? buffer)
     {
         this.buffer = buffer ?? throw new NullReferenceException("Buffer supplied to MemoryInputStream cannot be " +
                                                                  "null!");
-        length = buffer.Length;
+        Length = buffer.Length;
     }
 
-    /**
-     * Creates a memory input stream from byte array with compression flags.
-     *
-     * @param buffer           Byte array to use as source
-     * @param compressionFlags Flags for compression methods used
-     */
+    /// <summary>
+    /// Creates a memory input stream from byte array with compression flags.
+    /// </summary>
+    /// <param name="buffer">Byte array to use as source</param>
+    /// <param name="compressionFlags">Flags for compression methods used</param>
     public MemoryInputStream(byte[]? buffer, byte compressionFlags): this(buffer)
     {
-        this.compressionFlags = compressionFlags;
+        this.CompressionFlags = compressionFlags;
     }
 
-    /**
-     * Creates a memory input stream from file at path.
-     *
-     * @param path Location to read data from
-     */
+    /// <summary>
+    /// Creates a memory input stream from file at path.
+    /// </summary>
+    /// <param name="path">Location to read data from</param>
     public MemoryInputStream(string path)
     {
         if (path == null)
@@ -57,61 +50,56 @@ public class MemoryInputStream
                                              "null!");
         var data = File.ReadAllBytes(path) ?? throw new ArgumentException("File provided could not be read!");
         buffer = data;
-        length = data.Length;
+        Length = data.Length;
     }
 
-    /**
-     * Creates a memory input stream from file at path with compression flags.
-     *
-     * @param path             Location to read data from
-     * @param compressionFlags Flags for compression methods used
-     */
+    /// <summary>
+    /// Creates a memory input stream from file at path with compression flags.
+    /// </summary>
+    /// <param name="path">Location to read data from</param>
+    /// <param name="compressionFlags">Flags for compression methods used</param>
     public MemoryInputStream(string path, byte compressionFlags): this(path)
     {
-        this.compressionFlags = compressionFlags;
+        this.CompressionFlags = compressionFlags;
     }
 
-    /**
-     * Reads an arbitrary number of bytes from the stream.
-     *
-     * @param size Number of bytes to read from the stream
-     * @return Bytes read from the stream
-     */
+    /// <summary>
+    /// Reads an arbitrary number of bytes from the stream.
+    /// </summary>
+    /// <param name="size">Number of bytes to read from the stream</param>
+    /// <returns>Bytes read from the stream</returns>
     public byte[]? Bytes(int size)
     {
-        offset += size;
-        var secondBuffer = buffer[(offset - size)..offset]; // buffer.Skip(offset - size).ToArray();
+        Offset += size;
+        var secondBuffer = buffer[(Offset - size)..Offset]; // buffer.Skip(offset - size).ToArray();
 //            Array.Resize(ref secondBuffer, size);
 //             Array.Copy(this.buffer, 0, this.buffer, this.offset - size, this.offset);
         return secondBuffer;
     }
 
-    /**
-     * Reads a byte array from the stream.
-     *
-     * @return Bytes read from the stream
-     */
+    /// <summary>
+    /// Reads a byte array from the stream.
+    /// </summary>
+    /// <returns>Bytes read from the stream</returns>
     public byte[]? Bytearray()
     {
         var size = I32();
         return Bytes(size);
     }
 
-    /**
-     * Reads a bool from the stream.
-     *
-     * @return bool read from the stream
-     */
+    /// <summary>
+    /// Reads a bool from the stream.
+    /// </summary>
+    /// <returns>bool read from the stream</returns>
     public bool Boole()
     {
         return I8() != 0;
     }
 
-    /**
-     * Reads an array of bools from the stream.
-     *
-     * @return bool array read from the stream
-     */
+    /// <summary>
+    /// Reads an array of bools from the stream.
+    /// </summary>
+    /// <returns>bool array read from the stream</returns>
     public bool[] Boolarray()
     {
         var count = I32();
@@ -121,80 +109,74 @@ public class MemoryInputStream
         return elements;
     }
 
-    /**
-     * Reads a byte from the stream.
-     *
-     * @return Byte read from the stream
-     */
+    /// <summary>
+    /// Reads a byte from the stream.
+    /// </summary>
+    /// <returns>Byte read from the stream</returns>
     public byte I8()
     {
-        return buffer[offset++];
+        return buffer[Offset++];
     }
 
-    /**
-     * Reads an unsigned byte from the stream as an integer.
-     *
-     * @return Byte read from the stream
-     */
+    /// <summary>
+    /// Reads an unsigned byte from the stream as an integer.
+    /// </summary>
+    /// <returns>Byte read from the stream</returns>
     public int U8()
     {
-        return buffer[offset++] & 0xFF;
+        return buffer[Offset++] & 0xFF;
     }
 
-    /**
-     * Reads a short from the stream.
-     *
-     * @return Short read from the stream
-     */
+    /// <summary>
+    /// Reads a short from the stream.
+    /// </summary>
+    /// <returns>Short read from the stream</returns>
     public short I16()
     {
         var bytes = Bytes(2);
-        if (isLittleEndian) return Util.Bytes.ToShortLE(bytes);
+        if (IsLittleEndian) return Util.Bytes.ToShortLE(bytes);
         return Util.Bytes.ToShortBE(bytes);
     }
 
-    /**
-     * Reads an unsigned short from the stream as an integer.
-     *
-     * @return Short read from the stream
-     */
+    /// <summary>
+    /// Reads an unsigned short from the stream as an integer.
+    /// </summary>
+    /// <returns>Short read from the stream</returns>
     public int U16()
     {
         return I16() & 0xFFFF;
     }
 
-    /**
-     * Reads an unsigned 24-bit integer from the stream.
-     *
-     * @return Integer read from the stream
-     */
+    /// <summary>
+    /// Reads an unsigned 24-bit integer from the stream.
+    /// </summary>
+    /// <returns>Integer read from the stream</returns>
     public int U24()
     {
         var b = Bytes(3);
-        if (isLittleEndian)
+        if (IsLittleEndian)
             return (b[2] & 0xFF) << 16 | (b[1] & 0xFF) << 8 | b[0] & 0xFF;
         return (b[0] & 0xFF) << 16 | (b[1] & 0xFF) << 8 | b[2] & 0xFF;
     }
 
-    /**
-     * Reads a 32-bit integer from the stream, compressed depending on flags.
-     *
-     * @param force32 Whether to read as a 32-bit integer, regardless of compression flags.
-     * @return Integer read from the stream
-     */
+    /// <summary>
+    /// Reads a 32-bit integer from the stream, compressed depending on flags.
+    /// </summary>
+    /// <param name="force32">Whether to read as a 32-bit integer, regardless of compression flags.</param>
+    /// <returns>Integer read from the stream</returns>
     public int I32(bool force32 = false)
     {
-        if (!force32 && (compressionFlags & CompressionFlags.USE_COMPRESSED_INTEGERS) != 0)
+        if (!force32 && (CompressionFlags & Enums.CompressionFlags.USE_COMPRESSED_INTEGERS) != 0)
             return (int)(Uleb128() & 0xFFFFFFFF);
         var bytes = Bytes(4);
-        return isLittleEndian ? Util.Bytes.ToIntegerLE(bytes) : Util.Bytes.ToIntegerBE(bytes);
+        return IsLittleEndian ? Util.Bytes.ToIntegerLE(bytes) : Util.Bytes.ToIntegerBE(bytes);
     }
         
     public long I64(bool force64) {
-        if (!force64 && (compressionFlags & CompressionFlags.USE_COMPRESSED_INTEGERS) != 0)
+        if (!force64 && (CompressionFlags & Enums.CompressionFlags.USE_COMPRESSED_INTEGERS) != 0)
             return Uleb128();
         var b = Bytes(8);
-        if (isLittleEndian) {
+        if (IsLittleEndian) {
             return	(b[7] & 0xFFL) << 56 |
                     (b[6] & 0xFFL) << 48 |
                     (b[5] & 0xFFL) << 40 |
@@ -214,44 +196,41 @@ public class MemoryInputStream
                 (b[7] & 0xFFL) << 0;
     }
 
-    /**
-     * Reads a signed 32-bit integer from the stream, compressed depending on flags.
-     * This function modifies the value written to the stream to fit an unsigned value, prefer i32
-     *
-     * @return Signed integer read from the stream
-     */
+    /// <summary>
+    /// Reads a signed 32-bit integer from the stream, compressed depending on flags.
+    /// This function modifies the value written to the stream to fit an unsigned value, prefer i32
+    /// </summary>
+    /// <returns>Signed integer read from the stream</returns>
     public int S32()
     {
-        if ((compressionFlags & CompressionFlags.USE_COMPRESSED_INTEGERS) == 0)
+        if ((CompressionFlags & Enums.CompressionFlags.USE_COMPRESSED_INTEGERS) == 0)
             return I32(true);
         var v = (int)Uleb128();
         return v >> 1 ^ -(v & 1);
     }
 
-    /**
-     * Reads a long as an unsigned integer from the stream, compressed depending on flags.
-     *
-     * @param force64 Whether or not to read as a 32-bit integer, regardless of compression flags.
-     * @return Unsigned integer read from the stream
-     */
+    /// <summary>
+    /// Reads a long as an unsigned integer from the stream, compressed depending on flags.
+    /// </summary>
+    /// <param name="force64">Whether or not to read as a 32-bit integer, regardless of compression flags.</param>
+    /// <returns>Unsigned integer read from the stream</returns>
     public long U32(bool force32 = false)
     {
-        if (force32 || (compressionFlags & CompressionFlags.USE_COMPRESSED_INTEGERS) == 0)
+        if (force32 || (CompressionFlags & Enums.CompressionFlags.USE_COMPRESSED_INTEGERS) == 0)
             return I32(true) & 0xFFFFFFFFL;
         return Uleb128();
     }
 
-    /**
-     * Reads a long from the stream, compressed depending on flags.
-     *
-     * @param force64 Whether to read as a 64-bit long, regardless of compression flags.
-     * @return Long read from the stream
-     */
+    /// <summary>
+    /// Reads a long from the stream, compressed depending on flags.
+    /// </summary>
+    /// <param name="force64">Whether to read as a 64-bit long, regardless of compression flags.</param>
+    /// <returns>Long read from the stream</returns>
     public long U64(bool force64 = false)
     {
-        if (!force64 && (compressionFlags & CompressionFlags.USE_COMPRESSED_INTEGERS) != 0) return Uleb128();
+        if (!force64 && (CompressionFlags & Enums.CompressionFlags.USE_COMPRESSED_INTEGERS) != 0) return Uleb128();
         var b = Bytes(8);
-        if (isLittleEndian)
+        if (IsLittleEndian)
         {
             return (b[7] & 0xFF) << 56 |
                    (b[6] & 0xFF) << 48 |
@@ -272,25 +251,23 @@ public class MemoryInputStream
                (b[7] & 0xFF) << 0;
     }
 
-    /**
-     * Reads a "signed" long from the stream, compressed depending on flags.
-     *
-     * @param force64 Whether to read as a 64-bit long, regardless of compression flags.
-     * @return Long read from the stream
-     */
+    /// <summary>
+    /// Reads a "signed" long from the stream, compressed depending on flags.
+    /// </summary>
+    /// <param name="force64">Whether to read as a 64-bit long, regardless of compression flags.</param>
+    /// <returns>Long read from the stream</returns>
     public long S64(bool force64 = false)
     {
-        if (force64 || (compressionFlags & CompressionFlags.USE_COMPRESSED_INTEGERS) == 0)
+        if (force64 || (CompressionFlags & Enums.CompressionFlags.USE_COMPRESSED_INTEGERS) == 0)
             return U64(true);
         var v = Uleb128();
         return v >> 1 ^ -(v & 1L);
     }
 
-    /**
-     * Reads a variable length quantity from the stream.
-     *
-     * @return Long value read from the stream
-     */
+    /// <summary>
+    /// Reads a variable length quantity from the stream.
+    /// </summary>
+    /// <returns>Long value read from the stream</returns>
     public long Uleb128()
     {
         long result = 0;
@@ -306,11 +283,10 @@ public class MemoryInputStream
         return result >>> 0;
     }
 
-    /**
-     * Reads a 16-bit integer array from the stream.
-     *
-     * @return Short array read from the stream
-     */
+    /// <summary>
+    /// Reads a 16-bit integer array from the stream.
+    /// </summary>
+    /// <returns>Short array read from the stream</returns>
     public short[] Shortarray()
     {
         var count = I32();
@@ -320,11 +296,10 @@ public class MemoryInputStream
         return elements;
     }
 
-    /**
-     * Reads a 32-bit integer array from the stream.
-     *
-     * @return Integer array read from the stream
-     */
+    /// <summary>
+    /// Reads a 32-bit integer array from the stream.
+    /// </summary>
+    /// <returns>Integer array read from the stream</returns>
     public int[] Intarray()
     {
         var count = I32();
@@ -334,11 +309,10 @@ public class MemoryInputStream
         return elements;
     }
 
-    /**
-     * Reads a 64-bit integer array from the stream.
-     *
-     * @return Long array read from the stream
-     */
+    /// <summary>
+    /// Reads a 64-bit integer array from the stream.
+    /// </summary>
+    /// <returns>Long array read from the stream</returns>
     public long[] Longarray()
     {
         var count = I32();
@@ -348,12 +322,11 @@ public class MemoryInputStream
         return elements;
     }
 
-    /**
-     * Reads a 16 bit floating point number from the stream.
-     * https://stackoverflow.com/questions/6162651/half-precision-floating-point-in-java
-     *
-     * @return Float read from the stream
-     */
+    /// <summary>
+    /// Reads a 16 bit floating point number from the stream.
+    /// https://stackoverflow.com/questions/6162651/half-precision-floating-point-in-java
+    /// </summary>
+    /// <returns>Float read from the stream</returns>
     public float F16()
     {
         var half = U16();
@@ -379,22 +352,20 @@ public class MemoryInputStream
         return BitConverter.Int32BitsToSingle((half & 0x8000) << 16 | (exp | mant) << 13);
     }
 
-    /**
-     * Reads a 32 bit floating point number from the stream.
-     *
-     * @return Float read from the stream
-     */
+    /// <summary>
+    /// Reads a 32 bit floating point number from the stream.
+    /// </summary>
+    /// <returns>Float read from the stream</returns>
     public float F32()
     {
         return BitConverter.Int32BitsToSingle(I32(true));
     }
 
-    /**
-     * Reads a 32-bit floating point number array from the stream.
-     *
-     * @return Float array read from the stream
-     */
-    public float[] Floatarray()
+    /// <summary>
+    /// Reads a 32-bit floating point number array from the stream.
+    /// </summary>
+    /// <returns>Float array read from the stream</returns>
+    public float[] FloatArray()
     {
         var count = I32();
         var elements = new float[count];
@@ -403,42 +374,38 @@ public class MemoryInputStream
         return elements;
     }
 
-    /**
-     * Reads a 2-dimensional floating point vector from the stream.
-     *
-     * @return Vector2f read from the stream
-     */
+    /// <summary>
+    /// Reads a 2-dimensional floating point vector from the stream.
+    /// </summary>
+    /// <returns>Vector2f read from the stream</returns>
     public Vector2 V2()
     {
         return new Vector2(F32(), F32());
     }
 
-    /**
-     * Reads a 3-dimensional floating point vector from the stream.
-     *
-     * @return Vector3f read from the stream
-     */
+    /// <summary>
+    /// Reads a 3-dimensional floating point vector from the stream.
+    /// </summary>
+    /// <returns>Vector3f read from the stream</returns>
     public Vector3 V3()
     {
         return new Vector3(F32(), F32(), F32());
     }
 
-    /**
-     * Reads a 4-dimensional floating point vector from the stream.
-     *
-     * @return Vector4f read from the stream
-     */
+    /// <summary>
+    /// Reads a 4-dimensional floating point vector from the stream.
+    /// </summary>
+    /// <returns>Vector4f read from the stream</returns>
     public Vector4 V4()
     {
         return new Vector4(F32(), F32(), F32(), F32());
     }
 
-    /**
-     * Reads an array of 4-dimensional floating point vectors from the stream.
-     *
-     * @return Vector array read from the stream
-     */
-    public Vector4[] Vectorarray()
+    /// <summary>
+    /// Reads an array of 4-dimensional floating point vectors from the stream.
+    /// </summary>
+    /// <returns>Vector array read from the stream</returns>
+    public Vector4[] VectorArray()
     {
         var count = I32();
         var elements = new Vector4[count];
@@ -447,17 +414,16 @@ public class MemoryInputStream
         return elements;
     }
 
-    /**
-     * Reads a Matrix4x4 from the stream, compressed depending on flags.
-     *
-     * @return Matrix4x4 read from the stream
-     */
+    /// <summary>
+    /// Reads a Matrix4x4 from the stream, compressed depending on flags.
+    /// </summary>
+    /// <returns>Matrix4x4 read from the stream</returns>
     public Matrix4x4 M44()
     {
         float[] matrix = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
 
         var flags = 0xFFFF;
-        if ((compressionFlags & CompressionFlags.USE_COMPRESSED_MATRICES) != 0)
+        if ((CompressionFlags & Enums.CompressionFlags.USE_COMPRESSED_MATRICES) != 0)
             flags = I16();
 
         for (var i = 0; i < 16; ++i)
@@ -468,64 +434,58 @@ public class MemoryInputStream
         return mat;
     }
 
-    /**
-     * Reads a string of specified size from the stream.
-     *
-     * @param size Size of string to read
-     * @return String value read from the stream
-     */
+    /// <summary>
+    /// Reads a string of specified size from the stream.
+    /// </summary>
+    /// <param name="size">Size of string to read</param>
+    /// <returns>String value read from the stream</returns>
     public string Str(int size)
     {
         return size == 0 ? "" : Encoding.ASCII.GetString(Bytes(size)).Replace("\0", "");
     }
 
-    /**
-     * Reads a wide string of specified size from the stream.
-     *
-     * @param size Size of string to read
-     * @return String value read from the stream
-     */
+    /// <summary>
+    /// Reads a wide string of specified size from the stream.
+    /// </summary>
+    /// <param name="size">Size of string to read</param>
+    /// <returns>String value read from the stream</returns>
     public string Wstr(int size)
     {
         return size == 0 ? "" : Encoding.BigEndianUnicode.GetString(Bytes(size * 2)).Replace("\0", "");
     }
 
-    /**
-     * Reads a length-prefixed string from the stream.
-     *
-     * @return String value read from the stream
-     */
-    public string? Str()
+    /// <summary>
+    /// Reads a length-prefixed string from the stream.
+    /// </summary>
+    /// <returns>String value read from the stream</returns>
+    public string Str()
     {
         return Str(S32());
     }
 
-    /**
-     * Reads a length-prefixed wide string from the stream.
-     *
-     * @return String value read from the stream
-     */
-    public string? Wstr()
+    /// <summary>
+    /// Reads a length-prefixed wide string from the stream.
+    /// </summary>
+    /// <returns>String value read from the stream</returns>
+    public string Wstr()
     {
         return Wstr(S32());
     }
 
-    /**
-     * Reads a SHA1 hash from the stream.
-     *
-     * @return SHA1 hash read from the stream
-     */
+    /// <summary>
+    /// Reads a SHA1 hash from the stream.
+    /// </summary>
+    /// <returns>SHA1 hash read from the stream</returns>
     public Sha1 Sha1()
     {
         return new Sha1(Bytes(0x14));
     }
 
-    /**
-     * Reads a GUID (uint32_t) from the stream.
-     *
-     * @param force32 Whether to read as a 32 bit integer, regardless of compression flags.
-     * @return GUID read from the stream
-     */
+    /// <summary>
+    /// Reads a GUID (uint32_t) from the stream.
+    /// </summary>
+    /// <param name="force32">Whether to read as a 32 bit integer, regardless of compression flags.</param>
+    /// <returns>GUID read from the stream</returns>
     public GUID? Guid(bool force32 = false)
     {
         var number = U32(force32);
@@ -533,13 +493,12 @@ public class MemoryInputStream
         return new GUID(number);
     }
 
-    /**
-     * Reads an 8-bit integer from the stream and resolves the enum value.
-     *
-     * @param <T>         Type of enum
-     * @param enumeration Enum class
-     * @return Resolved enum constant
-     */
+    /// <summary>
+    /// Reads an 8-bit integer from the stream and resolves the enum value.
+    /// </summary>
+    /// <typeparam name="T">Type of enum</typeparam>
+    /// <param name="enumeration">Enum class</param>
+    /// <returns>Resolved enum constant</returns>
     public T? Enum8<T>() where T : Enum
     {
         var number = I8();
@@ -549,27 +508,23 @@ public class MemoryInputStream
         return default;
     }
 
-    /**
-     * Reads an 32-bit integer from the stream and resolves the enum value.
-     *
-     * @param <T>         Type of enum
-     * @param enumeration Enum class
-     * @return Resolved enum constant
-     */
+    /// <summary>
+    /// Reads an 32-bit integer from the stream and resolves the enum value.
+    /// </summary>
+    /// <typeparam name="T">Type of enum</typeparam>
+    /// <returns>Resolved enum constant</returns>
     public T Enum32<T>() where T : Enum
     {
         return Enum32<T>(false);
     }
 
-    /**
-     * Reads an 32-bit integer from the stream and resolves the enum value.
-     *
-     * @param <T>         Type of enum
-     * @param enumeration Enum class
-     * @param signed      Whether to read a signed value
-     * @return Resolved enum constant
-     */
-    public T Enum32<T>(bool signed)
+    /// <summary>
+    /// Reads an 32-bit integer from the stream and resolves the enum value.
+    /// </summary>
+    /// <typeparam name="T">Type of enum</typeparam>
+    /// <param name="signed">Whether to read a signed value</param>
+    /// <returns>Resolved enum constant</returns>
+    public T? Enum32<T>(bool signed)
     {
         var number = signed ? S32() : I32();
         var constants = Enum.GetValues(typeof(T));
@@ -579,15 +534,13 @@ public class MemoryInputStream
         return default;
     }
 
-    /**
-     * Reads a series of 8-bit integers from the stream and resolves them
-     * as an enum array.
-     *
-     * @param <T>         Type of enum
-     * @param enumeration Enum class
-     * @return Resolved enum constant
-     */
-    public T[] Enumarray<T>() where T: Enum
+    /// <summary>
+    /// Reads a series of 8-bit integers from the stream and resolves them
+    /// as an enum array.
+    /// </summary>
+    /// <typeparam name="T">Type of enum</typeparam>
+    /// <returns>Resolved enum constant</returns>
+    public T[] EnumArray<T>() where T: Enum
     {
         var count = I32();
         var elements = new T[count];
@@ -596,12 +549,11 @@ public class MemoryInputStream
         return elements;
     }
 
-    /**
-     * Seeks to position relative to seek mode.
-     *
-     * @param offset Offset relative to seek position
-     * @param mode   Seek origin
-     */
+    /// <summary>
+    /// Seeks to position relative to seek mode.
+    /// </summary>
+    /// <param name="offset">Offset relative to seek position</param>
+    /// <param name="mode">Seek origin</param>
     public void Seek(int offset, SeekMode mode = SeekMode.RELATIVE)
     {
         if (mode == null)
@@ -611,34 +563,29 @@ public class MemoryInputStream
         {
             case SeekMode.BEGIN:
             {
-                if (offset > length)
+                if (offset > Length)
                     throw new ArgumentException("Can't seek past stream length.");
-                this.offset = offset;
+                this.Offset = offset;
                 break;
             }
             case SeekMode.RELATIVE:
             {
-                var newOffset = this.offset + offset;
-                if (newOffset > length || newOffset < 0)
+                var newOffset = this.Offset + offset;
+                if (newOffset > Length || newOffset < 0)
                     throw new ArgumentException("Can't seek outside bounds of " +
                                                 "stream.");
-                this.offset = newOffset;
+                this.Offset = newOffset;
                 break;
             }
             case SeekMode.END:
             {
-                if (offset < 0 || length - offset < 0)
+                if (offset < 0 || Length - offset < 0)
                     throw new ArgumentException("Can't seek outside bounds of " +
                                                 "stream.");
-                this.offset = length - offset;
+                this.Offset = Length - offset;
                 break;
             }
         }
-    }
-
-    public bool IsLittleEndian()
-    {
-        return isLittleEndian;
     }
 
     public byte[]? GetBuffer()
@@ -646,23 +593,9 @@ public class MemoryInputStream
         return buffer;
     }
 
-    public int GetOffset()
-    {
-        return offset;
-    }
+    public int Offset { get; private set; }
 
-    public int GetLength()
-    {
-        return length;
-    }
+    public int Length { get; }
 
-    public byte GetCompressionFlags()
-    {
-        return compressionFlags;
-    }
-
-    public void SetLittleEndian(bool value)
-    {
-        isLittleEndian = value;
-    }
+    public byte CompressionFlags { get; }
 }

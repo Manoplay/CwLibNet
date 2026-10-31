@@ -57,12 +57,11 @@ public class Dds
         0x0000001f, 0x00008000
     ];
 
-    /**
-     * Generates a DDS header.
-     *
-     * @param texture Texture header data
-     * @return Generated DDS header.
-     */
+    /// <summary>
+    /// Generates a DDS header.
+    /// </summary>
+    /// <param name="texture">Texture header data</param>
+    /// <returns>Generated DDS header.</returns>
     public static byte[] GetDdsHeader(CellGcmTexture texture)
     {
         return GetDdsHeader(
@@ -74,15 +73,14 @@ public class Dds
         );
     }
 
-    /**
-     * Generates a DDS header.
-     *
-     * @param format DDS format for PS3
-     * @param width  Width of texture
-     * @param height Height of texture
-     * @param mips   Mip level count
-     * @return Generated DDS header
-     */
+    /// <summary>
+    /// Generates a DDS header.
+    /// </summary>
+    /// <param name="format">DDS format for PS3</param>
+    /// <param name="width">Width of texture</param>
+    /// <param name="height">Height of texture</param>
+    /// <param name="mips">Mip level count</param>
+    /// <returns>Generated DDS header</returns>
     public static byte[] GetDdsHeader(CellGcmEnumForGtf format, int width, int height, int mips,
                                       bool cubemap)
     {
@@ -90,7 +88,7 @@ public class Dds
         // https://docs.microsoft.com/en-us/windows/win32/direct3ddds/dds-header
 
         var header = new MemoryOutputStream(0x80);
-        header.SetLittleEndian(true);
+        header.IsLittleEndian = true;
 
         header.Str("DDS ", 4);
         header.U32(0x7C); // dwSize
@@ -151,17 +149,16 @@ public class Dds
         for (var i = 0; i < 3; ++i)
             header.U32(0); // dwReserved
 
-        return header.GetBuffer();
+        return header.Buffer;
     }
 
-    /**
-     * Unswizzles pixel data
-     *
-     * @param pixels Pixel data
-     * @param height Height of texture
-     * @param width  Width of texture
-     * @return Unswizzled pixels
-     */
+    /// <summary>
+    /// Unswizzles pixel data
+    /// </summary>
+    /// <param name="pixels">Pixel data</param>
+    /// <param name="height">Height of texture</param>
+    /// <param name="width">Width of texture</param>
+    /// <returns>Unswizzled pixels</returns>
     public static int[] Unswizzle(int[] pixels, int height, int width)
     {
         // NOTE(Aidan): For original source, see:

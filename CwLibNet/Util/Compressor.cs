@@ -28,7 +28,7 @@ public static class Compressor
 
         if (chunks == 0)
         {
-            return stream.Bytes(endOffset - stream.GetOffset());
+            return stream.Bytes(endOffset - stream.Offset);
         }
 
         var compressed = new int[chunks];
@@ -58,7 +58,7 @@ public static class Compressor
             inflateStream.Bytes(inflatedData);
         }
 
-        return inflateStream.GetBuffer();
+        return inflateStream.Buffer;
     }
 
     public static byte[] GetCompressedStream(byte[]? data, bool isCompressed)
@@ -95,6 +95,6 @@ public static class Compressor
         }
 
         var combinedZlibStreams = Bytes.Combine(zlibStreams);
-        return Bytes.Combine(output.GetBuffer(), combinedZlibStreams);
+        return Bytes.Combine(output.Buffer, combinedZlibStreams);
     }
 }

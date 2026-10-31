@@ -2,10 +2,10 @@ namespace CwLibNet.Enums;
 
 public enum BuiltinType
 {
-    // /**
-    //  * If a type doesn't exist, or if it's associated
-    //  * machine type is a reference, this type will be used.
-    //  */
+    // <summary>
+    // If a type doesn't exist, or if it's associated
+    // machine type is a reference, this type will be used.
+    // </summary>
     // VOID(0x0)
     VOID,
     // BOOL(0x1)
@@ -25,9 +25,9 @@ public enum BuiltinType
     V4,
     // M44(0x8)
     M44,
-    // /**
-    //  * Functionally the same as a s32.
-    //  */
+    // <summary>
+    // Functionally the same as a s32.
+    // </summary>
     // GUID(0x9)
     GUID,
     // S64(0xa)

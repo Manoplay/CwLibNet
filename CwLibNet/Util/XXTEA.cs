@@ -1,4 +1,5 @@
-/**********************************************************\
+/*
+************************************************************
 |                                                          |
 | XXTEA.cs                                                 |
 |                                                          |
@@ -11,7 +12,9 @@
 | Code Author:  Ma Bingyao <mabingyao@gmail.com>           |
 | LastModified: Mar 10, 2015                               |
 |                                                          |
-\**********************************************************/
+************************************************************
+*/
+
 
 namespace Xxtea;
 
@@ -23,7 +26,7 @@ public static class XXTEA {
 
     private const uint Delta = 0x9E3779B9;
 
-    private static uint MX(uint sum, uint y, uint z, int p, uint e, uint[] k) {
+    private static uint Mx(uint sum, uint y, uint z, int p, uint e, uint[] k) {
         return (z >> 5 ^ y << 2) + (y >> 3 ^ z << 4) ^ (sum ^ y) + (k[p & 3 ^ e] ^ z);
     }
 
@@ -60,11 +63,9 @@ public static class XXTEA {
         return Convert.ToBase64String(Encrypt(data, key));
     }
 
-    public static byte[]? Decrypt(byte[]? data, byte[]? key) {
-        if (data.Length == 0) {
-            return data;
-        }
-        return ToByteArray(Decrypt(ToUInt32Array(data, false), ToUInt32Array(FixKey(key), false)), true);
+    public static byte[]? Decrypt(byte[]? data, byte[]? key)
+    {
+        return data is { Length: 0 } ? data : ToByteArray(Decrypt(ToUInt32Array(data, false), ToUInt32Array(FixKey(key), false)), true);
     }
 
     public static byte[]? Decrypt(byte[]? data, string key) {
@@ -112,10 +113,10 @@ public static class XXTEA {
                 int p;
                 for (p = 0; p < n; p++) {
                     y = v[p + 1];
-                    z = v[p] += MX(sum, y, z, p, e, k);
+                    z = v[p] += Mx(sum, y, z, p, e, k);
                 }
                 y = v[0];
-                z = v[n] += MX(sum, y, z, p, e, k);
+                z = v[n] += Mx(sum, y, z, p, e, k);
             }
         }
         return v;
@@ -138,10 +139,10 @@ public static class XXTEA {
                 int p;
                 for (p = n; p > 0; p--) {
                     z = v[p - 1];
-                    y = v[p] -= MX(sum, y, z, p, e, k);
+                    y = v[p] -= Mx(sum, y, z, p, e, k);
                 }
                 z = v[n];
-                y = v[0] -= MX(sum, y, z, p, e, k);
+                y = v[0] -= Mx(sum, y, z, p, e, k);
                 sum -= Delta;
             }
         }
@@ -161,7 +162,7 @@ public static class XXTEA {
     }
 
     private static uint[] ToUInt32Array(byte[]? data, bool includeLength) {
-        var length = data.Length;
+        var length = data?.Length ?? 0;
         var n = (length & 3) == 0 ? length >> 2 : (length >> 2) + 1;
         uint[] result;
         if (includeLength) {

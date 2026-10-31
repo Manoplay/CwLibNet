@@ -5,37 +5,28 @@ namespace CwLibNet.Types.Data
 {
     public class OpenPSID : ISerializable
     {
-        public static readonly int BASE_ALLOCATION_SIZE = 0x8;
+        public const int BaseAllocationSize = 0x8;
 
-        private long high, low;
+        public long High;
+        public long Low;
 
         public OpenPSID() { }
 
         public OpenPSID(long high, long low)
         {
-            this.high = high;
-            this.low = low;
+            High = high;
+            Low = low;
         }
 
         public void Serialize(Serializer serializer)
         {
-            high = serializer.U64(high);
-            low = serializer.U64(low);
+            High = serializer.U64(High);
+            Low = serializer.U64(Low);
         }
 
         public int GetAllocatedSize()
         {
-            return BASE_ALLOCATION_SIZE;
-        }
-
-        public long GetHigh()
-        {
-            return high;
-        }
-
-        public long GetLow()
-        {
-            return low;
+            return BaseAllocationSize;
         }
     }
 }

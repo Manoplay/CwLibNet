@@ -10,12 +10,11 @@ namespace CwLibNet.Resources;
 
 public class RTranslationTable : Resource
 {
-    /**
-     * Calculates LAMS key ID from translation tag.
-     *
-     * <param name="tag"> Translation tag </param>
-     * <returns> Hashed key from translation tag </returns>
-     */
+    /// <summary>
+    /// Calculates LAMS key ID from translation tag.
+    /// </summary>
+    /// <param name="tag"> Translation tag </param>
+    /// <returns> Hashed key from translation tag </returns>
     public static long MakeLamsKeyID(string? tag)
     {
         tag ??= "";
@@ -58,7 +57,7 @@ public class RTranslationTable : Resource
         }
         
         var stream = new MemoryInputStream(data);
-        var dataLength = stream.GetLength();
+        var dataLength = stream.Length;
 
         var count = stream.I32();
 
@@ -68,20 +67,20 @@ public class RTranslationTable : Resource
             var key = stream.U32();
             var stringStart = stream.I32();
 
-            var oldOffset = stream.GetOffset();
+            var oldOffset = stream.Offset;
 
             stream.Seek(tableOffset + stringStart + 2, SeekMode.BEGIN);
-            while (stream.GetOffset() != dataLength)
+            while (stream.Offset != dataLength)
                 if (stream.U16() == 0xFEFF)
                     break;
             
-            var stringEnd = stream.GetOffset();
+            var stringEnd = stream.Offset;
             if (stringEnd != dataLength)
                 stringEnd -= 2;
             
             stream.Seek(tableOffset + stringStart, SeekMode.BEGIN);
 
-            var text = Encoding.BigEndianUnicode.GetString(stream.Bytes(stringEnd - stream.GetOffset())).Trim((char)0xFEFF);
+            var text = Encoding.BigEndianUnicode.GetString(stream.Bytes(stringEnd - stream.Offset)).Trim((char)0xFEFF);
             lookup.Add(key, text);
 
             stream.Seek(oldOffset, SeekMode.BEGIN);
@@ -148,7 +147,7 @@ public class RTranslationTable : Resource
                 continue;
             }
 
-            var offset = stringTable.GetOffset();
+            var offset = stringTable.Offset;
             offsets.Add(value, offset);
 
             keyTable.I32(offset);
@@ -158,6 +157,6 @@ public class RTranslationTable : Resource
         }
 
         stringTable.Shrink();
-        return new SerializationData(Bytes.Combine(keyTable.GetBuffer(), stringTable.GetBuffer()));
+        return new SerializationData(Bytes.Combine(keyTable.Buffer, stringTable.Buffer));
     }
 }

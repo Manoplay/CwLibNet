@@ -4,11 +4,11 @@ using CwLibNet.IO.Serializer;
 
 namespace CwLibNet.Structs.Things.Parts;
 
-/**
- * This part represents a Thing's
- * position in the world, as well
- * as information about a bone.
- */
+/// <summary>
+/// This part represents a Thing's
+/// position in the world, as well
+/// as information about a bone.
+/// </summary>
 public class PPos: ISerializable
 {
     public const int BaseAllocationSize = 0x100;

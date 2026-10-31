@@ -11,44 +11,44 @@ public class InventoryItem: ISerializable
 {
     public const int BaseAllocationSize = 0x40;
 
-    /**
-     * The reference to the actual plan data used by this item.
-     */
+    /// <summary>
+    /// The reference to the actual plan data used by this item.
+    /// </summary>
     public ResourceDescriptor? Plan;
 
-    /**
-     * Cache for inventory details of this item.
-     */
+    /// <summary>
+    /// Cache for inventory details of this item.
+    /// </summary>
     public InventoryItemDetails Details = new();
 
-    /**
-     * Cache of GUID for this item.
-     */
+    /// <summary>
+    /// Cache of GUID for this item.
+    /// </summary>
     
     public GUID? Guid;
 
-    /**
-     * Unique ID of this item in your inventory(?)
-     */
+    /// <summary>
+    /// Unique ID of this item in your inventory(?)
+    /// </summary>
     public int Uid;
 
-    /**
-     * Tutorial related data, see ETutorialLevels
-     */
+    /// <summary>
+    /// Tutorial related data, see ETutorialLevels
+    /// </summary>
     
     public TutorialLevel TutorialLevel = TutorialLevel.UNKNOWN;
     
     public TutorialLevel TutorialVideo = TutorialLevel.UNKNOWN;
 
-    /**
-     * State of the item in your inventory,
-     * whether it's hearted, uploaded, etc
-     */
+    /// <summary>
+    /// State of the item in your inventory,
+    /// whether it's hearted, uploaded, etc
+    /// </summary>
     public int Flags = InventoryItemFlags.NONE;
 
-    /**
-     * Index of user defined category in the string table.
-     */
+    /// <summary>
+    /// Index of user defined category in the string table.
+    /// </summary>
     
     public int UserCategoryIndex;
 

@@ -2,23 +2,21 @@
 
 public static class Matcher
 {
-    /**
- * Finds the first occurence of a pattern in a byte array starting from the origin.
- *
- * <param name="data">    Data to search</param>
- * <param name="pattern"> Pattern to search for</param>
- * <returns> Index in byte array where pattern occurs, -1 if not found</returns>
- */
+    /// <summary>
+    /// Finds the first occurence of a pattern in a byte array starting from the origin.
+    /// </summary>
+    /// <param name="data">    Data to search</param>
+    /// <param name="pattern"> Pattern to search for</param>
+    /// <returns> Index in byte array where pattern occurs, -1 if not found</returns>
     public static int IndexOf(byte[]? data, byte[]? pattern) => IndexOf(data, pattern, 0);
 
-    /**
-     * Finds the first occurence of a pattern in a byte array starting from an offset.
-     *
-     * <param name="data">    Data to search </param>
-     * <param name="pattern"> Pattern to search for </param>
-     * <param name="offset">  Offset to start from </param>
-     * <returns> Index in byte array where pattern occurs, -1 if not found </returns>
-     */
+    /// <summary>
+    /// Finds the first occurence of a pattern in a byte array starting from an offset.
+    /// </summary>
+    /// <param name="data">    Data to search </param>
+    /// <param name="pattern"> Pattern to search for </param>
+    /// <param name="offset">  Offset to start from </param>
+    /// <returns> Index in byte array where pattern occurs, -1 if not found </returns>
     public static int IndexOf(byte[]? data, byte[]? pattern, int offset)
     {
         var failure = ComputeFailure(pattern);
@@ -37,13 +35,12 @@ public static class Matcher
         return -1;
     }
 
-    /**
-     * Finds tall occurences of a pattern in a byte array starting from the origin.
-     *
-     * <param name="data">    Data to search</param>
-     * <param name="pattern"> pattern Pattern to search for</param>
-     * <returns> Indices in byte array where pattern occurs</returns>
-     */
+    /// <summary>
+    /// Finds tall occurences of a pattern in a byte array starting from the origin.
+    /// </summary>
+    /// <param name="data">    Data to search</param>
+    /// <param name="pattern"> pattern Pattern to search for</param>
+    /// <returns> Indices in byte array where pattern occurs</returns>
     public static int[] IndicesOf(byte[]? data, byte[]? pattern)
     {
         List<int> indices = [];
@@ -56,13 +53,12 @@ public static class Matcher
         return [.. indices];
     }
 
-    /**
-     * Computes the failure function using a boot-strapping process,
-     * where the pattern is matched against itself.
-     *
-     * <param name="pattern"> pattern Pattern to search for</param>
-     * <returns> Partial match table</returns>
-     */
+    /// <summary>
+    /// Computes the failure function using a boot-strapping process,
+    /// where the pattern is matched against itself.
+    /// </summary>
+    /// <param name="pattern"> pattern Pattern to search for</param>
+    /// <returns> Partial match table</returns>
     private static int[] ComputeFailure(byte[]? pattern)
     {
         var failure = new int[pattern.Length];

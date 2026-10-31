@@ -2,39 +2,39 @@ namespace CwLibNet.Enums;
 
 public enum FlipType
 {
-    // /**
-    //  * X.pos, X.rot
-    //  */
+    // <summary>
+    // X.pos, X.rot
+    // </summary>
     // MAX(0)
     MAX,
-    // /**
-    //  * Y.pos, Y.rot + prerot
-    //  */
+    // <summary>
+    // Y.pos, Y.rot + prerot
+    // </summary>
     // BIP_ROOT(1)
     BIP_ROOT,
-    // /**
-    //  * Z.pos, Z.rot + prerot
-    //  */
+    // <summary>
+    // Z.pos, Z.rot + prerot
+    // </summary>
     // BIP_PELVIS(2)
     BIP_PELVIS,
-    // /**
-    //  * Z.pos, Z.rot
-    //  */
+    // <summary>
+    // Z.pos, Z.rot
+    // </summary>
     // BIP_BONE(3)
     BIP_BONE,
-    // /**
-    //  * Z.pos, Z.rot + null prerot
-    //  */
+    // <summary>
+    // Z.pos, Z.rot + null prerot
+    // </summary>
     // PARENT_WAS_BIP_BONE(4)
     PARENT_WAS_BIP_BONE,
-    // /**
-    //  * X.pos, X.rot + prerot
-    //  */
+    // <summary>
+    // X.pos, X.rot + prerot
+    // </summary>
     // GRANDPARENT_WAS_BIP_BONE(5)
     GRANDPARENT_WAS_BIP_BONE,
-    // /**
-    //  * No flip, straight copy from mirror bone.
-    //  */
+    // <summary>
+    // No flip, straight copy from mirror bone.
+    // </summary>
     // COPY(6)
     COPY 
 }

@@ -8,9 +8,9 @@ public class Polygon: ISerializable
 {
     public const int BaseAllocationSize = 0x10;
 
-    /**
-     * Vertices that make up this polygon.
-     */
+    /// <summary>
+    /// Vertices that make up this polygon.
+    /// </summary>
     public Vector3?[]? Vertices =
     [
         new Vector3(-100, -100, 0),
@@ -19,16 +19,16 @@ public class Polygon: ISerializable
         new Vector3(100, -100, 0)
     ];
 
-    /**
-     * Whether this polygon needs the Z vertex.
-     */
+    /// <summary>
+    /// Whether this polygon needs the Z vertex.
+    /// </summary>
     
     public bool RequiresZ = true;
 
-    /**
-     * Controls which parts of the polygon are "loops",
-     * if two loops intersect with each other, it counts as a cut.
-     */
+    /// <summary>
+    /// Controls which parts of the polygon are "loops",
+    /// if two loops intersect with each other, it counts as a cut.
+    /// </summary>
     public int[]? Loops = [4];
 
     

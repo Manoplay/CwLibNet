@@ -167,7 +167,7 @@ public class RAnimation: Resource
             foreach (var bone in ScaledBonesAnimated) memoryOutputStream.I8(bone);
             foreach (var bone in MorphsAnimated) memoryOutputStream.I8(bone);
 
-            if (memoryOutputStream.GetOffset() % 2 != 0) memoryOutputStream.U8(0);
+            if (memoryOutputStream.Offset % 2 != 0) memoryOutputStream.U8(0);
 
             foreach (Vector4 rotation in PackedRotation)
             {
@@ -196,11 +196,11 @@ public class RAnimation: Resource
 
             foreach (var morph in PackedMorph) memoryOutputStream.F16(morph);
 
-            while (memoryOutputStream.GetOffset() % 16 != 0) memoryOutputStream.U8(0);
+            while (memoryOutputStream.Offset % 16 != 0) memoryOutputStream.U8(0);
 
             memoryOutputStream.Shrink();
 
-            var animationData = memoryOutputStream.GetBuffer();
+            var animationData = memoryOutputStream.Buffer;
             memoryOutputStream = serializer.GetOutput();
 
             memoryOutputStream.U8(Bones.Length);
@@ -267,7 +267,7 @@ public class RAnimation: Resource
         for (var i = 0; i < scaleAnims; ++i) ScaledBonesAnimated[i] = stream.I8();
         for (var i = 0; i < morphAnims; ++i) MorphsAnimated[i] = stream.I8();
 
-        if (stream.GetOffset() % 2 != 0) stream.I8(); // Alignment
+        if (stream.Offset % 2 != 0) stream.I8(); // Alignment
 
         PackedRotation = new Vector4?[boneCount + rotAnims * (NumFrames - 1)];
         PackedPosition = new Vector4?[boneCount + posAnims * (NumFrames - 1)];

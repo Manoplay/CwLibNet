@@ -15,79 +15,76 @@ namespace CwLibNet.Types;
 
 public class SerializedResource
 {
-    /**
-     * Type of resource.
-     */
+    /// <summary>
+    /// Type of resource.
+    /// </summary>
     private ResourceType type = ResourceType.Invalid;
 
-    /**
-     * Method of serialization, binary, text, or texture resources.
-     */
+    /// <summary>
+    /// Method of serialization, binary, text, or texture resources.
+    /// </summary>
     private SerializationType method = SerializationType.UNKNOWN;
 
-    /**
-     * Texture metadata for texture resources.
-     */
+    /// <summary>
+    /// Texture metadata for texture resources.
+    /// </summary>
     private CellGcmTexture textureInfo;
 
-    /**
-     * Static mesh metadata
-     */
+    /// <summary>
+    /// Static mesh metadata
+    /// </summary>
     private StaticMeshInfo meshInfo;
 
-    /**
-     * Revision of the resource.
-     */
+    /// <summary>
+    /// Revision of the resource.
+    /// </summary>
     private Revision revision;
 
-    /**
-     * Whether the resource is compressed
-     */
+    /// <summary>
+    /// Whether the resource is compressed
+    /// </summary>
     private bool isCompressed = true;
 
-    /**
-     * Controls which data types get compressed during serialization.
-     */
+    /// <summary>
+    /// Controls which data types get compressed during serialization.
+    /// </summary>
     private byte compressionFlags = CompressionFlags.USE_NO_COMPRESSION;
 
-    /**
-     * Decompressed data from this resource.
-     */
+    /// <summary>
+    /// Decompressed data from this resource.
+    /// </summary>
     private byte[]? data;
 
-    /**
-     * Resources this resource depends on.
-     */
+    /// <summary>
+    /// Resources this resource depends on.
+    /// </summary>
     private HashSet<ResourceDescriptor> dependencies = [];
 
-    /**
-     * Constructs a new resource from path
-     *
-     * @param path Path to read resource from
-     */
+    /// <summary>
+    /// Constructs a new resource from path
+    /// </summary>
+    /// <param name="path">Path to read resource from</param>
     public SerializedResource(string path)
     {
         Process(new MemoryInputStream(path));
     }
 
-    /**
-     * Constructs a new resource from buffer
-     *
-     * @param data Data to read resource from
-     */
+    /// <summary>
+    /// Constructs a new resource from buffer
+    /// </summary>
+    /// <param name="data">Data to read resource from</param>
     public SerializedResource(byte[]? data)
     {
         Process(new MemoryInputStream(data));
     }
 
-    /**
-     * Processes the resource stream.
-     *
-     * @param stream Memory input stream to read from
-     */
+    /// <summary>
+    /// Processes the resource stream.
+    /// </summary>
+    /// <param name="stream">Memory input stream to read from</param>
     private void Process(MemoryInputStream stream)
     {
-        if (stream == null || stream.GetLength() < 0xb) return;
+        if (stream == null || stream.Length < 0xb) return;
         type = ResourceType.FromMagic(stream.Str(3));
         if (type.Value == ResourceType.Invalid.Value)
             throw new SerializationException("Invalid Resource type!");
@@ -137,30 +134,29 @@ public class SerializedResource
                 if (isCompressed)
                     data = Compressor.DecompressData(stream, dependencyTableOffset);
                 else if (dependencyTableOffset != -1)
-                    data = stream.Bytes(dependencyTableOffset - stream.GetOffset());
+                    data = stream.Bytes(dependencyTableOffset - stream.Offset);
                 else
-                    data = stream.Bytes(stream.GetLength() - stream.GetOffset());
+                    data = stream.Bytes(stream.Length - stream.Offset);
                 break;
             case "t":
-                data = stream.Bytes(stream.GetLength() - stream.GetOffset());
+                data = stream.Bytes(stream.Length - stream.Offset);
                 break;
             case " ":
             case "s":
             case "S":
                 if (type.Value != ResourceType.Texture.Value)
                     textureInfo = new CellGcmTexture(stream, method);
-                data = Compressor.DecompressData(stream, stream.GetLength());
+                data = Compressor.DecompressData(stream, stream.Length);
                 break;
             case null:
                 throw new SerializationException("Invalid serialization method!");
         }
     }
 
-    /**
-     * Constructs a new serializer from this resource's data.
-     *
-     * @return Data deserializer from current resource data
-     */
+    /// <summary>
+    /// Constructs a new serializer from this resource's data.
+    /// </summary>
+    /// <returns>Data deserializer from current resource data</returns>
     public Serializer GetSerializer()
     {
         var serializer = new Serializer(data, revision, compressionFlags);
@@ -169,39 +165,36 @@ public class SerializedResource
         return serializer;
     }
 
-    /**
-     * Constructs a new memory input stream from this resource's data.
-     *
-     * @return Data stream from current resource data
-     */
+    /// <summary>
+    /// Constructs a new memory input stream from this resource's data.
+    /// </summary>
+    /// <returns>Data stream from current resource data</returns>
     public MemoryInputStream GetStream()
     {
         return new MemoryInputStream(data, compressionFlags);
     }
 
-    /**
-     * Deserializes a resource from this instance.
-     *
-     * @param T   Resource type that implements Serializable
-     * @param clazz Resource class reference that implements Serializable
-     * @return Deserialized resource
-     */
+    /// <summary>
+    /// Deserializes a resource from this instance.
+    /// </summary>
+    /// <param name="T">Resource type that implements Serializable</param>
+    /// <param name="clazz">Resource class reference that implements Serializable</param>
+    /// <returns>Deserialized resource</returns>
     public T LoadResource<T>() where T : ISerializable
     {
         var serializer = GetSerializer();
         return serializer.Struct<T>(default);
     }
 
-    /**
-     * Reads the dependency table from the current resource stream.
-     *
-     * @param stream Memory input stream to read from
-     * @return The offset of the dependency table
-     */
+    /// <summary>
+    /// Reads the dependency table from the current resource stream.
+    /// </summary>
+    /// <param name="stream">Memory input stream to read from</param>
+    /// <returns>The offset of the dependency table</returns>
     private int ProcessDependencies(MemoryInputStream stream)
     {
         var dependencyTableOffset = stream.I32();
-        var originalOffset = stream.GetOffset();
+        var originalOffset = stream.Offset;
         stream.Seek(dependencyTableOffset, SeekMode.BEGIN);
 
         var count = stream.I32();
@@ -229,15 +222,14 @@ public class SerializedResource
         return dependencyTableOffset;
     }
 
-    /**
-     * Wraps a resource in a container, preferring compression if possible.
-     *
-     * @param resource         Instance of compressible resource
-     * @param revision         Revision of underlying resource stream.
-     * @param compressionFlags Compression flags used during resource serialization
-     * @param preferCompressed Whether this resource should be compressed, if possible
-     * @return Resource container
-     */
+    /// <summary>
+    /// Wraps a resource in a container, preferring compression if possible.
+    /// </summary>
+    /// <param name="resource">Instance of compressible resource</param>
+    /// <param name="revision">Revision of underlying resource stream.</param>
+    /// <param name="compressionFlags">Compression flags used during resource serialization</param>
+    /// <param name="preferCompressed">Whether this resource should be compressed, if possible</param>
+    /// <returns>Resource container</returns>
     public static byte[]? Compress(Resource resource, Revision revision, byte compressionFlags
         , bool preferCompressed)
     {
@@ -245,25 +237,23 @@ public class SerializedResource
             preferCompressed);
     }
 
-    /**
-     * Wraps a resource in a container, preferring compression if possible.
-     *
-     * @param resource         Instance of compressible resource
-     * @param revision         Revision of underlying resource stream.
-     * @param compressionFlags Compression flags used during resource serialization
-     * @return Resource container
-     */
+    /// <summary>
+    /// Wraps a resource in a container, preferring compression if possible.
+    /// </summary>
+    /// <param name="resource">Instance of compressible resource</param>
+    /// <param name="revision">Revision of underlying resource stream.</param>
+    /// <param name="compressionFlags">Compression flags used during resource serialization</param>
+    /// <returns>Resource container</returns>
     public static byte[]? Compress(Resource resource, Revision revision, byte compressionFlags)
     {
         return Compress(resource.Build(revision, compressionFlags), true);
     }
 
-    /**
-     * Wraps a resource in a container, preferring compression if possible.
-     *
-     * @param data Serialization data to wrap
-     * @return Resource container
-     */
+    /// <summary>
+    /// Wraps a resource in a container, preferring compression if possible.
+    /// </summary>
+    /// <param name="data">Serialization data to wrap</param>
+    /// <returns>Resource container</returns>
     public static byte[]? Compress(SerializationData data)
     {
         return Compress(data, true);
@@ -299,13 +289,12 @@ public class SerializedResource
         );
     }
 
-    /**
-     * Wraps a resource in a container, with optional compression.
-     *
-     * @param data             Serialization data to wrap
-     * @param preferCompressed Whether this resource should be compressed, if possible
-     * @return Resource container
-     */
+    /// <summary>
+    /// Wraps a resource in a container, with optional compression.
+    /// </summary>
+    /// <param name="data">Serialization data to wrap</param>
+    /// <param name="preferCompressed">Whether this resource should be compressed, if possible</param>
+    /// <returns>Resource container</returns>
     public static byte[]? Compress(SerializationData data, bool preferCompressed)
     {
         var type = data.Type;
@@ -327,7 +316,7 @@ public class SerializedResource
             stream.Str(type.Value.Header + data.Method.GetValue() + '\n', 5);
             stream.Bytes(buffer);
             stream.Shrink();
-            return stream.GetBuffer();
+            return stream.Buffer;
         }
 
         if (type.Value.Value == ResourceType.Texture.Value || type.Value.Value == ResourceType.GtfTexture.Value)
@@ -339,7 +328,7 @@ public class SerializedResource
             stream.Bytes(Compressor.GetCompressedStream(data.Buffer, preferCompressed));
 
             stream.Shrink();
-            return stream.GetBuffer();
+            return stream.Buffer;
         }
 
         stream.Str(type.Value.Header + data.Method.GetValue(), 4);
@@ -392,7 +381,7 @@ public class SerializedResource
         if (head >= 0x109 || isStaticMesh)
         {
             // Setting dependency table offset
-            var dependencyTableOffset = stream.GetOffset();
+            var dependencyTableOffset = stream.Offset;
             stream.Seek(8, SeekMode.BEGIN);
             stream.I32(dependencyTableOffset);
             stream.Seek(dependencyTableOffset, SeekMode.BEGIN);
@@ -423,7 +412,7 @@ public class SerializedResource
         }
 
         stream.Shrink();
-        return stream.GetBuffer();
+        return stream.Buffer;
     }
 
     public static byte[]? ChangeRevision(byte[]? data, Revision revision)

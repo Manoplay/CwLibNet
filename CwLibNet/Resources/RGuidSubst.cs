@@ -22,7 +22,7 @@ public class RGuidSubst: Dictionary<GUID, GUID>
             if (line2 == "" || line2.StartsWith("#")) continue;
 
             String[] row = line2.Split(",");
-            subst.Add(Strings.GetGUID(row[0])!.Value, Strings.GetGUID(row[1])!.Value);
+            subst.Add(Strings.GetGuid(row[0])!.Value, Strings.GetGuid(row[1])!.Value);
         }
         return subst;
     }
