@@ -1,6 +1,6 @@
 namespace CwLibNet.Enums;
 
-public class BoxType
+public static class BoxType
 {
     public static readonly int OUTPUT = 0;
     public static readonly int TEXTURE_SAMPLE = 1;

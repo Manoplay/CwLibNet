@@ -14,7 +14,7 @@ namespace CwLibNet.IO.Serializer;
 /// Reversible serializer for assets, also handles
 /// references, revision, and dependencies.
 /// </summary>
-public class Serializer
+public sealed class Serializer
 {
     private readonly bool isWriting;
     private readonly MemoryInputStream? input;
@@ -1066,12 +1066,12 @@ public class Serializer
         return isWriting ? output.GetLength() : input.GetLength();
     }
 
-    public virtual void Log(string message)
+    public void Log(string message)
     {
         Log(message, ResourceLogLevel.SerializerTrace);
     }
 
-    public virtual void Log(string message, int level)
+    public void Log(string message, int level)
     {
         if (level > ResourceSystem.LogLevel)
             return;
@@ -1101,23 +1101,23 @@ public class Serializer
         dependencies.Clear();
     }
 
-    public virtual T GetPointer<T>(int index)
+    public T GetPointer<T>(int index)
     {
         return (T)referenceIDs[index];
     }
 
-    public virtual void SetPointer(int index, object? value)
+    public void SetPointer(int index, object? value)
     {
         referenceIDs.Add(index, value);
         referenceObjects.Add(value, index);
     }
 
-    public virtual int GetNextReference()
+    public int GetNextReference()
     {
         return nextReference++;
     }
 
-    public virtual Thing[] GetThings()
+    public Thing[] GetThings()
     {
         List<Thing> things = [];
         foreach (var reference in referenceObjects.Keys)

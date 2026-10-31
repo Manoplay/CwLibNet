@@ -13,8 +13,8 @@ public class RTranslationTable : Resource
     /**
      * Calculates LAMS key ID from translation tag.
      *
-     * @param tag Translation tag
-     * @return Hashed key from translation tag
+     * <param name="tag"> Translation tag </param>
+     * <returns> Hashed key from translation tag </returns>
      */
     public static long MakeLamsKeyID(string? tag)
     {
@@ -48,7 +48,7 @@ public class RTranslationTable : Resource
     public RTranslationTable(byte[]? data)
     {
         // Legacy RTranslationTable is just a text file.
-        if (Bytes.ToShortBE(data) == 0xFEFF) {
+        if ((ushort)Bytes.ToShortBE(data) == 0xFEFF) {
             string?[] lines = Encoding.Unicode.GetString(data).Split('\n');
             for (var i = 0; i < lines.Length; i+=2)
             {
@@ -70,7 +70,7 @@ public class RTranslationTable : Resource
 
             var oldOffset = stream.GetOffset();
 
-            stream.Seek(tableOffset + stringStart + 2, SeekMode.Begin);
+            stream.Seek(tableOffset + stringStart + 2, SeekMode.BEGIN);
             while (stream.GetOffset() != dataLength)
                 if (stream.U16() == 0xFEFF)
                     break;
@@ -79,16 +79,16 @@ public class RTranslationTable : Resource
             if (stringEnd != dataLength)
                 stringEnd -= 2;
             
-            stream.Seek(tableOffset + stringStart, SeekMode.Begin);
+            stream.Seek(tableOffset + stringStart, SeekMode.BEGIN);
 
             var text = Encoding.BigEndianUnicode.GetString(stream.Bytes(stringEnd - stream.GetOffset())).Trim((char)0xFEFF);
             lookup.Add(key, text);
 
-            stream.Seek(oldOffset, SeekMode.Begin);
+            stream.Seek(oldOffset, SeekMode.BEGIN);
         }
     }
         
-    private Dictionary<long, string?> lookup = new();
+    private readonly Dictionary<long, string?> lookup = new();
         
     public string? Translate(string tag) {
         return Translate(MakeLamsKeyID(tag));

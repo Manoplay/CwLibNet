@@ -2,9 +2,9 @@ namespace CwLibNet.Extensions;
 
 public static class Float
 {
-    public static float ToRadians (this float angleIn10thofaDegree) {
+    public static float ToRadians (this float degrees) {
         // Angle in 10th of a degree
-        return (float)(angleIn10thofaDegree * Math.PI/1800); 
+        return (float)(degrees * Math.PI/1800); 
     }
 
     public static float IntBitsToFloat(this int value)

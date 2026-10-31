@@ -11,8 +11,8 @@ namespace CwLibNet.Resources;
 
 public class RTexture
 {
-    private CellGcmTexture info;
-    private byte[]? data;
+    public CellGcmTexture Info { get; private set; }
+    public byte[]? Data { get; private set; }
     public bool NoSrgb;
 
     private SKBitmap? cached;
@@ -31,7 +31,7 @@ public class RTexture
         }
 
         var magic = (uint)Bytes.ToIntegerBE(data);
-        this.data = data;
+        this.Data = data;
         switch (magic)
         {
             case 0xffd8ffe0:
@@ -57,11 +57,11 @@ public class RTexture
 
     private void Process(SerializedResource resource)
     {
-        info = resource.GetTextureInfo();
+        Info = resource.GetTextureInfo();
         var type = resource.GetResourceType();
         if (type.Value != ResourceType.Texture.Value && type.Value != ResourceType.GtfTexture.Value)
             throw new SerializationException("Invalid resource provided to RTexture");
-        data = resource.GetStream().GetBuffer();
+        Data = resource.GetStream().GetBuffer();
         switch (resource.GetSerializationType().GetValue())
         {
             case " ":
@@ -69,17 +69,14 @@ public class RTexture
                 {
                     // ResourceSystem.println("Texture", "Detected COMPRESSED_TEXTURE,
                     // decompressing to DDS");
-                    cached = Images.FromDds(data);
+                    cached = Images.FromDds(Data);
 
-                    var footer = data.Skip(data.Length - 4).Take(4).ToArray();
+                    var footer = Data.Skip(Data.Length - 4).Take(4).ToArray();
                     if (Bytes.ToIntegerBE(footer) == 0x42554D50)
                         NoSrgb = true;
                 }
                 else
                 {
-                    // ResourceSystem.println("Texture", "Detected GTF_TEXTURE,
-                    // generating DDS
-                    // header");
                     ParseGtf();
                 }
                 break;
@@ -97,7 +94,7 @@ public class RTexture
                                                  "resource!");
         }
 
-        if (info != null && info.IsBumpTexture())
+        if (Info != null && Info.IsBumpTexture())
             NoSrgb = true;
     }
 
@@ -105,13 +102,13 @@ public class RTexture
     {
         UnswizzleCompressed();
         var header = GetDdsHeader();
-        var gtf = data;
+        var gtf = Data;
 
         var dds = new byte[gtf.Length + header.Length];
         Array.Copy(header, 0, dds, 0, header.Length);
         Array.Copy(gtf, 0, dds, header.Length, gtf.Length);
 
-        data = dds;
+        Data = dds;
         cached = GetImage();
     }
 
@@ -121,18 +118,18 @@ public class RTexture
     public void ParseGtf()
     {
         var header = GetDdsHeader();
-        var gtf = data;
+        var gtf = Data;
 
         var dds = new byte[gtf.Length + header.Length];
         Array.Copy(header, 0, dds, 0, header.Length);
         Array.Copy(gtf, 0, dds, header.Length, gtf.Length);
 
-        data = dds;
+        Data = dds;
 
-        var format = info.GetFormat();
+        var format = Info.GetFormat();
         if (format == CellGcmEnumForGtf.A8R8G8B8 || format == CellGcmEnumForGtf.B8 ||
-            info.GetMethod() == SerializationType.GTF_SWIZZLED ||
-            info.GetMethod() == SerializationType.GXT_SWIZZLED)
+            Info.GetMethod() == SerializationType.GTF_SWIZZLED ||
+            Info.GetMethod() == SerializationType.GXT_SWIZZLED)
             Unswizzle();
         else cached = GetImage();
     }
@@ -161,23 +158,23 @@ public class RTexture
      */
     private void UnswizzleCompressed()
     {
-        var pixels = new byte[data.Length];
+        var pixels = new byte[Data.Length];
 
         const int blockWidth = 4;
         const int blockHeight = 4;
         var bpp = 4;
-        if (info.GetFormat().Equals(CellGcmEnumForGtf.DXT5))
+        if (Info.GetFormat().Equals(CellGcmEnumForGtf.DXT5))
             bpp = 8;
 
         var @base = 0;
 
-        var width = Math.Max(info.GetWidth(), blockWidth);
-        var height = Math.Max(info.GetHeight(), blockHeight);
+        var width = Math.Max(Info.GetWidth(), blockWidth);
+        var height = Math.Max(Info.GetHeight(), blockHeight);
 
         var log2Width = 1 << (31 - Longs.NumberOfLeadingZeros(width + (width - 1)));
         var log2Height = 1 << (31 - Longs.NumberOfLeadingZeros(height + (height - 1)));
 
-        for (var i = 0; i < info.GetMipCount(); ++i)
+        for (var i = 0; i < Info.GetMipCount(); ++i)
         {
             var w = (width + blockWidth - 1) / blockWidth;
             var h = (height + blockHeight - 1) / blockHeight;
@@ -198,7 +195,7 @@ public class RTexture
                 for (var x = 0; x < w; ++x)
                 {
                     var offset = @base + (ox + oy) * pixelSize;
-                    Array.Copy(data, offset, pixels, tgt, pixelSize);
+                    Array.Copy(Data, offset, pixels, tgt, pixelSize);
                     tgt += pixelSize;
                     ox = (ox - mx) & mx;
                 }
@@ -214,7 +211,7 @@ public class RTexture
             log2Height = log2Height > blockHeight ? log2Height / 2 : blockHeight;
         }
 
-        data = pixels;
+        Data = pixels;
     }
 
     /**
@@ -222,8 +219,8 @@ public class RTexture
      */
     private void Unswizzle()
     {
-        var pixels = DdsReader.Read(data, DdsReader.ARGB, 0);
-        pixels = Dds.Unswizzle(pixels, info.GetHeight(), info.GetWidth());
+        var pixels = DdsReader.Read(Data, DdsReader.ARGB, 0);
+        pixels = Dds.Unswizzle(pixels, Info.GetHeight(), Info.GetWidth());
 
         for (var i = 0; i < pixels.Length; ++i)
         {
@@ -232,36 +229,34 @@ public class RTexture
                 (pixel & 0xff) << 24 | (pixel & 0xff00) << 8 | (pixel & 0xff0000) >> 8 | (pixel >> 24) & 0xff;
         }
 
-        cached = new SKBitmap(info.GetWidth(), info.GetHeight(), SKColorType.Argb4444, SKAlphaType.Opaque);
+        cached = new SKBitmap(Info.GetWidth(), Info.GetHeight(), SKColorType.Argb4444, SKAlphaType.Opaque);
         if (cached != null)
-            for (var i = 0; i < info.GetHeight(); ++i)
-                for (var j = 0; j < info.GetWidth(); ++j)
+            for (var i = 0; i < Info.GetHeight(); ++i)
+                for (var j = 0; j < Info.GetWidth(); ++j)
                     cached.SetPixel(j, i, new SKColor((uint)pixels[j*i]));
     }
 
     /**
      * Convert texture to BufferedImage
      *
-     * @return Converted texture
+     * <returns> Converted texture </returns>
      */
     public SKBitmap? GetImage()
     {
-        if (cached != null)
-            return cached;
-        return Images.FromDds(data);
+        return cached ?? Images.FromDds(Data);
     }
 
     /**
      * Scales texture to specified W/H and creates an ImageIcon.
      *
-     * @param width  Desired width
-     * @param height Desired height
-     * @return Scaled ImageIcon of Texture
+     * <param name="width">  Desired width</param>
+     * <param name="height"> Desired height</param>
+     * <returns> Scaled ImageIcon of Texture </returns>
      */
-    public SKBitmap GetImageIcon(int width = 320, int height = 320)
+    public SKBitmap? GetImageIcon(int width = 320, int height = 320)
     {
         cached ??= GetImage();
-        return cached != null ? cached.Resize(new SKSizeI(width, height), SKSamplingOptions.Default) : null;
+        return cached?.Resize(new SKSizeI(width, height), SKSamplingOptions.Default);
     }
 
     /**
@@ -271,21 +266,6 @@ public class RTexture
      */
     public byte[] GetDdsHeader()
     {
-        //System.out.println(String.format("DDS Type: %s (%s)", Bytes.toHex(this.info
-        // .getFormat()
-        // .getValue()), this.info.getFormat().name()));
-        //System.out.println(String.format("Image Width: %spx", this.info.getWidth()));
-        //System.out.println(String.format("Image Height: %spx", this.info.getHeight()));
-        return null; // DDS.getDDSHeader(this.info);
-    }
-
-    public CellGcmTexture GetInfo()
-    {
-        return info;
-    }
-
-    public byte[]? GetData()
-    {
-        return data;
+        return Dds.GetDdsHeader(Info);
     }
 }

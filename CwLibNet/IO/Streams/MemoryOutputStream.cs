@@ -731,21 +731,21 @@ public class MemoryOutputStream
      * @param offset Offset relative to seek position
      * @param mode   Seek origin
      */
-    public void Seek(int off, SeekMode? mode = SeekMode.Relative)
+    public void Seek(int off, SeekMode? mode = SeekMode.RELATIVE)
     {
         if (mode == null)
             throw new NullReferenceException("SeekMode cannot be null!");
         if (offset < 0) throw new ArgumentException("Can't seek to negative offsets.");
         switch (mode)
         {
-            case SeekMode.Begin:
+            case SeekMode.BEGIN:
             {
                 if (offset > length)
                     throw new ArgumentException("Can't seek past stream length.");
                 offset = off;
                 break;
             }
-            case SeekMode.Relative:
+            case SeekMode.RELATIVE:
             {
                 var newOffset = offset + off;
                 if (newOffset > length || newOffset < 0)
@@ -754,7 +754,7 @@ public class MemoryOutputStream
                 offset = newOffset;
                 break;
             }
-            case SeekMode.End:
+            case SeekMode.END:
             {
                 if (off < 0 || length - off < 0)
                     throw new ArgumentException("Can't seek outside bounds of " +

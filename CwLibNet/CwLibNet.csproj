@@ -13,6 +13,7 @@
         <Authors>ProjectCraftworld</Authors>
         <PackageProjectUrl>https://github.com/ProjectCraftworld/CwLibNet</PackageProjectUrl>
         <PackageReadmeFile>README.md</PackageReadmeFile>
+        <Version>1.0.1</Version>
     </PropertyGroup>
 
     <ItemGroup>

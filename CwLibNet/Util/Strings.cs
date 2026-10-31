@@ -6,8 +6,8 @@ namespace CwLibNet.Util;
 public static class Strings
 {
     private static readonly Regex Sha1Regex = new("(h?)[a-fA-F0-9]{40}$", RegexOptions.Compiled);
-    private static readonly Regex GUIDRegex = new("(g?)\\d+", RegexOptions.Compiled);
-    private static readonly Regex HexGUIDRegex = new("(g?)(0x|0X)[a-fA-F0-9]+$", RegexOptions.Compiled);
+    private static readonly Regex GuidRegex = new("(g?)\\d+", RegexOptions.Compiled);
+    private static readonly Regex HexGuidRegex = new("(g?)(0x|0X)[a-fA-F0-9]+$", RegexOptions.Compiled);
 
     /// <summary>
     /// Left pads the input with zeros.
@@ -72,7 +72,7 @@ public static class Strings
     /// </summary>
     public static bool IsGUID(string? guid)
     {
-        return !string.IsNullOrEmpty(guid) && (GUIDRegex.IsMatch(guid) || HexGUIDRegex.IsMatch(guid));
+        return !string.IsNullOrEmpty(guid) && (GuidRegex.IsMatch(guid) || HexGuidRegex.IsMatch(guid));
     }
 
     /// <summary>

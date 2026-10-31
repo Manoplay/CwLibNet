@@ -856,7 +856,7 @@ public class RMesh: Resource
         for (var i = 0; i < count; ++i)
         {
             stream.Seek(start + AttributeCount * 0x8 * i + 0x8 * channel,
-                SeekMode.Begin);
+                SeekMode.BEGIN);
             uVs[i] = stream.V2();
         }
         return uVs;
@@ -903,7 +903,7 @@ public class RMesh: Resource
         var normals = new Vector3[count];
         for (var i = 0; i < count; ++i)
         {
-            stream.Seek(start * 0x10 + i * 0x10 + 0x4, SeekMode.Begin);
+            stream.Seek(start * 0x10 + i * 0x10 + 0x4, SeekMode.BEGIN);
             normals[i] = Bytes.UnpackNormal24(stream.U24());
         }
         return normals;
@@ -956,7 +956,7 @@ public class RMesh: Resource
         var tangents = new Vector4[count];
         for (var i = 0; i < count; ++i)
         {
-            stream.Seek(start * 0x10 + i * 0x10 + 0x8, SeekMode.Begin);
+            stream.Seek(start * 0x10 + i * 0x10 + 0x8, SeekMode.BEGIN);
             var tangent = Bytes.UnpackNormal24(stream.U24());
             tangents[i] = new Vector4(tangent, 1.0f);
         }
@@ -990,7 +990,7 @@ public class RMesh: Resource
         var normals = new Vector3[count];
         for (var i = 0; i < count; ++i)
         {
-            stream.Seek(start * 0x10 + i * 0x10 + 0xC, SeekMode.Begin);
+            stream.Seek(start * 0x10 + i * 0x10 + 0xC, SeekMode.BEGIN);
             normals[i] = Bytes.UnpackNormal24(stream.U24());
         }
         return normals;
@@ -1400,8 +1400,8 @@ public class RMesh: Resource
                 if (!(min.GetComponent(c) > max.GetComponent(c))) continue;
                 var u = min.GetComponent(c);
                 var l = max.GetComponent(c);
-                min.SetComponent(c, l);
-                max.SetComponent(c, u);
+                min = min.SetComponent(c, l);
+                max = max.SetComponent(c, u);
             }
 
             bone.BoundBoxMax = max;

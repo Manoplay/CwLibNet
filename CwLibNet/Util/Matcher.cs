@@ -1,23 +1,23 @@
 ﻿namespace CwLibNet.Util;
 
-public class Matcher
+public static class Matcher
 {
     /**
  * Finds the first occurence of a pattern in a byte array starting from the origin.
  *
- * @param data    Data to search
- * @param pattern Pattern to search for
- * @return Index in byte array where pattern occurs, -1 if not found
+ * <param name="data">    Data to search</param>
+ * <param name="pattern"> Pattern to search for</param>
+ * <returns> Index in byte array where pattern occurs, -1 if not found</returns>
  */
     public static int IndexOf(byte[]? data, byte[]? pattern) => IndexOf(data, pattern, 0);
 
     /**
      * Finds the first occurence of a pattern in a byte array starting from an offset.
      *
-     * @param data    Data to search
-     * @param pattern Pattern to search for
-     * @param offset  Offset to start from
-     * @return Index in byte array where pattern occurs, -1 if not found
+     * <param name="data">    Data to search </param>
+     * <param name="pattern"> Pattern to search for </param>
+     * <param name="offset">  Offset to start from </param>
+     * <returns> Index in byte array where pattern occurs, -1 if not found </returns>
      */
     public static int IndexOf(byte[]? data, byte[]? pattern, int offset)
     {
@@ -40,13 +40,13 @@ public class Matcher
     /**
      * Finds tall occurences of a pattern in a byte array starting from the origin.
      *
-     * @param data    Data to search
-     * @param pattern Pattern to search for
-     * @return Indices in byte array where pattern occurs
+     * <param name="data">    Data to search</param>
+     * <param name="pattern"> pattern Pattern to search for</param>
+     * <returns> Indices in byte array where pattern occurs</returns>
      */
     public static int[] IndicesOf(byte[]? data, byte[]? pattern)
     {
-        List<int> indices = new ();
+        List<int> indices = [];
         var offset = IndexOf(data, pattern, 0);
         while (offset != -1)
         {
@@ -60,8 +60,8 @@ public class Matcher
      * Computes the failure function using a boot-strapping process,
      * where the pattern is matched against itself.
      *
-     * @param pattern Pattern to search for
-     * @return Partial match table
+     * <param name="pattern"> pattern Pattern to search for</param>
+     * <returns> Partial match table</returns>
      */
     private static int[] ComputeFailure(byte[]? pattern)
     {

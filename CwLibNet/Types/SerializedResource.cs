@@ -202,7 +202,7 @@ public class SerializedResource
     {
         var dependencyTableOffset = stream.I32();
         var originalOffset = stream.GetOffset();
-        stream.Seek(dependencyTableOffset, SeekMode.Begin);
+        stream.Seek(dependencyTableOffset, SeekMode.BEGIN);
 
         var count = stream.I32();
         dependencies = new HashSet<ResourceDescriptor>(count);
@@ -224,7 +224,7 @@ public class SerializedResource
                 dependencies.Add(descriptor);
         }
 
-        stream.Seek(originalOffset, SeekMode.Begin);
+        stream.Seek(originalOffset, SeekMode.BEGIN);
 
         return dependencyTableOffset;
     }
@@ -393,9 +393,9 @@ public class SerializedResource
         {
             // Setting dependency table offset
             var dependencyTableOffset = stream.GetOffset();
-            stream.Seek(8, SeekMode.Begin);
+            stream.Seek(8, SeekMode.BEGIN);
             stream.I32(dependencyTableOffset);
-            stream.Seek(dependencyTableOffset, SeekMode.Begin);
+            stream.Seek(dependencyTableOffset, SeekMode.BEGIN);
 
             // Writing dependencies
             stream.I32(dependencies.Length);

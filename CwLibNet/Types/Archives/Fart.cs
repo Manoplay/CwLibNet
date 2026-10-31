@@ -8,7 +8,7 @@ namespace CwLibNet.Types.Archives;
 
 public abstract class Fart: IEnumerable<Fat>
 {
-    protected readonly string File;
+    public readonly string File;
 
     /**
      * The last time this archive was modified,
@@ -25,12 +25,12 @@ public abstract class Fart: IEnumerable<Fat>
     /**
      * Type of FileArchive
      */
-    private ArchiveType type;
+    public readonly ArchiveType Type;
 
     /**
      * Queue mapping for entries to be added on save.
      */
-    protected Dictionary<Sha1, byte[]> Queue = new(32);
+    protected readonly Dictionary<Sha1, byte[]> Queue = new(32);
 
     protected Fat[] Entries;
 
@@ -38,7 +38,7 @@ public abstract class Fart: IEnumerable<Fat>
      * Structure to map SHA1s to their respective entries in the archive,
      * so access is constant time.
      */
-    protected Dictionary<Sha1, Fat> Lookup = new();
+    protected readonly Dictionary<Sha1, Fat> Lookup = new();
 
     protected Fart(string file, ArchiveType type)
     {
@@ -47,7 +47,7 @@ public abstract class Fart: IEnumerable<Fat>
             throw new NullReferenceException("Archive path cannot be null!");
         if (type == null)
             throw new NullReferenceException("Archive type cannot be null!");
-        this.type = type;
+        Type = type;
         File = file;
         if (File != null)
             LastModified = new DateTimeOffset(System.IO.File.GetLastWriteTime(File)).ToUnixTimeSeconds();
@@ -56,8 +56,8 @@ public abstract class Fart: IEnumerable<Fat>
     /**
      * Extracts a resource from the archive via SHA1.
      *
-     * @param sha1 SHA1 signature of resource to extract
-     * @return Extracted resource
+     * <param name="sha1"> SHA1 signature of resource to extract</param>
+     * <returns>Extracted resource</returns>
      */
     public byte[]? Extract(Sha1 sha1)
     {
@@ -68,14 +68,14 @@ public abstract class Fart: IEnumerable<Fat>
         if (Queue.TryGetValue(sha1, out var extract1))
             return extract1;
 
-        return Lookup.ContainsKey(sha1) ? Extract(Lookup[sha1]) : null;
+        return Lookup.TryGetValue(sha1, out var value) ? Extract(value) : null;
     }
 
     /**
      * Extracts a resource via a FAT entry.
      *
-     * @param fat FAT row to extract
-     * @return Extracted resource
+     * <param name="fat">FAT row to extract</param>
+     * <returns> Extracted resource </returns>
      */
     public byte[]? Extract(Fat fat)
     {
@@ -97,8 +97,8 @@ public abstract class Fart: IEnumerable<Fat>
     /**
      * Checks if a hash exists in the archive.
      *
-     * @param sha1 Hash to query
-     * @return Whether the hash exists
+     * <param name="sha1"> Hash to query </param>
+     * <returns> Whether the hash exists </returns>
      */
     public bool Exists(Sha1 sha1)
     {
@@ -130,8 +130,8 @@ public abstract class Fart: IEnumerable<Fat>
     /**
      * Adds the contents of another archive to this one.
      *
-     * @param fart Archive containing data to add
-     * @return Hashes added
+     * <param name="fart"> Archive containing data to add </param>
+     * <returns> Hashes added </returns>
      */
     public Sha1[] Add(Fart fart)
     {
@@ -145,30 +145,20 @@ public abstract class Fart: IEnumerable<Fat>
             Queue.Add(sha1, fart.Extract(fat));
             hashes.Add(sha1);
         }
-        return hashes.ToArray();
+        return [.. hashes];
     }
 
     /**
      * Flushes changes to the archive.
      *
-     * @return Whether the operation was successful.
+     * <returns> Whether the operation was successful. </returns>
      */
     public abstract bool Save();
-
-    public ArchiveType GetArchiveType()
-    {
-        return type;
-    }
-
-    public string GetFile()
-    {
-        return File;
-    }
 
     /**
      * Gets the accumulated size of the data in the queue.
      *
-     * @return Queue size
+     * <returns> Queue size </returns>
      */
     public long GetQueueSize()
     {
@@ -208,10 +198,9 @@ public abstract class Fart: IEnumerable<Fat>
     /**
      * Deserializes a resource extracted from this archive.
      *
-     * @param <T>   Resource type that implements Serializable
-     * @param hash  Hash of resource to extract
-     * @param clazz Resource class reference that implements Serializable
-     * @return Deserialized resource
+     * <typeparam name="T">Resource type that implements Serializable</typeparam>
+     * <param name="hash">Hash of resource to extract</param>
+     * <returns> Deserialized resource </returns>
      */
     public T? LoadResource<T>(Sha1 hash) where T: ISerializable
     {
@@ -225,7 +214,7 @@ public abstract class Fart: IEnumerable<Fat>
      * Checks if the archive has been modified since
      * being loaded.
      *
-     * @return Whether or not the archive has been modified
+     * <returns> Whether the archive has been modified </returns>
      */
     public bool WasModified()
     {
@@ -237,7 +226,7 @@ public abstract class Fart: IEnumerable<Fat>
     /**
      * Validates that all SHA1s match their corresponding buffers in FAT
      *
-     * @return Number of entries that failed validation
+     * <returns> Number of entries that failed validation </returns>
      */
     public int Validate()
     {
@@ -251,12 +240,9 @@ public abstract class Fart: IEnumerable<Fat>
     /**
      * Checks if the archive contains data to save.
      *
-     * @return Whether the archive should save.
+     * <returns> Whether the archive should save. </returns>
      */
-    public bool ShouldSave()
-    {
-        return Queue.Count != 0;
-    }
+    public bool ShouldSave() => Queue.Count != 0;
 
     /**
      * Gets number of entries in FAT.
@@ -265,10 +251,7 @@ public abstract class Fart: IEnumerable<Fat>
      * Number of entries.
      * </returns>
      */
-    public int GetEntryCount()
-    {
-        return Entries.Length;
-    }
+    public int GetEntryCount() => Entries.Length;
 
     public IEnumerator GetEnumerator()
     {

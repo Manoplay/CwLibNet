@@ -19,9 +19,9 @@ using System;
 using System.Text;
 
 public static class XXTEA {
-    private static readonly UTF8Encoding utf8 = new();
+    private static readonly UTF8Encoding Utf8 = new();
 
-    private const uint delta = 0x9E3779B9;
+    private const uint Delta = 0x9E3779B9;
 
     private static uint MX(uint sum, uint y, uint z, int p, uint e, uint[] k) {
         return (z >> 5 ^ y << 2) + (y >> 3 ^ z << 4) ^ (sum ^ y) + (k[p & 3 ^ e] ^ z);
@@ -33,15 +33,15 @@ public static class XXTEA {
     }
 
     public static byte[]? Encrypt(string data, byte[]? key) {
-        return Encrypt(utf8.GetBytes(data), key);
+        return Encrypt(Utf8.GetBytes(data), key);
     }
 
     public static byte[]? Encrypt(byte[]? data, string key) {
-        return Encrypt(data, utf8.GetBytes(key));
+        return Encrypt(data, Utf8.GetBytes(key));
     }
 
     public static byte[]? Encrypt(string data, string key) {
-        return Encrypt(utf8.GetBytes(data), utf8.GetBytes(key));
+        return Encrypt(Utf8.GetBytes(data), Utf8.GetBytes(key));
     }
 
     public static string EncryptToBase64String(byte[]? data, byte[]? key) {
@@ -68,7 +68,7 @@ public static class XXTEA {
     }
 
     public static byte[]? Decrypt(byte[]? data, string key) {
-        return Decrypt(data, utf8.GetBytes(key));
+        return Decrypt(data, Utf8.GetBytes(key));
     }
 
     public static byte[]? DecryptBase64String(string data, byte[]? key) {
@@ -80,19 +80,19 @@ public static class XXTEA {
     }
 
     public static string DecryptToString(byte[]? data, byte[]? key) {
-        return utf8.GetString(Decrypt(data, key));
+        return Utf8.GetString(Decrypt(data, key));
     }
 
     public static string DecryptToString(byte[]? data, string key) {
-        return utf8.GetString(Decrypt(data, key));
+        return Utf8.GetString(Decrypt(data, key));
     }
 
     public static string DecryptBase64StringToString(string data, byte[]? key) {
-        return utf8.GetString(DecryptBase64String(data, key));
+        return Utf8.GetString(DecryptBase64String(data, key));
     }
 
     public static string DecryptBase64StringToString(string data, string key) {
-        return utf8.GetString(DecryptBase64String(data, key));
+        return Utf8.GetString(DecryptBase64String(data, key));
     }
 
     private static uint[] Encrypt(uint[] v, uint[] k) {
@@ -106,7 +106,7 @@ public static class XXTEA {
         var q = 6 + 52 / (n + 1);
         unchecked {
             while (0 < q--) {
-                sum += delta;
+                sum += Delta;
                 var e = sum >> 2 & 3;
                 uint y;
                 int p;
@@ -131,7 +131,7 @@ public static class XXTEA {
         var q = 6 + 52 / (n + 1);
         unchecked
         {
-            var sum = (uint)(q * delta);
+            var sum = (uint)(q * Delta);
             while (sum != 0) {
                 var e = sum >> 2 & 3;
                 uint z;
@@ -142,7 +142,7 @@ public static class XXTEA {
                 }
                 z = v[n];
                 y = v[0] -= MX(sum, y, z, p, e, k);
-                sum -= delta;
+                sum -= Delta;
             }
         }
         return v;

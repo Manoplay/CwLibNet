@@ -22,7 +22,7 @@ namespace CwLibNet.Resources
         public StringLookupTable StringTable { get; set; } = new();
 
         /// <summary>
-        /// Whether or not this profile was from a production build.
+        /// Whether this profile was from a production build.
         /// </summary>
         public bool FromProductionBuild { get; set; } = true;
 

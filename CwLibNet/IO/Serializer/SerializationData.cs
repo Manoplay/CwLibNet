@@ -7,7 +7,7 @@ namespace CwLibNet.IO.Serializer;
 
 public class SerializationData
 {
-    public byte[]? Buffer;
+    public readonly byte[]? Buffer;
     public readonly Revision? Revision;
     public readonly byte? CompressionFlags;
     public readonly ResourceType? Type;
@@ -17,19 +17,19 @@ public class SerializationData
     public readonly StaticMeshInfo? StaticMeshInfo;
 
     public SerializationData(
-        byte[]? Buffer,
-        Revision Revision,
-        byte CompressionFlags,
-        ResourceType Type,
-        SerializationType Method,
-        ResourceDescriptor?[] Dependencies)
+        byte[]? buffer,
+        Revision revision,
+        byte compressionFlags,
+        ResourceType type,
+        SerializationType method,
+        ResourceDescriptor?[] dependencies)
     {
-        this.Buffer = Buffer;
-        this.Revision = Revision;
-        this.CompressionFlags = CompressionFlags;
-        this.Type = Type;
-        this.Method = Method;
-        this.Dependencies = Dependencies;
+        Buffer = buffer;
+        Revision = revision;
+        CompressionFlags = compressionFlags;
+        Type = type;
+        Method = method;
+        Dependencies = dependencies;
         TextureInfo = null;
         StaticMeshInfo = null;
     }
@@ -37,7 +37,7 @@ public class SerializationData
     /**
      * Creates a serialization data structure for texture data.
      *
-     * @param Buffer Decompressed texture data
+     * <param name="buffer"> Decompressed texture data</param>
      */
     public SerializationData(byte[]? buffer)
     {
@@ -54,8 +54,8 @@ public class SerializationData
     /**
      * Creates a serialization data structure for GTF texture data.
      *
-     * @param Buffer Decompressed texture data
-     * @param info   Texture metadata
+     * <param name="buffer"> Decompressed texture data</param>
+     * <param name="info">   Texture metadata</param>
      */
     public SerializationData(byte[] buffer, CellGcmTexture info)
     {
@@ -72,9 +72,9 @@ public class SerializationData
     /**
      * Creates a serialization data structure for static mesh data
      *
-     * @param Buffer   Decompressed static mesh
-     * @param Revision Revision of the serialized resource
-     * @param info     Static mesh metadata
+     * <param name="buffer">   Decompressed static mesh</param>
+     * <param name="revision"> Revision of the serialized resource</param>
+     * <param name="info">     Static mesh metadata</param>
      */
     public SerializationData(byte[] buffer, Revision revision, StaticMeshInfo info)
     {

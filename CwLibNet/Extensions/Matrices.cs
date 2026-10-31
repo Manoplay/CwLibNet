@@ -4,61 +4,64 @@ namespace CwLibNet.Extensions;
 
 public static class Matrices
 {
-    public static Matrix4x4 Invert(this Matrix4x4 matrix)
+    extension(Matrix4x4 matrix)
     {
-        Matrix4x4.Invert(matrix, out var result);
-        return result;
-    }
-
-    public static Matrix4x4 TranslationRotationScale(this Matrix4x4 matrix, Vector3 translation, Quaternion rotation,
-        Vector3 scale)
-    {
-        var _a = Matrix4x4.CreateTranslation(translation) * matrix;
-        var _b = Matrix4x4.Transform(_a, rotation);
-        var _c = Matrix4x4.CreateScale(scale) * _b;
-        return _c;
-    }
-
-    public static Vector3 GetTranslation(this Matrix4x4 matrix)
-    {
-        return new Vector3(matrix.M41, matrix.M42, matrix.M43);
-    }
-
-    public static Vector3 GetScale(this Matrix4x4 matrix)
-    {
-        return new Vector3
+        public Matrix4x4 Invert()
         {
-            X = (float)Math.Sqrt(matrix.M11 * matrix.M11 + matrix.M12 * matrix.M12 + matrix.M13 * matrix.M13),
-            Y = (float)Math.Sqrt(matrix.M21 * matrix.M21 + matrix.M22 * matrix.M22 + matrix.M23 * matrix.M23),
-            Z = (float)Math.Sqrt(matrix.M31 * matrix.M31 + matrix.M32 * matrix.M32 + matrix.M33 * matrix.M33)
-        };
+            Matrix4x4.Invert(matrix, out var result);
+            return result;
+        }
+
+        public Matrix4x4 TranslationRotationScale(Vector3 translation, Quaternion rotation,
+            Vector3 scale)
+        {
+            var a = Matrix4x4.CreateTranslation(translation) * matrix;
+            var b = Matrix4x4.Transform(a, rotation);
+            var c = Matrix4x4.CreateScale(scale) * b;
+            return c;
+        }
+
+        public Vector3 GetTranslation()
+        {
+            return new Vector3(matrix.M41, matrix.M42, matrix.M43);
+        }
+
+        public Vector3 GetScale()
+        {
+            return new Vector3
+            {
+                X = (float)Math.Sqrt(matrix.M11 * matrix.M11 + matrix.M12 * matrix.M12 + matrix.M13 * matrix.M13),
+                Y = (float)Math.Sqrt(matrix.M21 * matrix.M21 + matrix.M22 * matrix.M22 + matrix.M23 * matrix.M23),
+                Z = (float)Math.Sqrt(matrix.M31 * matrix.M31 + matrix.M32 * matrix.M32 + matrix.M33 * matrix.M33)
+            };
+        }
+
+        public Quaternion GetUnnormalizedRotation()
+        {
+            Quaternion q;
+            q.X = matrix.M11;
+            q.Y = matrix.M21;
+            q.Z = matrix.M31;
+        
+            var t = 1f - (q.X * q.X + q.Y * q.Y + q.Z * q.Z);
+            q.W = (float)Math.Sqrt(t > 0f ? t : 0f);
+        
+            return q;
+        }
+
+        public float[] Linearize()
+        {
+            var matrix1 = Matrix4x4.Transpose(matrix);
+            return
+            [
+                matrix1.M11, matrix1.M12, matrix1.M13, matrix1.M14,
+                matrix1.M21, matrix1.M22, matrix1.M23, matrix1.M24,
+                matrix1.M31, matrix1.M32, matrix1.M33, matrix1.M34,
+                matrix1.M41, matrix1.M42, matrix1.M43, matrix1.M44
+            ];
+        }
     }
 
-    public static Quaternion GetUnnormalizedRotation(this Matrix4x4 matrix)
-    {
-        Quaternion q;
-        q.X = matrix.M11;
-        q.Y = matrix.M21;
-        q.Z = matrix.M31;
-        
-        var t = 1f - (q.X * q.X + q.Y * q.Y + q.Z * q.Z);
-        q.W = (float)Math.Sqrt(t > 0f ? t : 0f);
-        
-        return q;
-    }
-
-    public static float[] Linearize(this Matrix4x4 amatrix)
-    {
-        var matrix = Matrix4x4.Transpose(amatrix);
-        return
-        [
-            matrix.M11, matrix.M12, matrix.M13, matrix.M14,
-            matrix.M21, matrix.M22, matrix.M23, matrix.M24,
-            matrix.M31, matrix.M32, matrix.M33, matrix.M34,
-            matrix.M41, matrix.M42, matrix.M43, matrix.M44
-        ];
-    }
-    
     public static Quaternion RotateLocalX(this Quaternion q, float angle)
     {
         var localRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, angle);

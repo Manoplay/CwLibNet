@@ -7,9 +7,9 @@ namespace CwLibNet.IO.Streams;
 
 public enum SeekMode
 {
-    Begin,
-    Relative,
-    End
+    BEGIN,
+    RELATIVE,
+    END
 }
 
 public class MemoryInputStream
@@ -18,7 +18,7 @@ public class MemoryInputStream
 
     private int offset;
     private readonly int length;
-    private byte compressionFlags;
+    private readonly byte compressionFlags;
 
     private bool isLittleEndian;
 
@@ -523,7 +523,7 @@ public class MemoryInputStream
     /**
      * Reads a GUID (uint32_t) from the stream.
      *
-     * @param force32 Whether or not to read as a 32 bit integer, regardless of compression flags.
+     * @param force32 Whether to read as a 32 bit integer, regardless of compression flags.
      * @return GUID read from the stream
      */
     public GUID? Guid(bool force32 = false)
@@ -602,21 +602,21 @@ public class MemoryInputStream
      * @param offset Offset relative to seek position
      * @param mode   Seek origin
      */
-    public void Seek(int offset, SeekMode mode = SeekMode.Relative)
+    public void Seek(int offset, SeekMode mode = SeekMode.RELATIVE)
     {
         if (mode == null)
             throw new NullReferenceException("SeekMode cannot be null!");
         if (offset < 0) throw new ArgumentException("Can't seek to negative offsets.");
         switch (mode)
         {
-            case SeekMode.Begin:
+            case SeekMode.BEGIN:
             {
                 if (offset > length)
                     throw new ArgumentException("Can't seek past stream length.");
                 this.offset = offset;
                 break;
             }
-            case SeekMode.Relative:
+            case SeekMode.RELATIVE:
             {
                 var newOffset = this.offset + offset;
                 if (newOffset > length || newOffset < 0)
@@ -625,7 +625,7 @@ public class MemoryInputStream
                 this.offset = newOffset;
                 break;
             }
-            case SeekMode.End:
+            case SeekMode.END:
             {
                 if (offset < 0 || length - offset < 0)
                     throw new ArgumentException("Can't seek outside bounds of " +
