@@ -3,7 +3,7 @@ using CwLibNet.Resources;
 
 namespace CwLibNet.Enums;
 
-public struct ResourceType : IEquatable<ResourceType>
+public readonly struct ResourceType : IEquatable<ResourceType>
 {
     public string? Header { get; }
     public int Value { get; }
@@ -114,9 +114,9 @@ public struct ResourceType : IEquatable<ResourceType>
      */
     public static ResourceType FromMagic(string? value)
     {
-        if (value.Length > 3)
+        if (value is { Length: > 3 })
             value = value[..3];
-        value = value.ToUpper();
+        value = value?.ToUpper();
         return (ResourceType)(typeof(ResourceType).GetFields(BindingFlags.Static | BindingFlags.Public)
             .Where(p => p.FieldType == typeof(ResourceType))
             .Where(p => ((ResourceType)(p.GetValue(null) ?? Invalid)).Header == value).Select(e => e.GetValue(null))

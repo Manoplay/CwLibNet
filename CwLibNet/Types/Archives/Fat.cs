@@ -2,51 +2,43 @@ using CwLibNet.Types.Data;
 
 namespace CwLibNet.Types.Archives;
 
-public class Fat
+public class Fat(Fart archive, Sha1 sha1, long offset, int size)
 {
-    private Fart _archive;
+    private readonly Fart archive = archive ?? throw new NullReferenceException("File archive provided to Fat cannot be null!");
 
     /**
      * SHA1 signature of data.
      */
-    private readonly Sha1 _sha1;
+    private readonly Sha1 sha1 = sha1 ?? throw new NullReferenceException("File SHA1 provided to Fat cannot be null!");
 
     /**
      * Offset of the data in the archive.
      */
-    private readonly long _offset;
+    private readonly long offset = offset;
 
     /**
      * Size of the associated data buffer.
      */
-    private readonly int _size;
-
-    public Fat(Fart archive, Sha1 sha1, long offset, int size)
-    {
-        this._archive = archive ?? throw new NullReferenceException("File archive provided to Fat cannot be null!");
-        this._sha1 = sha1 ?? throw new NullReferenceException("File SHA1 provided to Fat cannot be null!");
-        this._offset = offset;
-        this._size = size;
-    }
+    private readonly int size = size;
 
     public Sha1 GetSha1()
     {
-        return _sha1;
+        return sha1;
     }
 
     public long GetOffset()
     {
-        return _offset;
+        return offset;
     }
 
     public int GetSize()
     {
-        return _size;
+        return size;
     }
 
     public Fart GetFileArchive()
     {
-        return _archive;
+        return archive;
     }
 
     /**
@@ -56,12 +48,11 @@ public class Fat
      */
     public byte[]? Extract()
     {
-        return _archive.Extract(this);
+        return archive.Extract(this);
     }
 
     public override string ToString()
     {
-        return string.Format("Fat (%h, offset=%d, size=%d)",
-            _sha1, _offset, _size);
+        return $"Fat ({sha1}, offset={offset}, size={size})";
     }
 }

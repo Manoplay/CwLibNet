@@ -8,7 +8,7 @@ namespace CwLibNet.Types.Archives;
 
 public abstract class Fart: IEnumerable<Fat>
 {
-    protected string File;
+    protected readonly string File;
 
     /**
      * The last time this archive was modified,
@@ -110,8 +110,8 @@ public abstract class Fart: IEnumerable<Fat>
     /**
      * Adds a buffer to the archive.
      *
-     * @param data Data to add
-     * @return SHA1 hash of data added
+     * <param name="data">Data to add</param>
+     * <returns> SHA1 hash of data added </returns>
      */
     public Sha1 Add(byte[] data)
     {
@@ -242,14 +242,9 @@ public abstract class Fart: IEnumerable<Fat>
     public int Validate()
     {
         List<Fat> entries = new(Entries.Length);
-        foreach (var fat in Entries)
-        {
-            var sha1 = Sha1.FromBuffer(fat.Extract());
-            if (sha1.Equals(fat.GetSha1()))
-                entries.Add(fat);
-        }
+        entries.AddRange(from fat in Entries let sha1 = Sha1.FromBuffer(fat.Extract()) where sha1.Equals(fat.GetSha1()) select fat);
         var missing = Entries.Length - entries.Count;
-        Entries = entries.ToArray();
+        Entries = [.. entries];
         return missing;
     }
 
@@ -266,7 +261,9 @@ public abstract class Fart: IEnumerable<Fat>
     /**
      * Gets number of entries in FAT.
      *
-     * @return Number of entries.
+     * <returns>
+     * Number of entries.
+     * </returns>
      */
     public int GetEntryCount()
     {

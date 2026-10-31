@@ -63,8 +63,6 @@ public class FileArchive: Fart
         // you save, so we only ever save when there's
         // data that needs to be added.
 
-        var size = GetQueueSize();
-
         var fat = new Fat[Entries.Length + Queue.Count];
 
         var hashes = Queue.Keys.ToArray();
@@ -83,7 +81,7 @@ public class FileArchive: Fart
 
         var table = GenerateFat(fat);
 
-        var stream = new FileStream(File, FileMode.Create, FileAccess.Write);
+        var stream = new FileStream(File, FileMode.OpenOrCreate, FileAccess.Write);
 
         var fatOffset = FatOffset;
 
@@ -102,7 +100,7 @@ public class FileArchive: Fart
         var data = Bytes.ToBytesBE(fat.Length);
         stream.Write(data, 0, data.Length);
         fatOffset += sizeof(int);
-        stream.Write("FARC"u8.ToArray(), 0, 4); // FARC
+        stream.Write([.. "FARC"u8], 0, 4); // FARC
 
         // archive.setLength(archive.getFilePointer());
 

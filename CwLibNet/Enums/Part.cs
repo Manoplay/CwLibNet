@@ -4,7 +4,7 @@ using CwLibNet.Structs.Things.Parts;
 
 namespace CwLibNet.Enums;
 
-public struct Part(string name, int index, int version, Type? serializable) : IEquatable<Part>
+public readonly struct Part(string name, int index, int version, Type? serializable) : IEquatable<Part>
 {
 
     public static readonly Dictionary<string, Part> Parts = new()
@@ -73,7 +73,7 @@ public struct Part(string name, int index, int version, Type? serializable) : IE
      * Serializable class reference
      */
     public readonly Type? Serializable = serializable;
-    public string Name = name;
+    public readonly string Name = name;
 
     public int GetIndex()
     {
