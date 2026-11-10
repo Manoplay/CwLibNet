@@ -31,7 +31,7 @@ public class RTexture
         }
 
         var magic = (uint)Bytes.ToIntegerBE(data);
-        this.Data = data;
+        Data = data;
         switch (magic)
         {
             case 0xffd8ffe0:
@@ -59,16 +59,14 @@ public class RTexture
     {
         Info = resource.GetTextureInfo();
         var type = resource.GetResourceType();
-        if (type.Value != ResourceType.Texture.Value && type.Value != ResourceType.GtfTexture.Value)
+        if (type.Value != ResourceType.Texture.Value)
             throw new SerializationException("Invalid resource provided to RTexture");
         Data = resource.GetStream().GetBuffer();
         switch (resource.GetSerializationType().GetValue())
         {
             case " ":
-                if (type.Value == ResourceType.Texture.Value)
+                if (type == ResourceType.Texture)
                 {
-                    // ResourceSystem.println("Texture", "Detected COMPRESSED_TEXTURE,
-                    // decompressing to DDS");
                     cached = Images.FromDds(Data);
 
                     var footer = Data.Skip(Data.Length - 4).Take(4).ToArray();

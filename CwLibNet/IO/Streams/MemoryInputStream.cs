@@ -134,8 +134,7 @@ public class MemoryInputStream
     public short I16()
     {
         var bytes = Bytes(2);
-        if (IsLittleEndian) return Util.Bytes.ToShortLE(bytes);
-        return Util.Bytes.ToShortBE(bytes);
+        return IsLittleEndian ? Util.Bytes.ToShortLE(bytes) : Util.Bytes.ToShortBE(bytes);
     }
 
     /// <summary>

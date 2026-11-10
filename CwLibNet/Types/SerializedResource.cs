@@ -144,7 +144,7 @@ public class SerializedResource
             case " ":
             case "s":
             case "S":
-                if (type.Value != ResourceType.Texture.Value)
+                if (type != ResourceType.Texture)
                     textureInfo = new CellGcmTexture(stream, method);
                 data = Compressor.DecompressData(stream, stream.Length);
                 break;

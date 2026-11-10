@@ -137,7 +137,7 @@ public readonly struct ResourceType : IEquatable<ResourceType>
 
     public bool Equals(ResourceType other)
     {
-        return Value == other.Value; // Value is the most efficient key to compare this enum-like since it is different in each item, it's significative, and it's lightweight (int)
+        return Value == other.Value && Header == other.Header; // Value is the most efficient key to compare this enum-like since it is different in each item, it's significative, and it's lightweight (int)
     }
 
     public override bool Equals(object? obj)

@@ -9,7 +9,7 @@ using SkiaSharp;
 
 namespace CwLibNet.Util;
 
-public class Images
+public static class Images
 {
     
     private static int ToNearest(int x)
@@ -123,7 +123,7 @@ public class Images
     {
         var dds = ToDds(image, type, generateMips);
         var info = new CellGcmTexture(dds, noSrgb);
-        dds = dds.Skip(0x80).ToArray();
+        dds = [.. dds.Skip(0x80)];
         return SerializedResource.Compress(new SerializationData(dds, info));
     }
 
